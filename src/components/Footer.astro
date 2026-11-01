@@ -1,0 +1,39 @@
+---
+const year = 2026;
+---
+<footer class="border-t border-white/10 mt-10">
+  <div class="wrap grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+    <div>
+      <a href="index.html" class="flex items-center gap-2.5 font-display font-semibold">
+        <img src="/logo-64.png" alt="" width="28" height="28" class="size-7" />
+        Explore<span class="text-gold -ml-2.5">NDMU</span>
+      </a>
+      <p class="mt-4 max-w-sm text-sm leading-relaxed text-mute">
+        An augmented reality campus tour, navigation and information app for Notre Dame of Marbel University,
+        Koronadal City. A BS Information Technology capstone project.
+      </p>
+    </div>
+    <div class="text-sm">
+      <p class="font-mono text-xs uppercase tracking-[.14em] text-gold">Explore</p>
+      <ul class="mt-4 space-y-2.5 text-mute">
+        <li><a class="hover:text-paper" href="index.html#features">Features</a></li>
+        <li><a class="hover:text-paper" href="index.html#how">How it works</a></li>
+        <li><a class="hover:text-paper" href="index.html#engineering">Engineering notes</a></li>
+        <li><a class="hover:text-paper" href="research.html">Research</a></li>
+        <li><a class="hover:text-paper" href="index.html#download">Get the app</a></li>
+      </ul>
+    </div>
+    <div class="text-sm">
+      <p class="font-mono text-xs uppercase tracking-[.14em] text-gold">Credits</p>
+      <ul class="mt-4 space-y-2.5 text-mute leading-relaxed">
+        <li>Bronze Stallion: “Horse Run Cycle On Place” by Amitesh Nandan (Sketchfab), licensed <a class="underline decoration-white/30 hover:text-paper" href="https://creativecommons.org/licenses/by-nd/4.0/" rel="noopener" target="_blank">CC BY-ND 4.0</a>. Used in the app only.</li>
+        <li>Icons: Flaticon UIcons.</li>
+        <li>Campus photos: ExploreNDMU team.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap flex flex-col gap-2 border-t border-white/5 py-6 text-xs text-mute/80 md:flex-row md:justify-between">
+    <p>© {year} Amoran, Herradura, Villanueva · Notre Dame of Marbel University</p>
+    <p>Built with Astro, GSAP and model-viewer.</p>
+  </div>
+</footer>

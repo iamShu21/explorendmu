@@ -1,0 +1,897 @@
+{
+  "cards": [
+    {
+      "name": "Alumni Center",
+      "about": "Serves as a coordination and assistance center for NDMU alumni. It supports alumni inquiries, communication, activities, programs, and other initiatives that maintain connections between graduates and the university.",
+      "services": [
+        "Alumni inquiries and assistance",
+        "Coordination of alumni activities and programs",
+        "Alumni communication and engagement",
+        "Assistance with alumni-related requests",
+        "Coordination of reunions and alumni events",
+        "Connection between alumni and the university"
+      ],
+      "schedule": [
+        "Monday–Friday: 8:00 AM – 5:00 PM",
+        "Saturday: 8:00 AM – 12:00 PM",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "Audio Visual Room 3 (AVR 3 San Lorenzo Ruiz Hall)",
+      "about": "A multimedia-equipped facility used for presentations, seminars, lectures, meetings, orientations, training sessions, and other approved university activities.",
+      "services": [
+        "Multimedia presentations and lectures",
+        "Seminars and workshops",
+        "Meetings and orientations",
+        "Academic presentations and defenses",
+        "Training sessions",
+        "Other approved university activities"
+      ],
+      "schedule": [
+        "Monday–Saturday: By reservation / scheduled activity",
+        "Sunday: By special arrangement",
+        "Holidays: Subject to university approval"
+      ],
+      "match": []
+    },
+    {
+      "name": "CBGA Dean’s Office (Bro. Herbert Daniel Dumont Hall)",
+      "about": "The main administrative office of the College of Business, Governance, and Accountancy, assisting students with college-level academic concerns, documents, inquiries, and coordination with the Dean and college personnel.",
+      "services": [
+        "College-level academic concerns",
+        "Student inquiries and administrative assistance",
+        "Approval and endorsement of academic documents",
+        "Coordination with the Dean and college personnel",
+        "Assistance with college policies and academic matters"
+      ],
+      "schedule": [
+        "Monday–Friday: 8:00 AM – 5:00 PM",
+        "Saturday: 8:00 AM – 12:00 PM",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "CBGA Guidance Office (Bro. Herbert Daniel Dumont Hall)",
+      "about": "Provides guidance and student support services for CBGA students, including assistance with academic, personal, social, and other student-related concerns.",
+      "services": [
+        "Individual guidance and consultation",
+        "Academic and student support",
+        "Personal and social concerns",
+        "Student referrals when additional assistance is needed",
+        "Guidance-related programs and activities"
+      ],
+      "schedule": [
+        "Monday–Friday: 8:00 AM – 5:00 PM",
+        "Saturday: By appointment / limited services",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "CBGA Program Coordinators (Bro. Herbert Daniel Dumont Hall)",
+      "about": "Serves as the office of the CBGA program coordinators. Students may visit for academic advising, program requirements, and matters that need coordination with their respective program coordinator.",
+      "services": [
+        "Program-specific academic concerns",
+        "Consultation with program coordinators",
+        "Academic advising and coordination",
+        "Assistance with program requirements",
+        "Coordination of program-related activities"
+      ],
+      "schedule": [
+        "Monday–Friday: 8:00 AM – 5:00 PM",
+        "Saturday: By appointment / subject to faculty availability",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "Bro. Xavier Creegan Hall",
+      "about": "A single-storey campus building that houses the University Clinic and the Muslim Prayer Room (Musallah), along with other campus rooms and offices.",
+      "services": [
+        "University Clinic: first aid and basic medical assistance",
+        "Basic health consultation and vital-sign checks",
+        "Muslim Prayer Room (Musallah) for daily prayers and personal reflection",
+        "Other rooms and offices housed in the hall"
+      ],
+      "schedule": [
+        "Building: Open during regular campus hours",
+        "University Clinic: Monday–Friday, 8:00 AM – 5:00 PM; Saturday, 8:00 AM – 12:00 PM; Sunday closed",
+        "Muslim Prayer Room: Monday–Saturday, 7:00 AM – 6:00 PM; Sunday closed / subject to campus access"
+      ],
+      "match": []
+    },
+    {
+      "name": "Bro. James Maurus Doherty Hall",
+      "about": "A multi-storey academic building with classrooms and rooms that open onto open-air corridors on each floor. It is used for scheduled classes and other approved academic activities.",
+      "services": [
+        "Scheduled classes and lectures",
+        "Classrooms and rooms on multiple floors",
+        "Academic activities and student–faculty consultations",
+        "Other approved university activities"
+      ],
+      "schedule": [
+        "Monday–Friday: Based on class schedules",
+        "Saturday: Based on scheduled classes / activities",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "Bro. Herbert Daniel Dumont Hall",
+      "about": "A campus building set among palm trees and garden walkways that houses the offices of the College of Business, Governance, and Accountancy (CBGA), student offices, and other academic facilities.",
+      "services": [
+        "CBGA Dean’s Office",
+        "CBGA Guidance Office",
+        "CBGA Program Coordinators",
+        "CBGA Student Council Office",
+        "OMNIANA Office (student publication)",
+        "Parents Employees Council (PEC)",
+        "Psychology Laboratory"
+      ],
+      "schedule": [
+        "Monday–Friday: Per office schedules (generally 8:00 AM – 5:00 PM)",
+        "Saturday: By appointment / per office schedule",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "SMC Hall",
+      "about": "The Saint Marcellin Champagnat Hall (SMC Hall) is a multipurpose venue at NDMU used for university meetings, seminars, presentations, training sessions, academic activities, and other authorized school functions. The hall is named after Saint Marcellin Champagnat, founder of the Marist Brothers of the Schools.",
+      "services": [
+        "Seminars and workshops",
+        "Meetings and conferences",
+        "Academic presentations",
+        "Training and orientation sessions",
+        "Organization and departmental activities",
+        "Other approved university functions"
+      ],
+      "schedule": [
+        "Monday–Saturday: By reservation / scheduled activity",
+        "Sunday: By special arrangement",
+        "Holidays: Subject to university approval"
+      ],
+      "match": []
+    },
+    {
+      "name": "San Lorenzo Ruiz Hall",
+      "about": "A multi-storey academic building overlooking an open green lawn, with classrooms, faculty offices, and audio-visual facilities on its floors.",
+      "services": [
+        "Audio Visual Room 3 (AVR 3)",
+        "CED Faculty Office",
+        "College of Law Dean Office",
+        "Scheduled classes and lectures",
+        "Seminars, meetings, and approved academic activities"
+      ],
+      "schedule": [
+        "Monday–Saturday: During campus hours / based on class schedules",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "University Canteen",
+      "about": "An on-campus dining facility where students, employees, and visitors can purchase meals, snacks, beverages, and refreshments. It also provides a convenient area for dining and breaks.",
+      "services": [
+        "Meals and affordable food options",
+        "Snacks and refreshments",
+        "Beverages",
+        "Dining and seating area",
+        "Convenient on-campus food service"
+      ],
+      "schedule": [
+        "Monday–Friday: 7:00 AM – 5:30 PM",
+        "Saturday: 7:00 AM – 1:00 PM",
+        "Sunday: Closed",
+        "Holidays / School Breaks: Limited or closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "University Gymnasium",
+      "about": "A multipurpose facility used for PE classes, indoor sports, athletic activities, university programs, assemblies, and other approved campus events.",
+      "services": [
+        "Physical Education (PE) classes",
+        "Basketball, volleyball, and other indoor sports",
+        "Athletic practices and competitions",
+        "University assemblies and programs",
+        "Student and organization activities",
+        "Ceremonies and other approved events"
+      ],
+      "schedule": [
+        "Monday–Saturday: Based on class and activity schedules",
+        "Sunday: By special arrangement",
+        "Holidays: Subject to university approval",
+        "Venue Reservation: Physical Plant Office"
+      ],
+      "match": [
+        "Gym"
+      ]
+    },
+    {
+      "name": "CEAC Faculty Office",
+      "about": "The CEAC Office serves as the administrative center of the College of Engineering, Architecture, and Computing. It assists students with academic concerns, college-related documents, faculty coordination, and inquiries involving CEAC programs. NDMU currently lists programs under CEAC including Architecture, Civil Engineering, Computer Engineering, Computer Science, Electrical Engineering, Electronics Engineering, Information Technology, and Library and Information Science.",
+      "services": [
+        "Student and academic inquiries",
+        "Assistance with college documents and records",
+        "Coordination with the Dean and Program Coordinators",
+        "Faculty and administrative concerns",
+        "Examination and other college-related assistance"
+      ],
+      "schedule": [
+        "Monday–Friday: 8:00 AM – 5:00 PM",
+        "Saturday: 8:00 AM – 11:30 AM",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "Gate 03 (Pantua Gate)",
+      "about": "A campus entrance and exit providing convenient access from the Pantua Village side of NDMU. The gate serves students, employees, and authorized visitors and is monitored by university security.",
+      "services": [
+        "Student and personnel entrance and exit",
+        "Visitor access subject to campus security procedures",
+        "Security monitoring and identification checks",
+        "Convenient access from the Pantua Village side of the campus"
+      ],
+      "schedule": [
+        "Monday–Friday: 6:00 AM – 7:00 PM",
+        "Saturday: 6:00 AM – 5:00 PM",
+        "Sunday: Closed / Limited Access",
+        "Holidays: Subject to university security arrangements"
+      ],
+      "match": []
+    },
+    {
+      "name": "Gate 04 (Sucayan Gate)",
+      "about": "A campus entrance and exit providing access from the Sucayan side of NDMU. It serves students, employees, and authorized visitors and is monitored by university security.",
+      "services": [
+        "Student and personnel entrance and exit",
+        "Visitor access subject to campus security procedures",
+        "Security monitoring and identification checks",
+        "Convenient access from the Sucayan street side of the campus"
+      ],
+      "schedule": [
+        "Monday–Friday: 6:00 AM – 7:00 PM",
+        "Saturday: 6:00 AM – 5:00 PM",
+        "Sunday: Closed / Limited Access",
+        "Holidays: Subject to university security arrangements"
+      ],
+      "match": []
+    },
+    {
+      "name": "Main School Entrance (Alunan Gate)",
+      "about": "The primary entrance and exit of the NDMU Main Campus along Alunan Avenue. It provides access for students, employees, visitors, and guests and is monitored by university security.",
+      "services": [
+        "Main pedestrian entrance and exit",
+        "Primary access for students, personnel, and visitors",
+        "Campus security and identification checks",
+        "Visitor assistance and entry monitoring",
+        "Convenient access from Alunan Avenue"
+      ],
+      "schedule": [
+        "Monday–Friday: 6:00 AM – 8:00 PM",
+        "Saturday: 6:00 AM – 5:00 PM",
+        "Sunday: Closed / Limited Access",
+        "Holidays: Subject to university security arrangements"
+      ],
+      "match": []
+    },
+    {
+      "name": "Physical Plant Office",
+      "about": "Handles the reservation and scheduling of university facilities and venues, including the school gymnasium and other campus spaces used for meetings, programs, and activities.",
+      "services": [
+        "Reservation of campus venues and facilities",
+        "Scheduling of the school gymnasium and other activity areas",
+        "Coordination of facility availability",
+        "Processing of venue-use requests",
+        "Assistance with campus facility arrangements"
+      ],
+      "schedule": [
+        "Monday–Friday: 8:00 AM – 5:00 PM",
+        "Saturday: 8:00 AM – 12:00 PM",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "University Clinic",
+      "about": "Provides basic healthcare services, first aid, health assessments, and assistance for minor illnesses and injuries experienced by students and university personnel while on campus.",
+      "services": [
+        "First aid and basic medical assistance",
+        "Assessment of minor illnesses and injuries",
+        "Basic health consultation",
+        "Health monitoring and vital-sign checks",
+        "Referral for cases requiring further medical attention",
+        "Assistance during campus medical emergencies"
+      ],
+      "schedule": [
+        "Monday–Friday: 8:00 AM – 5:00 PM",
+        "Saturday: 8:00 AM – 12:00 PM",
+        "Sunday: Closed"
+      ],
+      "match": [
+        "Clinic"
+      ]
+    },
+    {
+      "name": "University Library",
+      "about": "The University Library serves as a primary academic resource and study facility for the NDMU community. It provides students and faculty with access to books, reference materials, research resources, study areas, and other services that support learning, teaching, and research.",
+      "services": [
+        "Books and reference materials",
+        "Borrowing and returning of library materials",
+        "Research and information assistance",
+        "Individual and group study areas",
+        "Access to digital and electronic resources",
+        "Academic and research support"
+      ],
+      "schedule": [
+        "Monday–Friday: 7:30 AM – 6:00 PM",
+        "Saturday: 8:00 AM – 5:00 PM",
+        "Sunday: Closed",
+        "Holidays / School Breaks: Schedule may vary"
+      ],
+      "match": [
+        "Library"
+      ]
+    },
+    {
+      "name": "Bookroom Store (Bro. Renato B. Cruz Hall)",
+      "about": "An on-campus store providing students with convenient access to school supplies, academic materials, and other commonly needed university-related items.",
+      "services": [
+        "School and office supplies",
+        "Notebooks, paper, pens, and other basic materials",
+        "Selected academic materials",
+        "University-related supplies and items",
+        "Assistance with available school merchandise or materials"
+      ],
+      "schedule": [
+        "Monday–Friday: 8:00 AM – 5:00 PM",
+        "Saturday: 8:00 AM – 12:00 PM",
+        "Sunday: Closed",
+        "Holidays / School Breaks: Schedule may vary"
+      ],
+      "match": []
+    },
+    {
+      "name": "Business Office (Bro. Renato B. Cruz Hall)",
+      "about": "Handles university financial transactions, including tuition and school fee payments, official receipts, student account inquiries, statements of account, and other payment-related services.",
+      "services": [
+        "Tuition and school fee payments",
+        "Issuance of official receipts",
+        "Student account and balance inquiries",
+        "Statement of Account (SOA) requests",
+        "Processing of other authorized payments",
+        "Check claiming and payment-related concerns",
+        "Assistance with financial clearance concerns"
+      ],
+      "schedule": [
+        "Monday–Friday: 8:00 AM – 5:00 PM",
+        "Saturday: 8:00 AM – 12:00 PM",
+        "Sunday: Closed",
+        "Holidays: Closed / schedule may vary"
+      ],
+      "match": []
+    },
+    {
+      "name": "CED Faculty Office (San Lorenzo Ruiz Hall)",
+      "about": "Serves as the workspace and consultation area for College of Education faculty. Students may visit for faculty consultations, course-related concerns, academic guidance, and other matters requiring coordination with their instructors.",
+      "services": [
+        "Faculty consultations",
+        "Assistance with course-related concerns",
+        "Academic advising and guidance",
+        "Consultation regarding assignments and academic requirements",
+        "Coordination with CED faculty members",
+        "Student–faculty meetings"
+      ],
+      "schedule": [
+        "Monday–Friday: 8:00 AM – 5:00 PM",
+        "Saturday: Subject to faculty availability",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "Gender And Human Development Office (GHAD)",
+      "about": "Promotes gender sensitivity, inclusivity, equal opportunities, and respectful relationships within the university. The office coordinates gender and development programs and provides assistance or appropriate referrals for related concerns.",
+      "services": [
+        "Gender and development programs and activities",
+        "Gender sensitivity and awareness initiatives",
+        "Information and educational activities",
+        "Assistance and referral for gender-related concerns",
+        "Promotion of a safe, respectful, and inclusive campus environment",
+        "Coordination of gender and human development initiatives"
+      ],
+      "schedule": [
+        "Monday–Friday: 8:00 AM – 5:00 PM",
+        "Saturday: By appointment / limited services",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "HM Laboratory",
+      "about": "A practical training facility for Hospitality Management students used for hands-on learning, demonstrations, assessments, and simulations of hospitality operations and industry practices.",
+      "services": [
+        "Hospitality Management laboratory classes",
+        "Food preparation and service activities",
+        "Housekeeping and hospitality operations training",
+        "Practical demonstrations and assessments",
+        "Skills development and hands-on exercises",
+        "Simulation of hospitality industry procedures"
+      ],
+      "schedule": [
+        "Monday–Friday: Based on Class & Laboratory Schedules",
+        "Saturday: Based on Scheduled Classes / Activities",
+        "Sunday: Closed",
+        "Access: Students with scheduled classes or authorized activities"
+      ],
+      "match": []
+    },
+    {
+      "name": "Human Resource Office",
+      "about": "Manages personnel and employment-related services for the university. The office assists with recruitment, employment requirements, employee records, documentation, and other human resource concerns.",
+      "services": [
+        "Recruitment and employment inquiries",
+        "Processing of employment requirements",
+        "Employee records and documentation",
+        "Personnel-related requests and concerns",
+        "Employment certifications and applicable documents",
+        "Coordination of faculty and staff administrative matters"
+      ],
+      "schedule": [
+        "Morning: 7:30 AM – 11:30 AM",
+        "Afternoon: 1:00 PM – 5:00 PM",
+        "Saturday–Sunday: Closed / unless otherwise announced"
+      ],
+      "match": []
+    },
+    {
+      "name": "I.D. Room",
+      "about": "Provides university identification card services, including ID processing, printing, replacement, and assistance with ID-related concerns.",
+      "services": [
+        "University ID printing and issuance",
+        "Processing of student identification cards",
+        "ID replacement or reprinting",
+        "Assistance with ID-related concerns",
+        "Verification of information needed for ID processing"
+      ],
+      "schedule": [
+        "Monday–Friday",
+        "Morning: 8:00 AM – 11:00 AM",
+        "Afternoon: 1:00 PM – 4:30 PM"
+      ],
+      "match": []
+    },
+    {
+      "name": "Management Information Systems Office (MIS)",
+      "about": "Provides technical support and manages the university's information systems, network services, system access, and other campus IT-related services.",
+      "services": [
+        "University information systems support",
+        "User account and system-access assistance",
+        "Campus network and internet-related support",
+        "Troubleshooting of university IT services",
+        "Technical assistance for faculty, staff, and students",
+        "Maintenance and support of institutional computer systems"
+      ],
+      "schedule": [
+        "Monday–Friday: 8:00 AM – 5:00 PM",
+        "Lunch Break: 12:00 PM – 1:00 PM",
+        "Saturday–Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "Muslim Prayer Room (Musallah) (Bro. Xavier Creegan Hall)",
+      "about": "A designated prayer space for Muslim students, faculty, staff, and visitors. The room provides a quiet and respectful environment for daily prayers and personal religious observance.",
+      "services": [
+        "Daily Muslim prayers (Salah)",
+        "Personal prayer and reflection",
+        "Quiet space for Muslim members of the university community",
+        "Designated area for religious observance"
+      ],
+      "schedule": [
+        "Monday–Saturday: 7:00 AM – 6:00 PM",
+        "Sunday: Closed / Subject to campus access",
+        "Prayer Access: Available during campus operating hours, particularly around the prescribed daily prayer times."
+      ],
+      "match": []
+    },
+    {
+      "name": "OMNIANA Office (Bro. Herbert Daniel Dumont Hall)",
+      "about": "The workspace of Omniana, a student publication organization that provides a venue for student journalism, writing, editing, creative work, and publication-related activities.",
+      "services": [
+        "Student publication activities",
+        "Writing, editing, and content preparation",
+        "Editorial and staff meetings",
+        "Coordination of publication projects",
+        "Campus journalism and creative work",
+        "Student inquiries related to the publication"
+      ],
+      "schedule": [
+        "Monday–Friday: 8:00 AM – 5:00 PM",
+        "Saturday: By appointment / organization activity",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "Parents Employees Council (PEC) (Bro. Herbert Daniel Dumont Hall)",
+      "about": "Provides a venue for coordinating parent and employee concerns, council activities, meetings, and programs that support collaboration within the university community.",
+      "services": [
+        "Parent and employee coordination",
+        "Processing of PEC-related concerns and inquiries",
+        "Coordination of meetings and activities",
+        "Support for council programs and initiatives",
+        "Facilitation of communication among council members and the university community"
+      ],
+      "schedule": [
+        "Monday–Friday",
+        "Morning: 8:00 AM – 11:00 AM",
+        "Afternoon: 1:00 PM – 4:00 PM",
+        "Saturday–Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "Psychology Laboratory (Bro. Herbert Daniel Dumont Hall)",
+      "about": "An academic facility for psychology laboratory classes, practical exercises, demonstrations, assessments, and research-related activities. Access is generally based on scheduled classes and approved academic use.",
+      "services": [
+        "Psychology laboratory classes",
+        "Practical exercises and demonstrations",
+        "Psychological testing and assessment activities",
+        "Research-related academic activities",
+        "Experiments and observational exercises",
+        "Faculty-supervised student activities"
+      ],
+      "schedule": [
+        "Monday–Friday: 8:00 AM – 5:00 PM",
+        "Saturday: By class schedule / reservation",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "QAPS Office",
+      "about": "Supports the university's quality assurance and continuous improvement efforts through institutional assessment, accreditation activities, documentation, evaluation, and monitoring of quality standards.",
+      "services": [
+        "Quality assurance and continuous improvement",
+        "Accreditation preparation and coordination",
+        "Institutional assessment and evaluation",
+        "Quality-related documentation and reports",
+        "Monitoring of institutional standards and processes",
+        "Support for university development initiatives"
+      ],
+      "schedule": [
+        "Monday–Friday: 8:00 AM – 5:00 PM",
+        "Lunch Break: 12:00 PM – 1:00 PM",
+        "Saturday–Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "Reviewing Stand (Bro. Herbert Daniel Dumont Hall Area)",
+      "about": "A covered viewing and presentation area used during university ceremonies, assemblies, outdoor programs, and other organized activities held on the adjacent field.",
+      "services": [
+        "University ceremonies and formal programs",
+        "Viewing area for activities held on the field",
+        "Assemblies and campus gatherings",
+        "Recognition and presentation activities",
+        "Outdoor university events",
+        "Temporary seating or staging area during organized activities"
+      ],
+      "schedule": [
+        "Monday–Saturday: During campus hours or scheduled activities",
+        "Sunday: Subject to scheduled university events"
+      ],
+      "match": []
+    },
+    {
+      "name": "Vice President Administration Office",
+      "about": "The Office of the Vice President for Administration oversees and coordinates administrative operations and services that support the effective functioning of the university.",
+      "services": [
+        "Coordination of university administrative operations",
+        "Oversight of administrative services and campus operations",
+        "Coordination with university offices and personnel",
+        "Administrative concerns and official transactions",
+        "Support for institutional policies and procedures",
+        "Management and operational coordination"
+      ],
+      "schedule": [
+        "Monday–Friday: Regular university office hours",
+        "Saturday: Subject to office schedule",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "CBGA Student Council Office (Bro. Herbert Daniel Dumont Hall Area)",
+      "about": "The CBGA Student Council Office serves as the office of the student council representing students of the College of Business and Governance Administration (CBGA). It provides a space for student leaders to coordinate activities, address student concerns, and support programs and initiatives for CBGA students.",
+      "services": [
+        "Assistance with CBGA student concerns and inquiries",
+        "Coordination of student activities and programs",
+        "Student council meetings and planning",
+        "Support for CBGA student initiatives",
+        "Communication between students and student leaders",
+        "Information regarding student council activities"
+      ],
+      "schedule": [
+        "Monday–Friday: Subject to student council officers’ schedules",
+        "Saturday: Subject to availability",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "CEAC Student Council Office (Bro. Louis Omer Dupres Hall)",
+      "about": "The CEAC Student Council Office serves as the office of the student council representing students of the College of Engineering, Architecture, and Computing (CEAC). It serves as a space where student leaders coordinate activities, assist students, and organize programs and initiatives for the CEAC community.",
+      "services": [
+        "Assistance with CEAC student concerns and inquiries",
+        "Coordination of student activities and programs",
+        "Student council meetings and planning",
+        "Support for CEAC student initiatives",
+        "Communication between students and student leaders",
+        "Information regarding council activities and programs"
+      ],
+      "schedule": [
+        "Monday–Friday: Subject to student council officers’ schedules",
+        "Saturday: Subject to availability",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "Champagnat Community College",
+      "about": "The Champagnat Community College provides educational and skills-development opportunities through programs designed to support learners in developing practical knowledge and competencies. It forms part of NDMU’s efforts to extend educational opportunities and services to the community.",
+      "services": [
+        "Community-based education and learning",
+        "Skills development and training",
+        "Academic and program-related assistance",
+        "Student inquiries and information",
+        "Coordination of community education programs",
+        "Support for enrolled learners and program participants"
+      ],
+      "schedule": [
+        "Monday–Friday: Regular university/program office hours",
+        "Saturday: Subject to class and program schedules",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "Civil Engineering Laboratory",
+      "about": "The Civil Engineering Laboratory is an instructional facility used by Civil Engineering students for laboratory activities, demonstrations, experiments, and practical applications related to their engineering courses. It supports hands-on learning by allowing students to apply concepts discussed in lectures in a controlled laboratory environment.",
+      "services": [
+        "Civil Engineering laboratory classes",
+        "Practical experiments and demonstrations",
+        "Testing and analysis activities",
+        "Hands-on use of laboratory equipment",
+        "Support for engineering projects"
+      ],
+      "schedule": [
+        "Monday–Friday: Based on scheduled laboratory classes",
+        "Saturday: Subject to laboratory and class schedules",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "CMRE / SMC Chapel",
+      "about": "The CMRE/SMC Chapel is a campus worship and prayer space that provides members of the NDMU community with a quiet place for prayer, reflection, and spiritual activities. It may also serve as a venue for Masses and other religious gatherings organized by the university.",
+      "services": [
+        "Personal prayer and reflection",
+        "Celebration of Mass and other liturgical activities",
+        "Spiritual gatherings and activities",
+        "Religious formation activities",
+        "Quiet space for meditation",
+        "Campus ministry-related activities"
+      ],
+      "schedule": [
+        "Monday–Friday: Open during designated campus hours",
+        "Saturday: Subject to campus and chapel schedules",
+        "Sunday: Subject to scheduled religious activities"
+      ],
+      "match": []
+    },
+    {
+      "name": "College of Law Dean Office (San Lorenzo Ruiz Hall)",
+      "about": "The College of Law Dean’s Office oversees the academic and administrative affairs of the College of Law. It provides assistance to law students and coordinates matters involving the college’s academic programs, faculty, policies, and other official concerns.",
+      "services": [
+        "Assistance with College of Law academic concerns",
+        "Student inquiries and consultation",
+        "Coordination of academic programs and activities",
+        "Faculty and administrative coordination",
+        "Processing and endorsement of college-related requests",
+        "Information regarding College of Law policies and procedures"
+      ],
+      "schedule": [
+        "Monday–Friday: Regular university office hours",
+        "Saturday: Subject to College of Law schedule",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "EE/ECE/CpE Laboratory (Bro. Louis Omer Dupres Hall)",
+      "about": "The EE/ECE/CpE Laboratory is an instructional laboratory for students in Electrical Engineering (EE), Electronics Engineering (ECE), and Computer Engineering (CpE). It provides a controlled environment for laboratory exercises, experiments, demonstrations, and practical applications related to electronics, electrical systems, circuits, and computer engineering.",
+      "services": [
+        "EE, ECE, and CpE laboratory classes",
+        "Circuit and electronics experiments",
+        "Electrical and electronic measurements",
+        "Hardware and computer engineering activities",
+        "Hands-on use of laboratory equipment",
+        "Support for engineering projects and practical exercises"
+      ],
+      "schedule": [
+        "Monday–Friday: Based on scheduled laboratory classes",
+        "Saturday: Subject to laboratory and class schedules",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "Engineering Preparation Room (Bro. Louis Omer Dupres Hall)",
+      "about": "The Engineering Preparation Room is a support area used for preparing materials, equipment, and other resources needed for engineering laboratory activities and classes. It helps faculty and laboratory personnel organize and prepare instructional materials before practical sessions.",
+      "services": [
+        "Preparation of engineering laboratory materials",
+        "Storage and organization of laboratory equipment",
+        "Preparation of tools and instructional resources",
+        "Support for engineering laboratory classes",
+        "Equipment setup before practical activities"
+      ],
+      "schedule": [
+        "Monday–Friday: Based on engineering laboratory and class schedules",
+        "Saturday: Subject to scheduled academic activities",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "Maintenance Quarter (University Gymnasium)",
+      "about": "The Maintenance Quarter serves as a designated work and support area for campus maintenance personnel. It provides a space for coordinating maintenance activities and keeping tools and materials used for the upkeep of university facilities.",
+      "services": [
+        "Maintenance personnel work area",
+        "Storage of maintenance tools and equipment",
+        "Coordination of repair and upkeep activities",
+        "Support for facility maintenance",
+        "Assistance with minor campus repair concerns"
+      ],
+      "schedule": [
+        "Monday–Friday: During regular university operating hours",
+        "Saturday: Subject to maintenance operations",
+        "Sunday: Limited / as needed"
+      ],
+      "match": []
+    },
+    {
+      "name": "Medical Technology Department",
+      "about": "The Medical Technology Department supports the academic and administrative needs of students enrolled in the Medical Technology program. The department coordinates program-related matters, faculty activities, student concerns, and other academic services associated with Medical Technology education.",
+      "services": [
+        "Assistance with Medical Technology academic concerns",
+        "Faculty and department coordination",
+        "Program-related inquiries and information",
+        "Student consultation and academic assistance",
+        "Coordination of laboratory and academic activities",
+        "Processing of department-related requests and concerns"
+      ],
+      "schedule": [
+        "Monday–Friday: During regular university office hours",
+        "Saturday: Subject to department schedule",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "ROTC Office / Soil Laboratory",
+      "about": "This area serves both the NDMU ROTC Office and Soil Laboratory. The ROTC Office supports the university’s Reserve Officers’ Training Corps activities, while the Soil Laboratory provides a facility for conducting soil-related testing and practical activities for relevant academic programs.",
+      "services": [
+        "ROTC program inquiries and coordination",
+        "ROTC training and activity support",
+        "Assistance for ROTC cadets",
+        "Soil testing and laboratory activities",
+        "Preparation and analysis of soil samples",
+        "Support for engineering and other related laboratory exercises"
+      ],
+      "schedule": [
+        "Monday–Friday: During regular university operating hours",
+        "Saturday: Subject to ROTC training and laboratory schedules",
+        "Sunday: Closed / as scheduled"
+      ],
+      "match": []
+    },
+    {
+      "name": "Smart Laboratory (Bro. Louis Omer Dupres Hall)",
+      "about": "The Smart Laboratory is an academic facility used for practical learning, experimentation, and technology-based activities. It provides students with a controlled environment where concepts discussed in engineering and related courses can be applied through laboratory exercises and hands-on activities.",
+      "services": [
+        "Conduct of scheduled laboratory classes",
+        "Hands-on engineering and technology activities",
+        "Practical demonstrations and experiments",
+        "Use of laboratory equipment for academic exercises",
+        "Support for student projects and instructional activities",
+        "Faculty-supervised laboratory sessions"
+      ],
+      "schedule": [
+        "Monday–Friday: Based on laboratory and class schedules",
+        "Saturday: Subject to scheduled academic activities",
+        "Sunday: Closed"
+      ],
+      "match": []
+    },
+    {
+      "name": "Sports / Athletics Office (University Gymnasium)",
+      "about": "The Sports/Athletics Office coordinates the university’s sports, athletics, and fitness-related activities. It assists students and athletes with sports programs, athletic participation, use of sports facilities, and other related concerns.",
+      "services": [
+        "Sports and athletics program inquiries",
+        "Athlete coordination and assistance",
+        "Sports team and activity information",
+        "Fitness gym registration and inquiries",
+        "Sports equipment borrowing coordination"
+      ],
+      "schedule": [
+        "Monday–Friday: During regular university office hours",
+        "Saturday: Subject to scheduled sports activities",
+        "Sunday: Closed / as scheduled"
+      ],
+      "match": []
+    },
+    {
+      "name": "Student Supreme Government Office",
+      "about": "The Student Supreme Government (SSG) Office serves as the central office of the university’s student government. It provides a space for student leaders to coordinate activities, represent student concerns, and assist students with matters related to student governance and campus involvement.",
+      "services": [
+        "Student government inquiries and assistance",
+        "Coordination of student-led activities",
+        "Assistance with student concerns and suggestions",
+        "Information about SSG programs and initiatives",
+        "Coordination with student organizations",
+        "Student representation and leadership activities"
+      ],
+      "schedule": [
+        "Monday–Friday: During regular university operating hours",
+        "Saturday: Subject to student government activities",
+        "Sunday: Closed / as scheduled"
+      ],
+      "match": []
+    },
+    {
+      "name": "Accredited Training and Assessment Center",
+      "about": "The Accredited Training and Assessment Center provides skills training and competency assessment for approved technical-vocational programs. It supports learners who want to develop practical skills, complete competency requirements, and obtain qualifications or certifications under recognized training programs.",
+      "services": [
+        "Technical-vocational skills training",
+        "Competency assessment",
+        "Training and assessment inquiries",
+        "Driving NC II training and assessment",
+        "Theoretical Driving Course (TDC)",
+        "Practical Driving Course (PDC)",
+        "Assistance with training and assessment requirements",
+        "Coordination of scheduled assessments and training sessions"
+      ],
+      "schedule": [
+        "Monday–Friday: During regular university operating hours",
+        "Saturday: Subject to training and assessment schedules",
+        "Sunday: Closed / as scheduled"
+      ],
+      "match": []
+    },
+    {
+      "name": "Teston Hall",
+      "about": "",
+      "services": [],
+      "schedule": [],
+      "match": [
+        "Teston"
+      ]
+    },
+    {
+      "name": "Bro. Louis Omer Dupres Hall",
+      "about": "",
+      "services": [],
+      "schedule": [],
+      "match": [
+        "Omer"
+      ]
+    }
+  ]
+}

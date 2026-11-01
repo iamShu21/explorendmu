@@ -1,0 +1,130 @@
+---
+// One visual per feature step. Phone frames only ever show real captures from the app;
+// the other visuals are web-native panels built from the app's real data and voice lines.
+import cardsData from '../data/info-cards.json';
+import net from '../data/campus-network.json';
+interface Props { kind: 'arrows' | 'voice' | 'arrive' | 'directory' | 'scan' | 'about'; idSuffix: string; }
+const { kind, idSuffix } = Astro.props;
+
+const library = cardsData.cards.find((c) => c.name === 'University Library')!;
+const placeNames = net.places.map((p) => p.name.toLowerCase());
+const entries = cardsData.cards.map((c) => {
+  const cat = /^(gate|main school entrance)/i.test(c.name) ? 'Gates' : /office|council|room|government|coordinators|dean/i.test(c.name) ? 'Offices' : 'Buildings';
+  const route = (c.match ?? []).some((m: string) => placeNames.some((p) => p.includes(m.toLowerCase()) || m.toLowerCase().includes(p)));
+  const m = c.name.match(/^(.*?)\s*\(([^)]*)\)\s*$/);
+  return { name: m ? m[1] : c.name, where: m ? m[2] : '', cat, route, about: c.about, hours: (c.schedule ?? []).slice(0, 2) };
+}).sort((a, b) => a.name.localeCompare(b.name));
+const cues = [
+  { t: 'Follow the arrows.', at: 'Start' },
+  { t: 'Turn right in 15 meters.', at: '≤ 15 m to a turn' },
+  { t: 'Turn right now.', at: '≤ 3 m' },
+  { t: "You're off the path. Walk back to the walkway.", at: 'Off the route' },
+  { t: 'Back on the path. Follow the arrows.', at: 'Back on route' },
+  { t: 'You have arrived at Library.', at: 'Arrival' },
+];
+---
+{kind === 'arrows' && (
+  <div class="mx-auto w-[min(72vw,300px)]">
+    <div class="phone"><div class="phone-screen"><img src="/img/screen-ar-arrows.webp" alt="Gold AR chevrons on a campus walkway with the prompt Turn left in 8 m, about 24 m to go" width="710" height="1108" loading="lazy" /></div></div>
+    <p class="mt-4 text-center font-mono text-[.68rem] uppercase tracking-wider text-mute/70">Real capture · field test build</p>
+  </div>
+)}
+
+{kind === 'voice' && (
+  <div class="card w-full max-w-md p-5 md:p-6" data-voice>
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="grid size-10 place-items-center rounded-full bg-gold/15 text-gold"><i class="fi-rr-headphones"></i></span>
+        <div><p class="font-display font-semibold">Voice guidance</p><p class="text-xs text-mute">Android text-to-speech · English (US)</p></div>
+      </div>
+      <div class="flex h-6 items-end gap-[3px]" aria-hidden="true">
+        {[0, 1, 2, 3, 4].map((i) => <span class="w-[3px] h-full origin-bottom rounded-full bg-gold" style={`animation: wave 1s ease-in-out ${i * -0.18}s infinite`}></span>)}
+      </div>
+    </div>
+    <ol class="mt-5 space-y-2.5">
+      {cues.map((c) => (
+        <li class="voice-cue flex items-start justify-between gap-3 rounded-xl border border-white/8 bg-white/[.03] px-3.5 py-2.5">
+          <span class="text-sm">“{c.t}”</span>
+          <span class="shrink-0 font-mono text-[.65rem] uppercase tracking-wider text-mute pt-0.5">{c.at}</span>
+        </li>
+      ))}
+    </ol>
+    <p class="mt-4 text-xs text-mute">These are the lines the app speaks; the distance and place name change with your route. Off-path warnings repeat at most every 4 seconds.</p>
+  </div>
+)}
+
+{kind === 'arrive' && (
+  <div class="relative w-full max-w-md">
+    <div class="relative overflow-hidden rounded-[1.6rem] border border-white/10">
+      <img src="/img/campus-library.webp" alt="Entrance of the University Library, NDMU" width="1344" height="512" loading="lazy" class="h-44 w-full object-cover md:h-52" />
+      <div class="absolute inset-0 bg-gradient-to-t from-ink-2 to-transparent"></div>
+      <svg class="absolute left-1/2 top-3 -translate-x-1/2" width="64" height="110" viewBox="0 0 64 110" aria-hidden="true">
+        <defs><linearGradient id={`beam-${idSuffix}`} x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#ffc20e" stop-opacity=".0"/><stop offset="1" stop-color="#ffc20e" stop-opacity=".55"/></linearGradient></defs>
+        <rect x="29" y="40" width="6" height="66" fill={`url(#beam-${idSuffix})`} />
+        <path d="M32 4c-11 0-20 8.6-20 19.4C12 37 32 58 32 58s20-21 20-34.6C52 12.6 43 4 32 4z" fill="#ffc20e" />
+        <circle cx="32" cy="23" r="7.5" fill="#050f0a" />
+        <ellipse cx="32" cy="106" rx="20" ry="4" fill="none" stroke="#ffc20e" stroke-width="2" style="transform-origin:32px 106px;animation:pulse-ring 2.2s ease-out infinite" />
+      </svg>
+    </div>
+    <div class="card -mt-10 mx-4 p-5 backdrop-blur-md bg-ink-2/90">
+      <p class="font-mono text-[.65rem] uppercase tracking-wider text-gold">You have arrived</p>
+      <p class="mt-1 font-display text-lg font-semibold">{library.name}</p>
+      <p class="mt-2 text-sm leading-relaxed text-mute line-clamp-3">{library.about}</p>
+      <div class="mt-3 flex flex-wrap gap-2">
+        {library.schedule.slice(0, 2).map((h) => <span class="chip !text-[.72rem]"><i class="fi-rr-time-fast text-gold"></i>{h}</span>)}
+      </div>
+    </div>
+    <p class="mt-4 text-center font-mono text-[.68rem] uppercase tracking-wider text-mute/70">Card text from the app's place data</p>
+  </div>
+)}
+
+{kind === 'directory' && (
+  <div class="card w-full max-w-md p-4 md:p-5" data-directory>
+    <label class="flex items-center gap-3 rounded-xl border border-white/10 bg-ink px-3.5 py-3 focus-within:border-gold/60">
+      <i class="fi-rr-search text-mute"></i>
+      <span class="sr-only">Search places</span>
+      <input type="search" placeholder="Search 51 places… try “clinic”" class="w-full bg-transparent text-sm outline-none placeholder:text-mute/70" data-dir-search />
+    </label>
+    <div class="mt-3 flex gap-2" role="group" aria-label="Filter by category">
+      {['All', 'Buildings', 'Offices', 'Gates'].map((c, i) => (
+        <button type="button" class:list={['chip !py-1.5 transition-colors', i === 0 && '!bg-gold !text-ink !border-gold']} data-dir-filter={c} aria-pressed={i === 0 ? 'true' : 'false'}>{c}</button>
+      ))}
+    </div>
+    <ul class="mt-3 max-h-[19rem] space-y-1.5 overflow-y-auto pr-1 [scrollbar-width:thin]" data-dir-list data-lenis-prevent>
+      {entries.map((e) => (
+        <li data-cat={e.cat} data-name={`${e.name} ${e.where}`.toLowerCase()}>
+          <details class="group rounded-xl border border-white/6 bg-white/[.025] open:bg-white/[.05]">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-3.5 py-2.5">
+              <span class="min-w-0">
+                <span class="block truncate text-sm font-medium">{e.name}</span>
+                {e.where && <span class="block truncate text-xs text-mute">{e.where}</span>}
+              </span>
+              {e.route ? <span class="shrink-0 rounded-full bg-gold/15 px-2 py-0.5 text-[.65rem] font-mono uppercase text-gold">AR route</span> : <span class="shrink-0 text-[.65rem] font-mono uppercase text-mute/60">{e.cat.slice(0, -1)}</span>}
+            </summary>
+            <div class="px-3.5 pb-3 text-xs leading-relaxed text-mute">
+              <p>{e.about}</p>
+              {e.hours.length > 0 && <p class="mt-2 text-paper/80">{e.hours.join(' · ')}</p>}
+            </div>
+          </details>
+        </li>
+      ))}
+    </ul>
+    <p class="mt-3 text-xs text-mute">Live demo using the app's real place data. Tap a place to open it.</p>
+  </div>
+)}
+
+{kind === 'scan' && (
+  <div class="mx-auto w-[min(72vw,300px)]">
+    <div class="phone"><div class="phone-screen">
+      <video src="/video/scan-champagnat.mp4" poster="/img/screen-champagnat.webp" muted playsinline loop preload="none" data-autoplay aria-label="Scanning the Champagnat marker: a 3D statue of St. Marcellin Champagnat stands next to the printed marker"></video>
+    </div></div>
+    <p class="mt-4 text-center font-mono text-[.68rem] uppercase tracking-wider text-mute/70">Real capture · desk test with printed markers</p>
+  </div>
+)}
+
+{kind === 'about' && (
+  <div class="mx-auto w-[min(72vw,300px)]">
+    <div class="phone"><div class="phone-screen"><img src="/img/screen-about.webp" alt="ExploreNDMU About screen with appearance settings (system, light, dark) and a voice guidance toggle" width="720" height="1152" loading="lazy" class="object-top" /></div></div>
+    <p class="mt-4 text-center font-mono text-[.68rem] uppercase tracking-wider text-mute/70">Real capture · final build</p>
+  </div>
+)}

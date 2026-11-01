@@ -1,0 +1,81 @@
+---
+import FeatureVisual from './FeatureVisual.astro';
+const steps = [
+  { kind: 'arrows', n: '01', icon: 'fi-rr-navigation', title: 'Follow the gold arrows', text: 'Pick a place and tap Navigate here. Gold chevrons appear on the real walkway, and a card shows the metres left and the walking time.', points: ['Routes follow paths students may actually use', 'Start from a gate or from where you stand (GPS)', 'Warns you when you walk the wrong way'] },
+  { kind: 'voice', n: '02', icon: 'fi-rr-volume', title: 'Hear every turn', text: 'Voice prompts tell you about each turn, so you can look at the campus instead of the screen. One tap mutes them.', points: ['Spoken 15 m before a turn, rounded to 5 m', '“Now” when you are within 3 m', 'Tells you when you leave and return to the path'] },
+  { kind: 'arrive', n: '03', icon: 'fi-rr-marker', title: 'Arrive and learn what is inside', text: 'A gold pin with a light beam marks the destination from 60 m away. When you arrive, a card shows what the place is for, its services and its hours.', points: ['Pin, beam, pulse rings and sparkles', 'Card text written for each place', 'Offices show which hall they are in'] },
+  { kind: 'directory', n: '04', icon: 'fi-rr-search', title: 'Search every building and office', text: 'The Places directory lists buildings, offices, facilities and gates. Each place has a details page with its description, services, hours and a Navigate here button.', points: ['Search by name, full name or acronym', 'Filter by category, A to Z', 'Save favourites with a heart'] },
+  { kind: 'scan', n: '05', icon: 'fi-rr-cube', title: 'Scan a statue into 3D', text: 'Point the Scan tab at a printed marker and a 3D statue stands in front of you. Walk around it, reset it, or replay its animation.', points: ['AR Foundation image tracking (no Vuforia)', 'Mother Mary, St. Marcellin Champagnat, Bronze Stallion', 'Shows one model at a time, from the marker you saw last'] },
+  { kind: 'about', n: '06', icon: 'fi-rr-info', title: 'Made to be easy to use', text: 'The About page explains AR navigation in six steps. You can pick system, light or dark mode, switch the voice on or off, and replay the welcome tour.', points: ['Swipe-through welcome tour', 'Uses Android’s own permission prompts', 'Switching tabs is instant'] },
+] as const;
+const more = [
+  { icon: 'fi-rr-sparkles', title: 'Welcome tour', text: 'Animated splash and a three-step tour: find any place, follow the arrows, scan building signs.' },
+  { icon: 'fi-rr-heart', title: 'Saved places', text: 'Heart a place to keep it close. Saved list lives on the phone.' },
+  { icon: 'fi-rr-moon', title: 'Light and dark', text: 'Follows the system, or pick one. Every screen has both themes.' },
+  { icon: 'fi-rr-shield-check', title: 'Native permissions', text: 'Camera and location are asked with Android’s own dialogs, never a fake screen.' },
+  { icon: 'fi-rr-wifi-slash', title: 'No server', text: 'Places, cards, routes and models ship inside the APK.' },
+  { icon: 'fi-rr-bolt', title: 'Instant tabs', text: 'The four tab screens stay loaded, so switching tabs doesn’t lag.' },
+];
+---
+<section id="features" class="relative py-24 md:py-32">
+  <div class="wrap">
+    <div class="max-w-3xl">
+      <p class="eyebrow reveal">Features</p>
+      <h2 class="h-section mt-5 reveal">Everything you need to cross campus, <span class="gold-text">on one phone.</span></h2>
+      <p class="lead mt-6 reveal">Six things ExploreNDMU does well, shown with real captures from the app and its real data.</p>
+    </div>
+
+    <div class="mt-16 lg:mt-24 lg:grid lg:grid-cols-[1fr_1fr] lg:gap-16">
+      <!-- Desktop: pinned stage -->
+      <div class="hidden lg:block">
+        <div class="sticky top-0 flex h-[100svh] items-center justify-center" data-stage>
+          <div class="relative grid w-full place-items-center" style="min-height: 640px">
+            <div class="absolute inset-0 -z-10 rounded-full bg-[radial-gradient(closest-side,rgba(10,90,49,.45),transparent)] blur-2xl" aria-hidden="true"></div>
+            {steps.map((s, i) => (
+              <div class="stage-layer absolute inset-0 grid place-items-center" data-stage-layer={i} style={i === 0 ? '' : 'opacity:0;visibility:hidden'} aria-hidden={i === 0 ? 'false' : 'true'}>
+                <FeatureVisual kind={s.kind} idSuffix={`d${i}`} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Steps -->
+      <ol class="relative">
+        {steps.map((s, i) => (
+          <li class="feature-step flex flex-col justify-center py-10 lg:min-h-[100svh] lg:py-0" data-step={i}>
+            <div class="feature-copy">
+              <div class="flex items-center gap-4">
+                <span class="font-mono text-sm text-gold">{s.n}</span>
+                <span class="h-px flex-1 bg-white/10"></span>
+                <i class={`${s.icon} text-xl text-gold`}></i>
+              </div>
+              <h3 class="mt-6 text-[clamp(1.7rem,3vw,2.6rem)] font-semibold leading-tight">{s.title}</h3>
+              <p class="lead mt-4">{s.text}</p>
+              <ul class="mt-6 space-y-2.5">
+                {s.points.map((p) => (
+                  <li class="flex items-start gap-3 text-[.95rem]"><i class="fi-rr-arrow-small-right mt-1 text-gold"></i><span>{p}</span></li>
+                ))}
+              </ul>
+            </div>
+            <div class="mt-10 flex justify-center lg:hidden">
+              <FeatureVisual kind={s.kind} idSuffix={`m${i}`} />
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <div class="mt-16 lg:mt-8">
+      <h3 class="text-xl font-semibold reveal">And the small things that make it feel finished</h3>
+      <ul class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {more.map((m) => (
+          <li class="card card-glow reveal flex gap-4 p-5">
+            <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-gold/10 text-gold"><i class={m.icon}></i></span>
+            <div><p class="font-display font-semibold">{m.title}</p><p class="mt-1 text-sm leading-relaxed text-mute">{m.text}</p></div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

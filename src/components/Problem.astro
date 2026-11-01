@@ -1,0 +1,38 @@
+---
+const before = [
+  { icon: 'fi-rr-document', title: 'Printed maps', text: 'Static, hard to read on the move, and silent about what is inside each building.' },
+  { icon: 'fi-rr-flag-alt', title: 'Arrows on the walls', text: 'Helpful near a building, useless when you do not know which building you need.' },
+  { icon: 'fi-rr-users-alt', title: 'Asking a guard', text: 'Works, but depends on who is around, and directions are easy to forget halfway.' },
+];
+---
+<section class="relative py-28 md:py-36">
+  <div class="wrap grid gap-14 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
+    <div class="relative order-2 lg:order-1">
+      <div class="reveal relative overflow-hidden rounded-[1.75rem] border border-white/10">
+        <img src="/img/campus-teston.webp" alt="A long open corridor at Teston Hall, NDMU" width="1400" height="1050" loading="lazy" class="aspect-[4/3.4] w-full object-cover" data-parallax />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent"></div>
+        <p class="absolute bottom-5 left-5 right-5 text-sm text-paper/90">
+          Many offices sit inside open hallways like this one, so you can't see them from the walkway.
+        </p>
+      </div>
+    </div>
+    <div class="order-1 lg:order-2">
+      <p class="eyebrow reveal">The problem</p>
+      <h2 class="h-section mt-5 reveal">A campus you only learn by getting lost.</h2>
+      <p class="lead mt-6 reveal">
+        Freshmen, visitors and parents at Notre Dame of Marbel University find their way with paper maps, signs, a 3D campus
+        model and directions from staff. Those help, but none of them guide you step by step or tell you about the
+        buildings you pass.
+      </p>
+      <ul class="mt-10 grid gap-3 sm:grid-cols-3">
+        {before.map((b) => (
+          <li class="card card-glow reveal p-5">
+            <i class={`${b.icon} text-xl text-mute`}></i>
+            <p class="mt-4 font-display font-semibold">{b.title}</p>
+            <p class="mt-1.5 text-sm leading-relaxed text-mute">{b.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

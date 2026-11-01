@@ -1,0 +1,120 @@
+---
+import Base from '../layouts/Base.astro';
+const objectives = [
+  'Design and develop an interactive augmented reality-based campus tour that enables users to explore the buildings, facilities, landmarks, and points of interest within Notre Dame of Marbel University.',
+  'Develop an augmented reality-assisted navigation feature that enables users to locate university buildings, offices, laboratories, and other campus facilities using visual navigation guidance and location-based assistance.',
+  'Develop a campus information system that provides users with descriptive information about university buildings, offices, facilities, services, and other points of interest.',
+  'Evaluate the usability, functionality, and effectiveness of the system using the System Usability Scale (SUS), the Technology Acceptance Model (TAM), and User Acceptance Testing (UAT).',
+];
+const figures = [
+  { src: '/fig/fig2.webp', w: 1800, h: 1087, n: 'Figure 2', t: 'Conceptual framework (Input-Process-Output)', d: 'Campus data, GPS, AR assets, camera, markers and user requests are processed into AR navigation, a campus tour and campus information.' },
+  { src: '/fig/fig7.webp', w: 1800, h: 1473, n: 'Figure 7', t: 'Use case diagram', d: 'What a user can do: browse and search places, save them, start AR navigation, hear voice guidance and scan markers.' },
+  { src: '/fig/fig8.webp', w: 1800, h: 1860, n: 'Figure 8', t: 'Activity diagram', d: 'The user flow from launch, through the welcome and Home, to Places, Saved, Scan and About.' },
+  { src: '/fig/fig9.webp', w: 1800, h: 1266, n: 'Figure 9', t: 'System architecture', d: 'Client, application modules, local data and assets, and AR and device services (AR Foundation, ARCore, camera, GPS, sensors, text-to-speech).' },
+  { src: '/fig/fig10.webp', w: 1800, h: 1191, n: 'Figure 10', t: 'Deployment diagram', d: 'One Android APK holding the Unity runtime, the modules and all campus data, using the phone’s camera, GPS and sensors.' },
+  { src: '/fig/fig11.webp', w: 1800, h: 1329, n: 'Figure 11', t: 'Entity relationship diagram', d: 'How places, info cards, routes, saved places and marker models relate in the app’s local data.' },
+  { src: '/fig/fig12.webp', w: 1800, h: 1166, n: 'Figure 12', t: 'Class diagram', d: 'The main classes behind the directory, navigation, voice and marker scanning.' },
+];
+const cite = 'Amoran, S. A. D., Herradura, B. R., & Villanueva, E. T. (2026). ExploreNDMU: An augmented reality-based campus tour, navigation, and information system for Notre Dame of Marbel University [Capstone project, Notre Dame of Marbel University].';
+---
+<Base
+  page="research"
+  title="Research · ExploreNDMU capstone project"
+  description="The research behind ExploreNDMU: abstract, objectives, method and system design figures of the BS Information Technology capstone at Notre Dame of Marbel University."
+>
+  <section class="relative overflow-hidden pt-32 pb-16 md:pt-40">
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(60%_60%_at_80%_0%,rgba(10,90,49,.5),transparent_70%)]" aria-hidden="true"></div>
+    <div class="wrap max-w-4xl">
+      <p class="eyebrow hero-in">Capstone research · October 2026</p>
+      <h1 class="mt-6 text-[clamp(2rem,5vw,3.6rem)] font-semibold leading-[1.05]" data-split>
+        ExploreNDMU: An Augmented Reality-Based Campus Tour, Navigation, and Information System for Notre Dame of Marbel University
+      </h1>
+      <div class="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm hero-in">
+        <p><span class="text-mute">Researchers</span><br />Shuhari Alaihim D. Amoran · Ben Raffy Herradura · Edward T. Villanueva</p>
+        <p><span class="text-mute">Adviser</span><br />Vince Marc B. Sabado, MSIT</p>
+        <p><span class="text-mute">Program</span><br />BS Information Technology, NDMU</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pb-10">
+    <div class="wrap max-w-4xl space-y-6">
+      <article class="card reveal p-7 md:p-10">
+        <h2 class="text-2xl font-semibold">Abstract</h2>
+        <p class="mt-5 leading-[1.8] text-paper/85">
+          Finding buildings and offices on a large campus is difficult for freshmen, visitors, and parents, and Notre Dame of Marbel
+          University (NDMU) still relies on printed maps, signs, a 3D campus model, and verbal directions. This study developed
+          ExploreNDMU, an Android augmented reality (AR) application that combines a campus tour, AR-assisted navigation, and a campus
+          information system. The application was built with Unity, AR Foundation, and ARCore. It lets users browse and search campus
+          buildings, offices, facilities, and gates, read their descriptions and schedules, and follow AR arrows with English voice
+          guidance along routes that the researchers walked and recorded on campus. Distances are computed with the Haversine formula
+          over a network of walked paths, and an information card appears when the user arrives. Printed image markers display 3D
+          models of campus landmarks. Navigation is limited to outdoor walkways. The system was developed using the Prototyping Model
+          and is evaluated using the System Usability Scale (SUS), the Technology Acceptance Model (TAM), and user acceptance testing (UAT).
+        </p>
+        <p class="mt-6 flex flex-wrap gap-2">
+          {['augmented reality', 'campus navigation', 'campus tour', 'campus information system', 'Unity', 'Android'].map((k) => <span class="chip">{k}</span>)}
+        </p>
+      </article>
+
+      <article class="card reveal p-7 md:p-10">
+        <h2 class="text-2xl font-semibold">Objectives</h2>
+        <ol class="mt-6 space-y-5">
+          {objectives.map((o, i) => (
+            <li class="flex gap-5"><span class="font-mono text-gold">0{i + 1}</span><p class="leading-relaxed text-paper/85">{o}</p></li>
+          ))}
+        </ol>
+      </article>
+
+      <article class="card reveal grid gap-6 p-7 md:grid-cols-2 md:p-10">
+        <div>
+          <h2 class="text-2xl font-semibold">Method</h2>
+          <p class="mt-4 leading-relaxed text-mute">The team used the <span class="text-paper">Prototyping Model</span>: each version was built, tested on campus and refined before the next. This suits AR, where tracking, GPS and lighting only show their problems outdoors.</p>
+        </div>
+        <div>
+          <h2 class="text-2xl font-semibold">Evaluation</h2>
+          <p class="mt-4 leading-relaxed text-mute">Usability (SUS), acceptance (TAM) and user acceptance testing (UAT) with students and visitors. <span class="text-paper">Evaluation is in progress; results will be posted here.</span></p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="py-16">
+    <div class="wrap">
+      <div class="max-w-3xl">
+        <p class="eyebrow reveal">System design</p>
+        <h2 class="h-section mt-5 reveal">The diagrams behind the app.</h2>
+        <p class="lead mt-5 reveal">Figures from the paper, redrawn to match the final build. Tap one to enlarge it.</p>
+      </div>
+      <ul class="mt-12 grid gap-5 md:grid-cols-2">
+        {figures.map((f) => (
+          <li class="reveal">
+            <button type="button" class="card card-glow group block w-full overflow-hidden text-left" data-lightbox={f.src} data-lightbox-alt={`${f.n}. ${f.t}`}>
+              <div class="bg-white p-3"><img src={f.src} alt={`${f.n}. ${f.t}`} width={f.w} height={f.h} loading="lazy" class="mx-auto max-h-80 w-auto object-contain transition-transform duration-500 group-hover:scale-[1.02]" /></div>
+              <div class="p-5">
+                <p class="font-mono text-xs uppercase tracking-[.14em] text-gold">{f.n}</p>
+                <p class="mt-1 font-display text-lg font-semibold">{f.t}</p>
+                <p class="mt-2 text-sm leading-relaxed text-mute">{f.d}</p>
+              </div>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="py-16">
+    <div class="wrap max-w-4xl">
+      <div class="card reveal p-7 md:p-10">
+        <h2 class="text-2xl font-semibold">Cite this work</h2>
+        <p class="mt-5 rounded-xl border border-white/10 bg-ink p-5 font-mono text-sm leading-relaxed text-paper/85" data-cite>{cite}</p>
+        <button type="button" class="btn btn-ghost mt-5 !text-sm" data-copy-cite><i class="fi-rr-document"></i><span>Copy citation</span></button>
+      </div>
+    </div>
+  </section>
+
+  <dialog class="m-auto max-h-[92vh] w-[min(96vw,1400px)] rounded-2xl bg-white p-0 backdrop:bg-black/80" data-lightbox-dialog>
+    <form method="dialog" class="absolute right-3 top-3"><button class="grid size-10 place-items-center rounded-full bg-ink text-paper" aria-label="Close"><i class="fi-rr-cross"></i></button></form>
+    <img src="" alt="" class="h-auto w-full" data-lightbox-img />
+  </dialog>
+</Base>

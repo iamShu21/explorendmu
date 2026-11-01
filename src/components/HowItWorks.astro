@@ -1,0 +1,64 @@
+---
+import CampusNetwork from './CampusNetwork.astro';
+import net from '../data/campus-network.json';
+const offline = [
+  { icon: 'fi-rr-route', title: 'Walk the real paths', text: 'The team walked the campus with NDMU Walker, a field app they built that records GPS and the AR camera path, only on walkways students may use.' },
+  { icon: 'fi-rr-layers', title: 'Build routes', text: 'A Node.js tool runs Dijkstra over the walked segments, joined at doors and junctions the team marked.' },
+  { icon: 'fi-rr-database', title: 'Ship route files', text: 'Each route is saved as a JSON file with nodes, edges and total distance, and bundled in the APK.' },
+];
+const phone = [
+  { icon: 'fi-rr-marker', title: 'Find the phone', text: 'GPS gives a weighted start position; the ARCore session tracks every step after that.' },
+  { icon: 'fi-rr-navigation', title: 'Guide with arrows', text: 'Your position is matched to the route. Gold chevrons are placed on the path ahead, with voice prompts for turns.' },
+  { icon: 'fi-rr-flag-alt', title: 'Arrive', text: 'Within 60 m the gold pin appears; at the end the voice says you arrived and the place card opens.' },
+];
+---
+<section id="how" class="relative py-24 md:py-32">
+  <div class="wrap">
+    <div class="max-w-3xl">
+      <p class="eyebrow reveal">How it works</p>
+      <h2 class="h-section mt-5 reveal">Routes are built once on a laptop. <span class="gold-text">The phone only follows them.</span></h2>
+      <p class="lead mt-6 reveal">No routing server and no internet needed during a walk. The hard work happens before the app is built.</p>
+    </div>
+
+    <div class="mt-14 grid gap-6 lg:grid-cols-2">
+      {[{ label: 'Once, on the laptop', items: offline }, { label: 'Every walk, on the phone', items: phone }].map((lane, li) => (
+        <div class="card reveal p-6 md:p-7">
+          <p class="font-mono text-xs uppercase tracking-[.16em] text-mute">{lane.label}</p>
+          <ol class="pipeline mt-6 space-y-0">
+            {lane.items.map((s, i) => (
+              <li class="relative flex gap-4 pb-7 last:pb-0">
+                {i < lane.items.length - 1 && <span class="pipe-line absolute left-[1.2rem] top-11 bottom-1 w-px bg-white/10"><span class="pipe-fill block h-0 w-px bg-gold"></span></span>}
+                <span class:list={['grid size-10 shrink-0 place-items-center rounded-xl', li === 1 && i === 2 ? 'bg-gold text-ink' : 'bg-white/5 text-gold']}><i class={s.icon}></i></span>
+                <div>
+                  <p class="font-display font-semibold">{s.title}</p>
+                  <p class="mt-1 text-sm leading-relaxed text-mute">{s.text}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-6 card reveal overflow-hidden">
+      <div class="grid lg:grid-cols-[1fr_300px]">
+        <div class="relative bg-[radial-gradient(circle_at_40%_50%,rgba(10,90,49,.35),transparent_70%)] p-4 md:p-8">
+          <CampusNetwork id="map-net" variant="map" class="h-auto w-full" />
+        </div>
+        <div class="flex flex-col justify-center gap-6 border-t border-white/10 p-6 lg:border-l lg:border-t-0 md:p-8">
+          <div>
+            <p class="font-display text-lg font-semibold">The real walk network</p>
+            <p class="mt-2 text-sm leading-relaxed text-mute">Every line is a route the team walked with GPS. Gold dots are the four gates; green dots are places. Hover a line to see its name.</p>
+          </div>
+          <dl class="grid grid-cols-2 gap-4 text-sm">
+            <div><dt class="text-mute">Walks</dt><dd class="font-display text-2xl font-semibold">45</dd></div>
+            <div><dt class="text-mute">Walked routes</dt><dd class="font-display text-2xl font-semibold">{net.counts.walked}</dd></div>
+            <div><dt class="text-mute">Marked junctions</dt><dd class="font-display text-2xl font-semibold">{net.counts.intersections}</dd></div>
+            <div><dt class="text-mute">Joined routes</dt><dd class="font-display text-2xl font-semibold">{net.counts.joined.toLocaleString('en-US')}</dd></div>
+          </dl>
+          <p class="text-xs text-mute/70">Source: route export of Oct 30, 2026.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

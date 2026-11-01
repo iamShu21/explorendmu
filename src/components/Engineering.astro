@@ -1,0 +1,103 @@
+---
+// Engineering notes. Code excerpts are lightly trimmed from the real Unity project (ArNavigationController.cs).
+const notes = [
+  { icon: 'fi-rr-marker', title: 'A GPS start that waits for a good fix', text: 'Phone GPS on campus drifts by metres. Before guidance starts, the app averages fixes weighted by 1 / accuracy², then refuses to start if you are more than 20 m from the route.' },
+  { icon: 'fi-rr-route', title: 'Routes matched in AR space', text: 'Latitude and longitude are turned into local east-north-up metres, so the route can be matched to ARCore’s camera position. Progress, off-path and wrong-way checks all come from that match.' },
+  { icon: 'fi-rr-layers', title: 'Dijkstra, offline', text: 'Node.js tools run a binary-heap Dijkstra over path points 2 m apart and over walked segments joined at marked doors. The phone never computes a route; it reads JSON.' },
+  { icon: 'fi-rr-camera', title: 'Marker tracking that doesn’t lie', text: 'ARCore keeps reporting markers that left the view as “Limited”. Only “Tracking” now counts as seen, and only the last marker’s model is shown, so old statues don’t come back.' },
+  { icon: 'fi-rr-bolt', title: 'Fast UI, built in code', text: 'Screens are built at runtime in C#. Profiling found the dark theme mapping every graphic every frame; caching it per graphic fixed the stutter. The four tabs stay loaded so switching is instant.' },
+  { icon: 'fi-rr-laptop-code', title: 'Walks you can test at a desk', text: 'A simulated GPS source walks the route at 1.3 m/s with GPS noise and a fixed random seed, so navigation logic can be tested in the Unity editor before going outside.' },
+];
+const code0 = String.raw`<span class="c">// Speak each turn once: early warning within 15 m, then "now" within 3 m.</span>
+<span class="k">float</span> progress = _matcher.Progress;
+<span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; _turns.Count; i++)
+{
+    <span class="k">float</span> d = _turns[i].Progress - progress;
+    <span class="k">if</span> (d &lt; -<span class="n">1f</span>) <span class="k">continue</span>;
+    <span class="k">if</span> (d &gt; <span class="n">15f</span>) <span class="k">break</span>;
+    <span class="k">string</span> side = _turns[i].AngleDeg &gt; <span class="n">0f</span> ? <span class="s">"right"</span> : <span class="s">"left"</span>;
+    <span class="k">if</span> (d &lt;= <span class="n">3f</span>)
+    {
+        <span class="k">if</span> (_voiceNowTurn != i) { _voiceNowTurn = _voiceFarTurn = i; _voice.Say(<span class="s">"Turn "</span> + side + <span class="s">" now."</span>); }
+    }
+    <span class="k">else if</span> (_voiceFarTurn != i &amp;&amp; d &gt; <span class="n">4f</span>)
+    {
+        _voiceFarTurn = i;
+        <span class="k">int</span> meters = Mathf.Max(<span class="n">5</span>, Mathf.RoundToInt(d / <span class="n">5f</span>) * <span class="n">5</span>);
+        _voice.Say(<span class="s">"Turn "</span> + side + <span class="s">" in "</span> + meters + <span class="s">" meters."</span>);
+    }
+    <span class="k">break</span>;
+}`;
+const code1 = String.raw`<span class="c">// Collect good fixes, weighting each by 1 / accuracy².</span>
+<span class="k">if</span> (_gpsStartPending &amp;&amp; fix.horizontalAccuracyMeters &lt;= GpsStartMaxAccuracyMeters)
+{
+    <span class="k">double</span> w = <span class="n">1d</span> / (fix.horizontalAccuracyMeters * fix.horizontalAccuracyMeters);
+    _gpsStartSumLat += fix.latitude * w;
+    _gpsStartSumLon += fix.longitude * w;
+    _gpsStartSumWeight += w;
+}
+
+<span class="c">// On "Start here": project the weighted position onto the route.</span>
+<span class="k">double</span> lat = _gpsStartSumLat / _gpsStartSumWeight, lon = _gpsStartSumLon / _gpsStartSumWeight;
+RouteProjection p = _guide.Project(_guide.LatLonToEnu(lat, lon), -<span class="n">1f</span>, <span class="n">0f</span>, <span class="n">0f</span>);
+<span class="k">if</span> (!p.Valid || p.CrossTrackMeters &gt; <span class="n">20f</span>)
+{
+    Toast(<span class="s">"GPS says you are "</span> + F1(p.CrossTrackMeters) + <span class="s">" m from this route. Walk onto the route and try again."</span>);
+    <span class="k">return</span>;
+}
+startProgress = p.Progress;`;
+const code2 = String.raw`<span class="c">// Shape of a route file shipped in the APK (fields from the app's route format)</span>
+{
+  <span class="n">"routeId"</span>: <span class="s">"…"</span>,
+  <span class="n">"routeName"</span>: <span class="s">"Gate 03 to Library"</span>,
+  <span class="n">"status"</span>: <span class="s">"…"</span>,
+  <span class="n">"coordinateSystem"</span>: <span class="s">"…"</span>,
+  <span class="n">"distanceMethod"</span>: <span class="s">"…"</span>,  <span class="c">// distances use the Haversine formula</span>
+  <span class="n">"createdUtc"</span>: <span class="s">"…"</span>,
+  <span class="n">"nodes"</span>: [ <span class="c">/* lat, lon points along the walked path */</span> ],
+  <span class="n">"edges"</span>: [ <span class="c">/* links between nodes */</span> ],
+  <span class="n">"totalDistanceMeters"</span>: <span class="n">…</span>
+}`;
+const stack = ['Unity', 'C#', 'AR Foundation 6.5', 'Google ARCore', 'Android TextToSpeech', 'TextMeshPro', 'DOTween', 'Node.js', 'Dijkstra', 'Haversine', 'QGIS', 'Google My Maps', 'Blender', 'Figma', 'draw.io'];
+---
+<section id="engineering" class="relative py-24 md:py-32">
+  <div class="wrap">
+    <div class="grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-end">
+      <div>
+        <p class="eyebrow reveal">Under the hood</p>
+        <h2 class="h-section mt-5 reveal">Engineering notes, <span class="gold-text">for the curious.</span></h2>
+      </div>
+      <p class="lead reveal">The hard part of campus AR isn’t drawing arrows. It’s knowing where the phone is, trusting the camera, and keeping a big Unity UI smooth on a mid-range Android phone.</p>
+    </div>
+
+    <ul class="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {notes.map((n) => (
+        <li class="card card-glow reveal p-6">
+          <span class="grid size-11 place-items-center rounded-xl bg-gold/10 text-gold text-lg"><i class={n.icon}></i></span>
+          <h3 class="mt-5 text-lg font-semibold leading-snug">{n.title}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-mute">{n.text}</p>
+        </li>
+      ))}
+    </ul>
+
+    <div class="mt-6 card reveal p-2 md:p-3" data-tabs>
+      <div class="flex flex-wrap gap-1 p-1" role="tablist" aria-label="Code excerpts">
+        <button role="tab" type="button" class="chip !border-transparent !px-4 !py-2 aria-selected:!bg-white/10" aria-selected="true" data-tab="0"><i class="fi-rr-file-code text-gold"></i>VoiceCues.cs</button>
+        <button role="tab" type="button" class="chip !border-transparent !px-4 !py-2 aria-selected:!bg-white/10" aria-selected="false" data-tab="1"><i class="fi-rr-file-code text-gold"></i>GpsStart.cs</button>
+        <button role="tab" type="button" class="chip !border-transparent !px-4 !py-2 aria-selected:!bg-white/10" aria-selected="false" data-tab="2"><i class="fi-rr-brackets-curly text-gold"></i>route.json</button>
+      </div>
+<div role="tabpanel" data-panel="0"><pre class="code"><code set:html={code0} /></pre></div>
+<div role="tabpanel" data-panel="1" hidden><pre class="code"><code set:html={code1} /></pre></div>
+<div role="tabpanel" data-panel="2" hidden><pre class="code"><code set:html={code2} /></pre></div>
+    </div>
+
+    <div class="mt-14 reveal">
+      <p class="font-mono text-xs uppercase tracking-[.16em] text-mute">Tools and tech</p>
+      <div class="marquee mt-5 overflow-hidden">
+        <ul class="flex w-max gap-3" style="animation: marquee 40s linear infinite">
+          {[...stack, ...stack].map((s, i) => <li class="chip !px-4 !py-2 whitespace-nowrap" aria-hidden={i >= stack.length ? 'true' : undefined}>{s}</li>)}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

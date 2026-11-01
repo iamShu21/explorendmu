@@ -1,0 +1,71 @@
+---
+import CampusNetwork from './CampusNetwork.astro';
+---
+<section id="top" class="relative isolate min-h-[100svh] overflow-hidden pt-28 pb-16 md:pt-32">
+  <!-- backdrop: real walked network + glows -->
+  <div class="absolute inset-0 -z-10" aria-hidden="true">
+    <div class="absolute inset-0 bg-[radial-gradient(70%_60%_at_75%_30%,rgba(10,90,49,.55),transparent_70%),radial-gradient(50%_40%_at_10%_90%,rgba(255,194,14,.10),transparent_70%)]"></div>
+    <CampusNetwork id="hero-net" variant="hero" class="absolute right-[-20%] top-[8%] h-[85%] w-auto opacity-90 md:right-[-6%] md:top-[6%] md:h-[92%]" />
+    <div class="absolute inset-0 bg-[linear-gradient(90deg,var(--color-ink)_8%,rgba(5,15,10,.75)_45%,rgba(5,15,10,.2)_100%)] md:bg-[linear-gradient(90deg,var(--color-ink)_22%,rgba(5,15,10,.6)_55%,transparent_100%)]"></div>
+    <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ink to-transparent"></div>
+  </div>
+
+  <div class="wrap grid items-center gap-14 lg:grid-cols-[1.15fr_.85fr]">
+    <div>
+      <p class="eyebrow hero-in">Capstone project · BS Information Technology · NDMU</p>
+      <h1 class="mt-6 text-[clamp(2.6rem,7vw,5.4rem)] font-semibold leading-[.98]" data-split>
+        Find your way around NDMU, <span class="gold-text whitespace-nowrap">in AR.</span>
+      </h1>
+      <p class="lead mt-6 max-w-xl hero-in">
+        ExploreNDMU is an Android app that leads you to 37 places on campus. It shows gold arrows on the real walkway,
+        says each turn out loud, and shows a card about the place when you arrive.
+      </p>
+      <div class="mt-9 flex flex-wrap items-center gap-3 hero-in">
+        <a href="#download" class="btn btn-gold magnetic"><i class="fi-rr-download"></i>Get the Android app</a>
+        <a href="#engineering" class="btn btn-ghost magnetic">See how it was built<i class="fi-rr-arrow-small-right"></i></a>
+      </div>
+      <ul class="mt-10 flex flex-wrap gap-2 text-mute hero-in" aria-label="Built with">
+        <li class="chip"><i class="fi-rr-cube text-gold"></i>Unity + C#</li>
+        <li class="chip"><i class="fi-rr-camera text-gold"></i>AR Foundation + ARCore</li>
+        <li class="chip"><i class="fi-rr-marker text-gold"></i>GPS + walked routes</li>
+        <li class="chip"><i class="fi-rr-wifi-slash text-gold"></i>Data stored on the phone</li>
+      </ul>
+    </div>
+
+    <div class="relative mx-auto w-[min(78vw,330px)] lg:w-[340px]" data-tilt>
+      <div class="phone hero-phone">
+        <div class="phone-screen">
+          <img src="/img/screen-ar-arrows.webp" alt="ExploreNDMU AR navigation on a campus walkway: gold chevrons on the path and the prompt Turn left in 8 m" width="710" height="1108" fetchpriority="high" />
+        </div>
+      </div>
+      <!-- floating callouts (real voice cues from the app) -->
+      <div class="float-chip absolute -left-6 top-[18%] md:-left-24" style="animation: float-y 5s ease-in-out infinite">
+        <div class="card flex items-center gap-3 rounded-2xl px-4 py-3 shadow-2xl backdrop-blur-md bg-ink-2/80">
+          <span class="grid size-9 place-items-center rounded-full bg-gold/15 text-gold"><i class="fi-rr-volume"></i></span>
+          <div class="text-left">
+            <p class="text-[.7rem] font-mono uppercase tracking-wider text-mute">Voice</p>
+            <p class="text-sm font-medium">“Turn left now.”</p>
+          </div>
+        </div>
+      </div>
+      <div class="float-chip absolute -right-4 bottom-[16%] md:-right-16" style="animation: float-y 6s ease-in-out -2s infinite">
+        <div class="card flex items-center gap-3 rounded-2xl px-4 py-3 shadow-2xl backdrop-blur-md bg-ink-2/80">
+          <span class="relative grid size-9 place-items-center rounded-full bg-gold text-ink">
+            <span class="absolute inset-0 rounded-full border-2 border-gold" style="animation: pulse-ring 2s ease-out infinite"></span>
+            <i class="fi-rr-marker"></i>
+          </span>
+          <div class="text-left">
+            <p class="text-[.7rem] font-mono uppercase tracking-wider text-mute">Arrival</p>
+            <p class="text-sm font-medium">Gold pin within 60 m</p>
+          </div>
+        </div>
+      </div>
+      <p class="mt-5 text-center font-mono text-[.7rem] uppercase tracking-wider text-mute/70">On-campus field test · real capture</p>
+    </div>
+  </div>
+
+  <a href="#stats" class="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-xs text-mute md:flex" aria-label="Scroll down">
+    <span class="font-mono uppercase tracking-[.2em]">Scroll</span>
+    <span class="relative h-10 w-px overflow-hidden bg-white/15"><span class="absolute inset-x-0 top-0 h-4 bg-gold" style="animation: chevron-run 1.8s ease-in-out infinite"></span></span>
+  </a>
+</section>

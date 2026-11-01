@@ -1,0 +1,25 @@
+---
+import net from '../data/campus-network.json';
+import cards from '../data/info-cards.json';
+const stats = [
+  { value: net.counts.places, label: 'campus places with AR routes', icon: 'fi-rr-marker' },
+  { value: net.counts.walked, label: 'routes walked on foot with GPS', icon: 'fi-rr-route' },
+  { value: net.counts.joined, label: 'routes joined between places', icon: 'fi-rr-layers', fmt: true },
+  { value: cards.cards.length, label: 'place info cards', icon: 'fi-rr-book-alt' },
+  { value: 3, label: 'statues you can scan in 3D', icon: 'fi-rr-cube' },
+];
+---
+<section id="stats" class="relative border-y border-white/10 bg-ink-2/60">
+  <div class="wrap grid grid-cols-2 gap-px md:grid-cols-5">
+    {stats.map((s) => (
+      <div class="reveal flex flex-col gap-2 px-2 py-8 md:px-5 md:py-10">
+        <i class={`${s.icon} text-gold text-lg`}></i>
+        <p class="font-display text-[clamp(2rem,4vw,3rem)] font-semibold leading-none tabular-nums">
+          <span data-count={s.value} data-fmt={s.fmt ? '1' : undefined}>{s.fmt ? s.value.toLocaleString('en-US') : s.value}</span>
+        </p>
+        <p class="text-sm text-mute leading-snug">{s.label}</p>
+      </div>
+    ))}
+  </div>
+  <p class="wrap pb-5 -mt-2 text-[.7rem] font-mono uppercase tracking-wider text-mute/60">Counts from the team's route export of Oct 30, 2026</p>
+</section>

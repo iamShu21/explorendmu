@@ -1,0 +1,65 @@
+---
+const models = [
+  { id: 'mary', name: 'Mother Mary', sub: 'Statue of Mother Mary, the Good Mother of the Marist family.', src: '/models/mother-mary.glb', marker: '/img/marker-mother_mary.webp', poster: '/img/screen-mary.webp' },
+  { id: 'champagnat', name: 'St. Marcellin Champagnat', sub: 'Statue of St. Marcellin Champagnat, founder of the Marist Brothers.', src: '/models/champagnat.glb', marker: '/img/marker-champagnat.webp', poster: '/img/screen-champagnat.webp' },
+];
+---
+<section id="models" class="relative overflow-hidden py-24 md:py-32">
+  <div class="absolute inset-0 -z-10 bg-[radial-gradient(60%_50%_at_50%_40%,rgba(10,90,49,.35),transparent_70%)]" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+      <div class="max-w-2xl">
+        <p class="eyebrow reveal">3D landmarks</p>
+        <h2 class="h-section mt-5 reveal">Statues you can hold in your hand. <span class="gold-text">Try one here.</span></h2>
+        <p class="lead mt-6 reveal">In the app, you scan a printed marker and the statue appears in AR. Here you can drag to turn the same models, pinch to zoom, and on Android tap “View in your space”.</p>
+      </div>
+      <div class="flex gap-2 reveal" role="tablist" aria-label="Choose a model">
+        {models.map((m, i) => (
+          <button role="tab" type="button" class:list={['chip !px-4 !py-2.5 transition-colors', i === 0 && '!bg-gold !text-ink !border-gold']} aria-selected={i === 0 ? 'true' : 'false'} data-model-tab={m.id}>{m.name}</button>
+        ))}
+      </div>
+    </div>
+
+    <div class="mt-12 grid gap-5 lg:grid-cols-[1.5fr_1fr]">
+      <div class="card reveal relative overflow-hidden" style="min-height: 520px">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_70%,rgba(255,194,14,.12),transparent_55%)]" aria-hidden="true"></div>
+        <div class="absolute inset-x-0 bottom-[14%] mx-auto h-8 w-1/2 rounded-[50%] bg-black/50 blur-xl" aria-hidden="true"></div>
+        <div class="relative h-[520px] md:h-[600px]" data-model-host
+          data-models={JSON.stringify(models.map(({ id, name, src }) => ({ id, name, src })))}>
+          <div class="absolute inset-0 grid place-items-center text-sm text-mute" data-model-loading>
+            <span class="flex items-center gap-3"><span class="size-2 animate-ping rounded-full bg-gold"></span>Loading 3D model…</span>
+          </div>
+        </div>
+        <p class="absolute bottom-4 left-5 right-5 flex flex-wrap items-center justify-between gap-2 text-xs text-mute">
+          <span class="flex items-center gap-2"><i class="fi-rr-cube text-gold"></i><span data-model-name>{models[0].name}</span> · same model as in the app, compressed for the web</span>
+          <span>Drag to rotate</span>
+        </p>
+      </div>
+
+      <div class="grid gap-5">
+        <div class="card reveal p-6">
+          <p class="font-display text-lg font-semibold">How the scan works</p>
+          <ol class="mt-4 space-y-3 text-sm text-mute">
+            <li class="flex gap-3"><span class="font-mono text-gold">1</span>Open the centre Scan tab. The app asks for the camera with Android’s own prompt.</li>
+            <li class="flex gap-3"><span class="font-mono text-gold">2</span>Hold the phone about an arm’s length from a printed marker.</li>
+            <li class="flex gap-3"><span class="font-mono text-gold">3</span>AR Foundation recognises the image and the statue appears, facing you.</li>
+          </ol>
+          <a href="/downloads/ExploreNDMU-AR-markers-A4.pdf" class="btn btn-ghost mt-6 w-full justify-center !text-sm" download><i class="fi-rr-download"></i>Print the markers (A4 PDF)</a>
+        </div>
+        <div class="grid grid-cols-3 gap-3 reveal">
+          <figure class="card overflow-hidden p-2"><img src="/img/marker-mother_mary.webp" alt="Mother Mary marker" width="640" height="640" loading="lazy" class="rounded-xl" /><figcaption class="px-1 pt-2 text-[.7rem] text-mute">Mother Mary</figcaption></figure>
+          <figure class="card overflow-hidden p-2"><img src="/img/marker-champagnat.webp" alt="Champagnat marker" width="640" height="640" loading="lazy" class="rounded-xl" /><figcaption class="px-1 pt-2 text-[.7rem] text-mute">Champagnat</figcaption></figure>
+          <figure class="card overflow-hidden p-2"><img src="/img/marker-stallion.webp" alt="Bronze Stallion marker" width="640" height="640" loading="lazy" class="rounded-xl" /><figcaption class="px-1 pt-2 text-[.7rem] text-mute">Stallion</figcaption></figure>
+        </div>
+        <div class="card reveal flex gap-4 p-5">
+          <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-white/5 text-mute"><i class="fi-rr-info"></i></span>
+          <p class="text-sm leading-relaxed text-mute">
+            <span class="text-paper font-medium">Bronze Stallion is in the app only.</span>
+            The model is “Horse Run Cycle On Place” by Amitesh Nandan (Sketchfab), licensed CC BY-ND 4.0, and its credit
+            is shown in the app. We don’t publish our adjusted copy here, because the license doesn’t allow sharing changed versions.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

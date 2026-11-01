@@ -1,0 +1,36 @@
+---
+interface Props { page: 'home' | 'research'; }
+const { page } = Astro.props;
+const home = page === 'home' ? '' : 'index.html';
+const links = [
+  { href: `${home}#features`, label: 'Features' },
+  { href: `${home}#models`, label: '3D' },
+  { href: `${home}#how`, label: 'How it works' },
+  { href: `${home}#engineering`, label: 'Engineering' },
+  { href: 'research.html', label: 'Research', active: page === 'research' },
+];
+---
+<header id="nav" class="fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300 border-b border-transparent" data-nav>
+  <nav class="wrap flex h-16 items-center justify-between gap-4" aria-label="Main">
+    <a href={page === 'home' ? '#top' : 'index.html'} class="flex items-center gap-2.5 font-display font-semibold tracking-tight">
+      <img src="/logo-64.png" alt="" width="28" height="28" class="size-7" />
+      <span class="text-[1.05rem]">Explore<span class="text-gold">NDMU</span></span>
+    </a>
+    <ul class="hidden md:flex items-center gap-1 text-sm text-mute">
+      {links.map((l) => (
+        <li><a href={l.href} class:list={['rounded-full px-3.5 py-2 transition-colors hover:text-paper hover:bg-white/5', l.active && 'text-paper bg-white/5']}>{l.label}</a></li>
+      ))}
+    </ul>
+    <div class="flex items-center gap-2">
+      <a href={`${home}#download`} class="btn btn-gold !py-2.5 !px-4 text-sm"><i class="fi-rr-download"></i><span>Get the app</span></a>
+      <button class="md:hidden grid size-10 place-items-center rounded-full border border-white/15" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+        <i class="fi-rr-menu-burger" data-menu-icon></i>
+      </button>
+    </div>
+  </nav>
+  <div id="mobile-menu" class="md:hidden hidden border-t border-white/10 bg-ink/95 backdrop-blur-xl" data-menu>
+    <ul class="wrap flex flex-col py-3 text-lg">
+      {links.map((l) => <li><a href={l.href} class="block py-3 border-b border-white/5" data-menu-link>{l.label}</a></li>)}
+    </ul>
+  </div>
+</header>

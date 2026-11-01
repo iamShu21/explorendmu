@@ -5,13 +5,13 @@ const before = [
   { icon: 'fi-rr-users-alt', title: 'Asking a guard', text: 'Works, but depends on who is around, and directions are easy to forget halfway.' },
 ];
 ---
-<section class="relative py-28 md:py-36">
+<section class="relative py-16 md:py-24">
   <div class="wrap grid gap-14 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
     <div class="relative order-2 lg:order-1">
-      <div class="reveal relative overflow-hidden rounded-[1.75rem] border border-white/10">
+      <div class="reveal relative overflow-hidden rounded-[1.75rem] border border-forest/10 shadow-[0_30px_60px_-30px_rgba(10,60,32,.45)]">
         <img src="/img/campus-teston.webp" alt="A long open corridor at Teston Hall, NDMU" width="1400" height="1050" loading="lazy" class="aspect-[4/3.4] w-full object-cover" data-parallax />
-        <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent"></div>
-        <p class="absolute bottom-5 left-5 right-5 text-sm text-paper/90">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#06170e]/90 via-[#06170e]/25 to-transparent"></div>
+        <p class="absolute bottom-5 left-5 right-5 text-sm font-medium leading-relaxed text-white">
           Many offices sit inside open hallways like this one, so you can't see them from the walkway.
         </p>
       </div>
@@ -24,11 +24,11 @@ const before = [
         model and directions from staff. Those help, but none of them guide you step by step or tell you about the
         buildings you pass.
       </p>
-      <ul class="mt-10 grid gap-3 sm:grid-cols-3">
+      <ul class="mt-9 grid gap-3 sm:grid-cols-3">
         {before.map((b) => (
           <li class="card card-glow reveal p-5">
-            <i class={`${b.icon} text-xl text-mute`}></i>
-            <p class="mt-4 font-display font-semibold">{b.title}</p>
+            <span class="icon-tile size-10"><i class={`${b.icon} text-lg`}></i></span>
+            <p class="mt-4 font-display font-semibold text-fg">{b.title}</p>
             <p class="mt-1.5 text-sm leading-relaxed text-mute">{b.text}</p>
           </li>
         ))}

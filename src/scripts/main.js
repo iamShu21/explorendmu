@@ -10,10 +10,23 @@ const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = matchMedia('(pointer: fine)').matches;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+// IntersectionObserver works in any scroll container (also inside previews), so reveals never get stuck hidden.
+const onVisible = (els, cb, { margin = '0px 0px -12% 0px', once = true, threshold = 0 } = {}) => {
+  const list = (Array.isArray(els) ? els : [els]).filter(Boolean);
+  if (!list.length) return;
+  if (!('IntersectionObserver' in window)) { list.forEach((el) => cb(el)); return; }
+  const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (!e.isIntersecting) return;
+    cb(e.target);
+    if (once) io.unobserve(e.target);
+  }), { rootMargin: margin, threshold });
+  list.forEach((el) => io.observe(el));
+};
 
 /* ---------------- smooth scroll ---------------- */
 let lenis = null;
-if (!reduced) {
+const windowScrolls = () => document.documentElement.scrollHeight > innerHeight + 4 && getComputedStyle(document.body).overflowY !== 'auto';
+if (!reduced && windowScrolls()) {
   lenis = new Lenis({ duration: 1.1, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((time) => lenis.raf(time * 1000));
@@ -38,9 +51,10 @@ document.addEventListener('click', (e) => {
 const nav = $('[data-nav]');
 const setNav = () => {
   const on = scrollY > 24;
-  nav?.classList.toggle('bg-ink/75', on);
+  nav?.classList.toggle('bg-[#fffaf0]/85', on);
   nav?.classList.toggle('backdrop-blur-xl', on);
-  nav?.classList.toggle('!border-white/10', on);
+  nav?.classList.toggle('!border-forest/10', on);
+  nav?.classList.toggle('shadow-[0_10px_30px_-20px_rgba(10,60,32,.35)]', on);
 };
 setNav();
 addEventListener('scroll', setNav, { passive: true });
@@ -64,9 +78,12 @@ document.fonts.ready.then(() => {
   const h = $('[data-split]');
   if (h && !reduced) {
     const split = SplitText.create(h, { type: 'lines,words', mask: 'lines', linesClass: 'pb-[.08em]' });
-    // words become inline-blocks, so a parent's gradient text no longer reaches them
-    split.words.forEach((w) => { if (w.parentElement?.closest('.gold-text')) w.classList.add('gold-text'); });
+    // words become inline-blocks, so each highlighted word carries its own piece of the gold stroke
+    const hl = split.words.filter((w) => w.closest('.gold-text'));
+    $$('.gold-text', h).forEach((g) => g.classList.add('is-split'));
+    hl.forEach((w, i) => { w.classList.add('hl-word'); if (i === hl.length - 1) w.style.marginRight = '0'; });
     gsap.from(split.words, { yPercent: 110, duration: 1.1, ease: 'expo.out', stagger: 0.045, delay: 0.1 });
+    if (hl.length) gsap.fromTo(hl, { backgroundSize: '0% 100%' }, { backgroundSize: '100% 100%', duration: 0.7, ease: 'power3.inOut', stagger: 0.12, delay: 0.9 });
   }
   if (!reduced) {
     gsap.from('.hero-in', { y: 24, opacity: 0, duration: 1, ease: 'expo.out', stagger: 0.09, delay: 0.35 });
@@ -78,12 +95,20 @@ document.fonts.ready.then(() => {
 /* ---------------- reveal on scroll ---------------- */
 if (!reduced) {
   // Hide only what is below the first screen, so the page is complete at rest and without JS.
-  gsap.set($$('.reveal').filter((el) => el.getBoundingClientRect().top > innerHeight * 0.9), { opacity: 0, y: 28 });
-  ScrollTrigger.batch('.reveal', {
-    start: 'top 88%',
-    once: true,
-    onEnter: (els) => gsap.to(els, { opacity: 1, y: 0, duration: 1, ease: 'expo.out', stagger: 0.08, overwrite: true }),
+  const hidden = $$('.reveal').filter((el) => el.getBoundingClientRect().top > innerHeight * 0.9);
+  gsap.set(hidden, { opacity: 0, y: 28 });
+  let queue = [];
+  let flush = null;
+  onVisible(hidden, (el) => {
+    queue.push(el);
+    cancelAnimationFrame(flush);
+    flush = requestAnimationFrame(() => {
+      gsap.to(queue, { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out', stagger: 0.07, overwrite: true });
+      queue = [];
+    });
   });
+  // safety net: never leave content invisible (e.g. after a jump to an anchor)
+  setTimeout(() => hidden.forEach((el) => { if (el.getBoundingClientRect().top < innerHeight && +getComputedStyle(el).opacity < 0.05) gsap.to(el, { opacity: 1, y: 0, duration: 0.6 }); }), 2500);
 }
 
 /* ---------------- campus network: draw + pulses ---------------- */
@@ -95,9 +120,8 @@ function animateNetwork(svg, { scrub = false } = {}) {
   if (reduced) return;
   gsap.set(walks, { drawSVG: '0%' });
   gsap.set(places, { scale: 0, transformOrigin: 'center', transformBox: 'fill-box' });
-  const tl = gsap.timeline(scrub
-    ? { scrollTrigger: { trigger: svg, start: 'top 80%', end: 'center 45%', scrub: 1 } }
-    : { delay: 0.3 });
+  const tl = gsap.timeline({ paused: true, delay: scrub ? 0 : 0.3 });
+  if (scrub) onVisible(svg, () => tl.play(), { margin: '0px 0px -20% 0px' }); else tl.play();
   tl.to(walks, { drawSVG: '100%', duration: 1.6, ease: 'power2.inOut', stagger: { each: 0.025, from: 'random' } })
     .to(places, { scale: 1, duration: 0.5, ease: 'back.out(2)', stagger: { each: 0.02, from: 'random' } }, '-=0.9');
 
@@ -115,13 +139,11 @@ function animateNetwork(svg, { scrub = false } = {}) {
     });
   };
   const start = () => { for (let i = 0; i < 3; i++) gsap.delayedCall(i * 0.6, run); };
-  ScrollTrigger.create({
-    trigger: svg, start: 'top bottom', end: 'bottom top',
-    onToggle: (self) => {
-      if (self.isActive) { start(); svg._pulse = setInterval(run, 900); }
-      else clearInterval(svg._pulse);
-    },
-  });
+  let live = false;
+  new IntersectionObserver(([e]) => {
+    if (e.isIntersecting && !live) { live = true; start(); svg._pulse = setInterval(run, 900); }
+    else if (!e.isIntersecting && live) { live = false; clearInterval(svg._pulse); }
+  }).observe(svg);
 }
 animateNetwork($('#hero-net'));
 animateNetwork($('#map-net'), { scrub: true });
@@ -133,7 +155,7 @@ $$('[data-count]').forEach((el) => {
   if (reduced) return;
   const o = { v: 0 };
   el.textContent = fmt(0);
-  gsap.to(o, { v: to, duration: 1.8, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 90%', once: true }, onUpdate: () => (el.textContent = fmt(o.v)) });
+  onVisible(el, () => gsap.to(o, { v: to, duration: 1.8, ease: 'power3.out', onUpdate: () => (el.textContent = fmt(o.v)) }), { margin: '0px 0px -8% 0px' });
 });
 
 /* ---------------- features: pinned stage ---------------- */
@@ -145,6 +167,7 @@ function showLayer(i) {
   const next = layers[i];
   const dir = i > current ? 1 : -1;
   current = i;
+  $$('.feature-step').forEach((st, j) => st.classList.toggle('is-active', j === i));
   gsap.killTweensOf([prev, next]);
   prev.setAttribute('aria-hidden', 'true');
   next.setAttribute('aria-hidden', 'false');
@@ -165,7 +188,6 @@ const mm = gsap.matchMedia();
 mm.add('(min-width: 1024px)', () => {
   $$('.feature-step').forEach((step, i) => {
     ScrollTrigger.create({ trigger: step, start: 'top 55%', end: 'bottom 55%', onToggle: (self) => self.isActive && showLayer(i) });
-    if (!reduced) gsap.fromTo($('.feature-copy', step), { opacity: 0.25 }, { opacity: 1, scrollTrigger: { trigger: step, start: 'top 75%', end: 'top 45%', scrub: true } });
   });
 });
 // mobile + anything outside the stage: play videos when visible
@@ -175,7 +197,7 @@ const io = new IntersectionObserver((entries) => entries.forEach((e) => {
   if (e.isIntersecting) { v.preload = 'auto'; v.play().catch(() => {}); } else v.pause();
 }), { threshold: 0.35 });
 $$('video[data-autoplay]').forEach((v) => io.observe(v));
-$$('.feature-step [data-voice]').forEach((panel) => ScrollTrigger.create({ trigger: panel, start: 'top 80%', once: true, onEnter: () => playIn(panel) }));
+onVisible($$('.feature-step [data-voice]'), (panel) => playIn(panel), { margin: '0px 0px -20% 0px' });
 
 /* ---------------- directory demo ---------------- */
 $$('[data-directory]').forEach((root) => {
@@ -195,7 +217,7 @@ $$('[data-directory]').forEach((root) => {
     $$('[data-dir-filter]', root).forEach((x) => {
       const on = x === b;
       x.setAttribute('aria-pressed', String(on));
-      ['!bg-gold', '!text-ink', '!border-gold'].forEach((c) => x.classList.toggle(c, on));
+      ['!bg-forest', '!text-white', '!border-forest'].forEach((c) => x.classList.toggle(c, on));
     });
     apply();
   }));
@@ -204,40 +226,85 @@ $$('[data-directory]').forEach((root) => {
 /* ---------------- 3D models (lazy) ---------------- */
 const host = $('[data-model-host]');
 if (host) {
-  const models = JSON.parse(host.dataset.models);
+  // paths are relative to the page, so the site works under any sub-path (GitHub Pages, previews)
+  const models = JSON.parse(host.dataset.models).map((m) => ({ ...m, src: new URL(m.src.replace(/^\//, ''), document.baseURI).href }));
+  const status = $('[data-model-status]', host);
+  const loading = $('[data-model-loading]', host);
   let viewer = null;
   const load = async () => {
-    await import('@google/model-viewer');
-    const MV = customElements.get('model-viewer');
-    MV.meshoptDecoderLocation = new URL('vendor/meshopt-ready.js', document.baseURI).href;
+    try {
+      await import('@google/model-viewer');
+    } catch {
+      if (status) status.textContent = 'The 3D viewer could not load. Check your connection and refresh.';
+      return;
+    }
     viewer = document.createElement('model-viewer');
     Object.entries({
       src: models[0].src, alt: `3D model of ${models[0].name}`, 'camera-controls': '', 'auto-rotate': '', 'auto-rotate-delay': '0',
-      'rotation-per-second': '18deg', 'interaction-prompt': 'auto', 'shadow-intensity': '1.1', 'shadow-softness': '0.9',
+      'rotation-per-second': '18deg', 'interaction-prompt': 'auto', 'shadow-intensity': '1', 'shadow-softness': '0.9',
       exposure: '1.05', 'environment-image': 'neutral', 'camera-orbit': '25deg 78deg auto', 'field-of-view': '28deg',
       autoplay: '', ar: '', 'ar-modes': 'scene-viewer webxr quick-look', 'touch-action': 'pan-y',
     }).forEach(([k, v]) => viewer.setAttribute(k, v));
-    viewer.style.cssText = 'width:100%;height:100%;background:transparent;--poster-color:transparent;--progress-bar-color:#ffc20e';
+    viewer.style.cssText = 'width:100%;height:100%;background:transparent;--poster-color:transparent;--progress-bar-color:#0e7a43;--progress-bar-height:3px';
     const arBtn = document.createElement('button');
     arBtn.slot = 'ar-button';
     arBtn.className = 'btn btn-gold absolute right-4 top-4 !py-2.5 !text-sm';
     arBtn.innerHTML = '<i class="fi-rr-cube"></i>View in your space';
     viewer.appendChild(arBtn);
-    viewer.addEventListener('load', () => $('[data-model-loading]', host)?.remove());
+    viewer.addEventListener('load', () => { if (loading) loading.hidden = true; });
+    viewer.addEventListener('error', () => { if (loading) { loading.hidden = false; status.textContent = 'This model could not be loaded. Try the other statue or refresh.'; } });
     host.appendChild(viewer);
   };
-  ScrollTrigger.create({ trigger: host, start: 'top 140%', once: true, onEnter: load });
+  onVisible(host, load, { margin: '400px 0px 400px 0px' });
   $$('[data-model-tab]').forEach((tab) => tab.addEventListener('click', () => {
     const m = models.find((x) => x.id === tab.dataset.modelTab);
     $$('[data-model-tab]').forEach((t) => {
       const on = t === tab;
       t.setAttribute('aria-selected', String(on));
-      ['!bg-gold', '!text-ink', '!border-gold'].forEach((c) => t.classList.toggle(c, on));
+      ['!bg-forest', '!text-white', '!border-forest'].forEach((c) => t.classList.toggle(c, on));
     });
     $('[data-model-name]').textContent = m.name;
-    if (viewer) { viewer.src = m.src; viewer.alt = `3D model of ${m.name}`; }
+    if (viewer && viewer.src !== m.src) {
+      if (loading) { loading.hidden = false; status.textContent = 'Loading 3D model…'; }
+      viewer.src = m.src; viewer.alt = `3D model of ${m.name}`;
+    }
   }));
 }
+
+/* ---------------- places rail ---------------- */
+$$('[data-rail-root]').forEach((root) => {
+  const rail = $('[data-rail]', root);
+  const bar = $('[data-rail-progress]', root);
+  const section = root.closest('section');
+  const step = () => (rail.querySelector('li')?.getBoundingClientRect().width ?? 320) + 20;
+  const update = () => {
+    const max = rail.scrollWidth - rail.clientWidth;
+    if (bar) bar.style.width = `${max > 0 ? Math.max(8, (rail.scrollLeft / max) * 100) : 100}%`;
+  };
+  rail.addEventListener('scroll', update, { passive: true });
+  addEventListener('resize', update);
+  update();
+  $('[data-rail-prev]', section)?.addEventListener('click', () => rail.scrollBy({ left: -step(), behavior: 'smooth' }));
+  $('[data-rail-next]', section)?.addEventListener('click', () => rail.scrollBy({ left: step(), behavior: 'smooth' }));
+  rail.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') { rail.scrollBy({ left: step(), behavior: 'smooth' }); e.preventDefault(); }
+    if (e.key === 'ArrowLeft') { rail.scrollBy({ left: -step(), behavior: 'smooth' }); e.preventDefault(); }
+  });
+  // drag to scroll with a mouse
+  if (finePointer) {
+    let down = false, startX = 0, startLeft = 0, moved = false;
+    rail.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') return; down = true; moved = false; startX = e.clientX; startLeft = rail.scrollLeft; rail.style.scrollSnapType = 'none'; rail.style.cursor = 'grabbing'; });
+    addEventListener('pointermove', (e) => { if (!down) return; const dx = e.clientX - startX; if (Math.abs(dx) > 4) moved = true; rail.scrollLeft = startLeft - dx; });
+    addEventListener('pointerup', () => { if (!down) return; down = false; rail.style.cursor = ''; rail.style.scrollSnapType = ''; });
+    rail.addEventListener('click', (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+    rail.addEventListener('dragstart', (e) => e.preventDefault());
+  }
+  if (!reduced) {
+    const cards = $$(':scope > li', rail);
+    gsap.set(cards, { opacity: 0, x: 60 });
+    onVisible(rail, () => gsap.to(cards, { opacity: 1, x: 0, duration: 1, ease: 'expo.out', stagger: 0.07 }), { margin: '0px 0px -15% 0px' });
+  }
+});
 
 /* ---------------- tabs (code excerpts) ---------------- */
 $$('[data-tabs]').forEach((root) => {
@@ -251,13 +318,10 @@ $$('[data-tabs]').forEach((root) => {
 
 /* ---------------- scrubbed lines ---------------- */
 if (!reduced) {
-  const fill = $('.timeline-fill');
-  if (fill) gsap.to(fill, { scaleY: 1, ease: 'none', scrollTrigger: { trigger: '[data-timeline]', start: 'top 70%', end: 'bottom 70%', scrub: 0.6 } });
-  $$('.timeline-item').forEach((it) => gsap.from(it, { opacity: 0.2, x: 16, duration: 0.8, ease: 'expo.out', scrollTrigger: { trigger: it, start: 'top 80%' } }));
   $$('.pipe-fill').forEach((f) => gsap.to(f, { height: '100%', ease: 'none', scrollTrigger: { trigger: f.closest('li'), start: 'top 70%', end: 'bottom 60%', scrub: true } }));
   $$('[data-parallax]').forEach((img) => gsap.fromTo(img, { scale: 1.15, yPercent: -6 }, { yPercent: 6, ease: 'none', scrollTrigger: { trigger: img, start: 'top bottom', end: 'bottom top', scrub: true } }));
 } else {
-  $$('.timeline-fill').forEach((f) => (f.style.transform = 'scaleY(1)'));
+  $$('.pipe-fill').forEach((f) => (f.style.height = '100%'));
 }
 
 /* ---------------- pointer niceties ---------------- */

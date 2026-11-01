@@ -16,6 +16,8 @@ for (const file of walk(dist)) {
   const before = s;
   if (ext === '.html') {
     s = s.replace(/(\s(?:href|src|poster|content|srcset|data-src)=")\/(?!\/)/g, `$1${up}`);
+    // asset paths inside other attributes (data-lightbox="/fig/…", JSON in data-models)
+    s = s.replace(/(&quot;|")\/(models|img|video|downloads|fig)\//g, `$1${up}$2/`);
   }
   if (ext === '.css') {
     // CSS lives in /assets: fonts and images are siblings or one level up

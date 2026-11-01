@@ -3,14 +3,15 @@
 Showcase site for **ExploreNDMU**, an Android AR campus tour, navigation and information app for
 Notre Dame of Marbel University (BS Information Technology capstone, 2026).
 
-Pages: `index` (features, 3D statues, how it works, engineering notes, build timeline, team, download)
+Pages: `index` (features, campus places, 3D statues, how it works, engineering notes, team, download)
 and `research` (abstract, objectives, method, system design figures, citation).
 
 ## Stack
 
 - [Astro](https://astro.build) static site, Tailwind CSS v4
 - GSAP (ScrollTrigger, SplitText, DrawSVG) and Lenis for motion; everything respects `prefers-reduced-motion`
-- `<model-viewer>` for the 3D statues (meshopt-compressed GLB, about 1-1.5 MB each)
+- `<model-viewer>` for the 3D statues (quantized GLB with WebP textures, about 2-3.5 MB each; no WebAssembly decoder needed)
+- Light white-and-gold theme: dark green text on light surfaces, white text on dark surfaces only
 - Flaticon UIcons (regular rounded), subset to the icons in use by `scripts/build_icons.py`
 
 ## Run it

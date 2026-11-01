@@ -3,36 +3,40 @@ import { APK_URL, REPO_URL } from '../config';
 const reqs = [
   { icon: 'fi-rr-smartphone', text: 'An Android phone that supports Google Play Services for AR (ARCore)' },
   { icon: 'fi-rr-camera', text: 'Camera and precise location allowed while using the app' },
-  { icon: 'fi-rr-marker', text: 'Outdoors on the NDMU campus for AR navigation; markers work anywhere' },
+  { icon: 'fi-rr-marker', text: 'Outdoors on the NDMU campus for AR navigation; the 3D markers work anywhere' },
 ];
 ---
-<section id="download" class="relative py-24 md:py-32">
+<section id="download" class="relative py-16 md:py-24">
   <div class="wrap">
-    <div class="reveal relative overflow-hidden rounded-[2rem] border border-gold/25 bg-[linear-gradient(135deg,#0a5a31_0%,#073d22_45%,#050f0a_100%)] p-8 md:p-14">
-      <div class="absolute -right-24 -top-24 size-[28rem] rounded-full bg-gold/20 blur-3xl" aria-hidden="true"></div>
-      <img src="/img/campus-slr.webp" alt="" width="1600" height="930" loading="lazy" class="absolute inset-y-0 right-0 hidden h-full w-1/2 object-cover opacity-20 [mask-image:linear-gradient(90deg,transparent,#000_60%)] lg:block" aria-hidden="true" />
-      <div class="relative grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-center">
+    <!-- Dark photo card: every text colour here is set to white or gold on purpose. -->
+    <div class="reveal relative isolate overflow-hidden rounded-[2rem] bg-[#06170e] text-white shadow-[0_40px_80px_-40px_rgba(6,23,14,.7)]">
+      <picture>
+        <source media="(max-width: 767px)" srcset="/img/welcome-campus-800.webp" />
+        <img src="/img/welcome-campus.webp" alt="" width="1122" height="841" loading="lazy" class="absolute inset-0 -z-10 h-full w-full object-cover object-[50%_62%]" data-parallax aria-hidden="true" />
+      </picture>
+      <div class="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(4,30,17,.80)_0%,rgba(4,30,17,.72)_45%,rgba(4,30,17,.92)_100%)] lg:bg-[linear-gradient(90deg,rgba(4,30,17,.94)_0%,rgba(4,30,17,.82)_48%,rgba(4,30,17,.35)_100%)]" aria-hidden="true"></div>
+      <div class="relative grid gap-10 p-7 md:p-14 lg:grid-cols-[1.2fr_1fr] lg:items-center">
         <div>
-          <p class="eyebrow">Try it on campus</p>
-          <h2 class="h-section mt-5">Get ExploreNDMU <br class="hidden md:block" />for Android.</h2>
-          <p class="lead mt-5 !text-paper/80 max-w-lg">Free. Install the APK, open it at any gate, and follow the gold arrows.</p>
+          <p class="eyebrow on-dark">Try it on campus</p>
+          <h2 class="mt-5 text-[clamp(2rem,4.4vw,3.4rem)] font-semibold leading-[1.06] text-white">Get ExploreNDMU <br class="hidden md:block" />for <span class="text-gold">Android.</span></h2>
+          <p class="mt-5 max-w-lg text-[1.05rem] leading-relaxed text-[#e6f1ea]">Free. Install the APK, open it at any gate, and follow the gold arrows.</p>
           <div class="mt-8 flex flex-wrap gap-3">
             {APK_URL
               ? <a href={APK_URL} class="btn btn-gold magnetic"><i class="fi-rr-download"></i>Download the APK</a>
               : <span class="btn btn-gold" aria-disabled="true"><i class="fi-rr-download"></i>APK release coming soon</span>}
-            <a href="/downloads/ExploreNDMU-AR-markers-A4.pdf" class="btn btn-ghost" download><i class="fi-rr-cube"></i>Print the 3D markers</a>
-            {REPO_URL && <a href={`${REPO_URL}/releases`} class="btn btn-ghost">All releases<i class="fi-rr-arrow-up-right-from-square text-xs"></i></a>}
+            {APK_URL && REPO_URL && <a href={`${REPO_URL}/releases`} class="btn btn-ghost-dark">All releases<i class="fi-rr-arrow-up-right-from-square text-xs"></i></a>}
           </div>
         </div>
         <ul class="space-y-3">
           {reqs.map((r) => (
-            <li class="flex items-start gap-4 rounded-2xl border border-white/10 bg-ink/40 p-4 backdrop-blur">
-              <i class={`${r.icon} mt-0.5 text-gold`}></i><span class="text-sm leading-relaxed">{r.text}</span>
+            <li class="flex items-start gap-4 rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-md">
+              <i class={`${r.icon} mt-0.5 text-gold`}></i><span class="text-sm leading-relaxed text-white">{r.text}</span>
             </li>
           ))}
-          <li class="px-1 text-xs text-paper/60">Android may ask you to allow installs from your browser, because the APK isn’t from the Play Store.</li>
+          <li class="px-1 text-xs leading-relaxed text-[#cfe2d6]">Android may ask you to allow installs from your browser, because the APK isn’t from the Play Store.</li>
         </ul>
       </div>
+      <p class="relative px-7 pb-5 text-right font-mono text-[.62rem] uppercase tracking-wider text-[#cfe2d6] md:px-14">Photo: Tatak Marista Student Park, the app’s welcome screen</p>
     </div>
   </div>
 </section>

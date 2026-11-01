@@ -5,26 +5,26 @@ const team = [
   { initials: 'EV', name: 'Edward T. Villanueva', role: 'Research and field mapping', text: 'Wrote the research paper and walked the campus routes with NDMU Walker.' },
 ];
 ---
-<section id="team" class="relative py-24 md:py-32">
+<section id="team" class="relative py-16 md:py-24">
   <div class="wrap">
     <div class="max-w-2xl">
       <p class="eyebrow reveal">The team</p>
       <h2 class="h-section mt-5 reveal">Three students, <span class="gold-text">one campus.</span></h2>
       <p class="lead mt-6 reveal">BS Information Technology, College of Engineering, Architecture, and Computing, Notre Dame of Marbel University.</p>
     </div>
-    <ul class="mt-14 grid gap-4 md:grid-cols-3">
+    <ul class="mt-10 grid gap-4 md:grid-cols-3">
       {team.map((m) => (
-        <li class:list={['card card-glow reveal p-7', m.lead && 'md:-translate-y-0 border-gold/30']}>
-          <div class:list={['grid size-16 place-items-center rounded-2xl font-display text-xl font-semibold', m.lead ? 'bg-gold text-ink' : 'bg-forest text-paper']}>{m.initials}</div>
-          <p class="mt-6 font-display text-lg font-semibold">{m.name}</p>
-          <p class="mt-1 font-mono text-xs uppercase tracking-[.12em] text-gold">{m.role}</p>
+        <li class:list={['card card-glow reveal p-7', m.lead && '!border-gold/70']}>
+          <div class:list={['grid size-16 place-items-center rounded-2xl font-display text-xl font-semibold', m.lead ? 'bg-gold text-ink' : 'bg-forest text-white']}>{m.initials}</div>
+          <p class="mt-6 font-display text-lg font-semibold text-fg">{m.name}</p>
+          <p class="mt-1 font-mono text-xs font-semibold uppercase tracking-[.12em] text-gold-deep">{m.role}</p>
           <p class="mt-4 text-sm leading-relaxed text-mute">{m.text}</p>
         </li>
       ))}
     </ul>
     <div class="card reveal mt-4 flex flex-col gap-2 p-6 md:flex-row md:items-center md:justify-between">
-      <p class="flex items-center gap-3"><i class="fi-rr-graduation-cap text-xl text-gold"></i><span><span class="text-mute">Thesis adviser</span> · <span class="font-medium">Vince Marc B. Sabado, MSIT</span></span></p>
-      <a href="research.html" class="text-sm text-gold hover:underline">Read about the research <i class="fi-rr-arrow-small-right align-middle"></i></a>
+      <p class="flex items-center gap-3"><span class="icon-tile size-10 shrink-0"><i class="fi-rr-graduation-cap"></i></span><span><span class="text-mute">Thesis adviser</span> · <span class="font-semibold text-fg">Vince Marc B. Sabado, MSIT</span></span></p>
+      <a href="research.html" class="text-sm font-semibold text-forest hover:underline">Read about the research <i class="fi-rr-arrow-small-right align-middle"></i></a>
     </div>
   </div>
 </section>

@@ -17,7 +17,7 @@ const more = [
   { icon: 'fi-rr-bolt', title: 'Instant tabs', text: 'The four tab screens stay loaded, so switching tabs doesn’t lag.' },
 ];
 ---
-<section id="features" class="relative py-24 md:py-32">
+<section id="features" class="relative py-16 md:py-24">
   <div class="wrap">
     <div class="max-w-3xl">
       <p class="eyebrow reveal">Features</p>
@@ -25,12 +25,12 @@ const more = [
       <p class="lead mt-6 reveal">Six things ExploreNDMU does well, shown with real captures from the app and its real data.</p>
     </div>
 
-    <div class="mt-16 lg:mt-24 lg:grid lg:grid-cols-[1fr_1fr] lg:gap-16">
+    <div class="mt-10 lg:mt-6 lg:grid lg:grid-cols-[1fr_1fr] lg:gap-16">
       <!-- Desktop: pinned stage -->
       <div class="hidden lg:block">
         <div class="sticky top-0 flex h-[100svh] items-center justify-center" data-stage>
           <div class="relative grid w-full place-items-center" style="min-height: 640px">
-            <div class="absolute inset-0 -z-10 rounded-full bg-[radial-gradient(closest-side,rgba(10,90,49,.45),transparent)] blur-2xl" aria-hidden="true"></div>
+            <div class="absolute inset-0 -z-10 rounded-full bg-[radial-gradient(closest-side,rgba(255,194,14,.35),transparent)] blur-2xl" aria-hidden="true"></div>
             {steps.map((s, i) => (
               <div class="stage-layer absolute inset-0 grid place-items-center" data-stage-layer={i} style={i === 0 ? '' : 'opacity:0;visibility:hidden'} aria-hidden={i === 0 ? 'false' : 'true'}>
                 <FeatureVisual kind={s.kind} idSuffix={`d${i}`} />
@@ -43,22 +43,22 @@ const more = [
       <!-- Steps -->
       <ol class="relative">
         {steps.map((s, i) => (
-          <li class="feature-step flex flex-col justify-center py-10 lg:min-h-[100svh] lg:py-0" data-step={i}>
+          <li id={`feature-${s.kind}`} class:list={["feature-step flex flex-col justify-center py-8 lg:min-h-[66svh] lg:py-0", i === 0 && "is-active"]} data-step={i}>
             <div class="feature-copy">
               <div class="flex items-center gap-4">
-                <span class="font-mono text-sm text-gold">{s.n}</span>
-                <span class="h-px flex-1 bg-white/10"></span>
-                <i class={`${s.icon} text-xl text-gold`}></i>
+                <span class="font-mono text-sm font-semibold text-gold-deep">{s.n}</span>
+                <span class="step-line h-0.5 flex-1 rounded-full bg-forest/15"></span>
+                <span class="icon-tile size-10"><i class={`${s.icon} text-lg`}></i></span>
               </div>
-              <h3 class="mt-6 text-[clamp(1.7rem,3vw,2.6rem)] font-semibold leading-tight">{s.title}</h3>
+              <h3 class="mt-5 text-[clamp(1.6rem,2.8vw,2.4rem)] font-semibold leading-tight text-fg">{s.title}</h3>
               <p class="lead mt-4">{s.text}</p>
               <ul class="mt-6 space-y-2.5">
                 {s.points.map((p) => (
-                  <li class="flex items-start gap-3 text-[.95rem]"><i class="fi-rr-arrow-small-right mt-1 text-gold"></i><span>{p}</span></li>
+                  <li class="flex items-start gap-3 text-[.95rem] text-fg"><i class="fi-rr-check mt-1 text-forest-2"></i><span>{p}</span></li>
                 ))}
               </ul>
             </div>
-            <div class="mt-10 flex justify-center lg:hidden">
+            <div class="mt-8 flex justify-center lg:hidden">
               <FeatureVisual kind={s.kind} idSuffix={`m${i}`} />
             </div>
           </li>
@@ -66,13 +66,13 @@ const more = [
       </ol>
     </div>
 
-    <div class="mt-16 lg:mt-8">
-      <h3 class="text-xl font-semibold reveal">And the small things that make it feel finished</h3>
+    <div class="mt-14 lg:mt-10">
+      <h3 class="text-xl font-semibold text-fg reveal">And the small things that make it feel finished</h3>
       <ul class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {more.map((m) => (
           <li class="card card-glow reveal flex gap-4 p-5">
-            <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-gold/10 text-gold"><i class={m.icon}></i></span>
-            <div><p class="font-display font-semibold">{m.title}</p><p class="mt-1 text-sm leading-relaxed text-mute">{m.text}</p></div>
+            <span class="icon-tile size-10 shrink-0"><i class={m.icon}></i></span>
+            <div><p class="font-display font-semibold text-fg">{m.title}</p><p class="mt-1 text-sm leading-relaxed text-mute">{m.text}</p></div>
           </li>
         ))}
       </ul>

@@ -23,19 +23,19 @@ const labelled = new Set(['Library', 'Gate 01', 'Gate 02', 'Gate 03', 'Gate 04',
     </filter>
   </defs>
   <g fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <g class="net-base" stroke={hero ? 'rgba(95,211,149,.22)' : 'rgba(95,211,149,.45)'} stroke-width={hero ? 2 : 2.4}>
+    <g class="net-base" stroke={hero ? 'rgba(10,90,49,.20)' : 'rgba(10,90,49,.42)'} stroke-width={hero ? 2 : 2.4}>
       {net.walks.map((w) => <path d={w.d} data-walk><title>{w.name}</title></path>)}
     </g>
-    <g class="net-pulse" stroke="#ffc20e" stroke-width={hero ? 3 : 3.4} filter={`url(#${id}-glow)`} opacity="0">
+    <g class="net-pulse" stroke="#f2b200" stroke-width={hero ? 3 : 3.4} filter={`url(#${id}-glow)`} opacity="0">
       {net.walks.map((w) => <path d={w.d} data-pulse />)}
     </g>
   </g>
   <g class="net-places">
     {net.places.map((p) => (
       <g class="net-place" data-place={p.name} transform={`translate(${p.x} ${p.y})`}>
-        <circle r={hero ? 4 : 6} fill={p.name.startsWith('Gate') ? '#ffc20e' : '#5fd395'} />
+        <circle r={hero ? 4 : 6} fill={p.name.startsWith('Gate') ? '#ffc20e' : '#0e7a43'} stroke={p.name.startsWith('Gate') ? '#8a5a00' : '#ffffff'} stroke-width={hero ? 1 : 1.5} />
         {!hero && labelled.has(p.name) && (
-          <text x="10" y="4" font-size="17" font-family="Inter Variable, sans-serif" fill="rgba(244,242,234,.85)" paint-order="stroke" stroke="#050f0a" stroke-width="4">{p.name}</text>
+          <text x="10" y="4" font-size="17" font-family="Inter Variable, sans-serif" font-weight="600" fill="#0b2a1b" paint-order="stroke" stroke="#fffaf0" stroke-width="5">{p.name}</text>
         )}
         <title>{p.name}</title>
       </g>

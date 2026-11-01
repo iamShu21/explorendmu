@@ -1,0 +1,77 @@
+---
+// A few of the places the app guides you to. Photos are the team's own; text comes from the app's place cards.
+import cardsData from '../data/info-cards.json';
+import net from '../data/campus-network.json';
+const routed = new Set(net.places.map((p) => p.name));
+const picks = [
+  { card: 'University Library', place: 'Library', img: 'library', alt: 'Entrance of the University Library' },
+  { card: 'University Clinic', place: 'Clinic', img: 'clinic', alt: 'Front of the University Clinic' },
+  { card: 'Gate 03 (Pantua Gate)', place: 'Gate 03', img: 'gate03', alt: 'Gate 03, the Pantua Gate' },
+  { card: 'University Gymnasium', place: 'University Gym', img: 'gym', alt: 'Covered entrance of the University Gymnasium' },
+  { card: 'Audio Visual Room 3 (AVR 3 San Lorenzo Ruiz Hall)', place: 'Audio Visual Room 3', img: 'avr3', alt: 'Window into Audio Visual Room 3' },
+  { card: 'Alumni Center', place: 'Alumni Center', img: 'alumni', alt: 'Inside the Alumni Center with the university heritage wall' },
+  { card: 'Bro. James Maurus Doherty Hall', place: 'Bro. James Maurus Doherty Hall', img: 'doherty', alt: 'Two floors of classrooms at Doherty Hall' },
+  { card: 'Bro. Xavier Creegan Hall', place: null, img: 'creegan', alt: 'Bro. Xavier Creegan Hall with the University Clinic sign' },
+  { card: 'San Lorenzo Ruiz Hall', place: null, img: 'slr', alt: 'San Lorenzo Ruiz Hall across the green lawn' },
+];
+const firstSentence = (t: string) => (t.match(/^.*?[.!?](\s|$)/)?.[0] ?? t).trim();
+const items = picks.map((p) => {
+  const c = cardsData.cards.find((x) => x.name === p.card)!;
+  const m = c.name.match(/^(.*?)\s*\(([^)]*)\)\s*$/);
+  const name = m && !/^AVR/.test(m[2]) ? m[1] : c.name.replace(/\s*\(AVR 3 San Lorenzo Ruiz Hall\)/, '');
+  const sub = m ? (/^AVR/.test(m[2]) ? 'San Lorenzo Ruiz Hall' : m[2]) : '';
+  return { ...p, name, sub, about: firstSentence(c.about), hours: (c.schedule ?? [])[0] ?? '', route: !!(p.place && routed.has(p.place)) };
+});
+---
+<section id="places" class="relative py-16 md:py-24">
+  <div class="wrap">
+    <div class="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+      <div class="max-w-2xl">
+        <p class="eyebrow reveal">Around campus</p>
+        <h2 class="h-section mt-5 reveal">{net.counts.places} places, <span class="gold-text">one tap away.</span></h2>
+        <p class="lead mt-6 reveal">A few of the buildings and offices ExploreNDMU can walk you to. Each one has a card in the app with what it’s for and when it’s open.</p>
+      </div>
+      <div class="hidden gap-2 lg:flex reveal" aria-hidden="false">
+        <button type="button" class="btn btn-ghost !p-0 size-12 justify-center" aria-label="Previous places" data-rail-prev><i class="fi-rr-angle-left"></i></button>
+        <button type="button" class="btn btn-ghost !p-0 size-12 justify-center" aria-label="Next places" data-rail-next><i class="fi-rr-angle-right"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-10" data-rail-root>
+    <ul class="rail flex gap-4 overflow-x-auto pb-4 md:gap-5" data-rail data-lenis-prevent-horizontal tabindex="0" aria-label="Campus places">
+      {items.map((p) => (
+        <li class="place-card w-[min(82vw,340px)] shrink-0 md:w-[360px]">
+          <article class="group card card-glow h-full overflow-hidden">
+            <div class="relative overflow-hidden">
+              <img src={`/img/place-${p.img}.webp`} alt={p.alt} width="960" height="480" loading="lazy" class="aspect-[2/1] w-full object-cover transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-105" />
+              {p.route
+                ? <span class="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-gold px-2.5 py-1 font-mono text-[.62rem] font-semibold uppercase tracking-wider text-ink shadow"><i class="fi-rr-navigation"></i>AR route</span>
+                : <span class="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-2.5 py-1 font-mono text-[.62rem] font-semibold uppercase tracking-wider text-fg shadow"><i class="fi-rr-building"></i>Building</span>}
+            </div>
+            <div class="p-5">
+              <h3 class="font-display text-lg font-semibold leading-snug text-fg">{p.name}</h3>
+              {p.sub && <p class="mt-0.5 text-xs font-medium text-mute">{p.sub}</p>}
+              <p class="mt-3 text-sm leading-relaxed text-mute">{p.about}</p>
+              {p.hours && <p class="mt-4 flex items-start gap-2 border-t border-forest/10 pt-3 text-xs font-medium text-fg"><i class="fi-rr-time-fast mt-0.5 text-forest-2"></i><span>{p.hours}</span></p>}
+            </div>
+          </article>
+        </li>
+      ))}
+      <li class="w-[min(82vw,300px)] shrink-0 md:w-[300px]">
+        <a href="#feature-directory" class="card card-glow flex h-full flex-col justify-between overflow-hidden !bg-forest p-6 text-white">
+          <span class="grid size-12 place-items-center rounded-2xl bg-gold text-ink text-lg"><i class="fi-rr-search"></i></span>
+          <span>
+            <span class="block font-display text-2xl font-semibold leading-tight text-white">And {cardsData.cards.length - items.length} more in the app</span>
+            <span class="mt-2 block text-sm leading-relaxed text-[#d9eadf]">Offices, labs, chapels, councils and gates, all searchable by name or acronym.</span>
+            <span class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-gold">Try the directory demo<i class="fi-rr-arrow-small-right"></i></span>
+          </span>
+        </a>
+      </li>
+    </ul>
+    <div class="wrap mt-4 flex items-center gap-4">
+      <div class="h-1 flex-1 overflow-hidden rounded-full bg-forest/10"><div class="h-full w-0 rounded-full bg-forest-2" data-rail-progress></div></div>
+      <p class="caption shrink-0">Swipe or scroll sideways</p>
+    </div>
+  </div>
+</section>

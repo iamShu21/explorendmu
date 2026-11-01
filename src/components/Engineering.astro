@@ -60,7 +60,7 @@ const code2 = String.raw`<span class="c">// Shape of a route file shipped in the
 }`;
 const stack = ['Unity', 'C#', 'AR Foundation 6.5', 'Google ARCore', 'Android TextToSpeech', 'TextMeshPro', 'DOTween', 'Node.js', 'Dijkstra', 'Haversine', 'QGIS', 'Google My Maps', 'Blender', 'Figma', 'draw.io'];
 ---
-<section id="engineering" class="relative py-24 md:py-32">
+<section id="engineering" class="relative py-16 md:py-24">
   <div class="wrap">
     <div class="grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-end">
       <div>
@@ -70,32 +70,36 @@ const stack = ['Unity', 'C#', 'AR Foundation 6.5', 'Google ARCore', 'Android Tex
       <p class="lead reveal">The hard part of campus AR isn’t drawing arrows. It’s knowing where the phone is, trusting the camera, and keeping a big Unity UI smooth on a mid-range Android phone.</p>
     </div>
 
-    <ul class="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <ul class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {notes.map((n) => (
         <li class="card card-glow reveal p-6">
-          <span class="grid size-11 place-items-center rounded-xl bg-gold/10 text-gold text-lg"><i class={n.icon}></i></span>
-          <h3 class="mt-5 text-lg font-semibold leading-snug">{n.title}</h3>
+          <span class="icon-tile size-11 text-lg"><i class={n.icon}></i></span>
+          <h3 class="mt-5 text-lg font-semibold leading-snug text-fg">{n.title}</h3>
           <p class="mt-2 text-sm leading-relaxed text-mute">{n.text}</p>
         </li>
       ))}
     </ul>
 
-    <div class="mt-6 card reveal p-2 md:p-3" data-tabs>
-      <div class="flex flex-wrap gap-1 p-1" role="tablist" aria-label="Code excerpts">
-        <button role="tab" type="button" class="chip !border-transparent !px-4 !py-2 aria-selected:!bg-white/10" aria-selected="true" data-tab="0"><i class="fi-rr-file-code text-gold"></i>VoiceCues.cs</button>
-        <button role="tab" type="button" class="chip !border-transparent !px-4 !py-2 aria-selected:!bg-white/10" aria-selected="false" data-tab="1"><i class="fi-rr-file-code text-gold"></i>GpsStart.cs</button>
-        <button role="tab" type="button" class="chip !border-transparent !px-4 !py-2 aria-selected:!bg-white/10" aria-selected="false" data-tab="2"><i class="fi-rr-brackets-curly text-gold"></i>route.json</button>
+    <div class="mt-5 reveal overflow-hidden rounded-[1.25rem] bg-[#0b1f15] shadow-[0_30px_60px_-30px_rgba(6,23,14,.6)] ring-1 ring-[#0a5a31]/40" data-tabs>
+      <div class="flex flex-wrap items-center gap-1 border-b border-white/10 px-2 py-2 md:px-3">
+        <span class="mr-2 hidden gap-1.5 pl-1 sm:flex" aria-hidden="true"><span class="size-2.5 rounded-full bg-[#ff6b5e]"></span><span class="size-2.5 rounded-full bg-[#ffc20e]"></span><span class="size-2.5 rounded-full bg-[#5fd395]"></span></span>
+        <div class="flex flex-wrap gap-1" role="tablist" aria-label="Code excerpts">
+          <button role="tab" type="button" class="code-tab" aria-selected="true" data-tab="0"><i class="fi-rr-file-code"></i>VoiceCues.cs</button>
+          <button role="tab" type="button" class="code-tab" aria-selected="false" data-tab="1"><i class="fi-rr-file-code"></i>GpsStart.cs</button>
+          <button role="tab" type="button" class="code-tab" aria-selected="false" data-tab="2"><i class="fi-rr-brackets-curly"></i>route.json</button>
+        </div>
+        <span class="ml-auto hidden pr-2 font-mono text-[.68rem] uppercase tracking-wider text-[#a9c6b5] md:block">Trimmed from the Unity project</span>
       </div>
 <div role="tabpanel" data-panel="0"><pre class="code"><code set:html={code0} /></pre></div>
 <div role="tabpanel" data-panel="1" hidden><pre class="code"><code set:html={code1} /></pre></div>
 <div role="tabpanel" data-panel="2" hidden><pre class="code"><code set:html={code2} /></pre></div>
     </div>
 
-    <div class="mt-14 reveal">
-      <p class="font-mono text-xs uppercase tracking-[.16em] text-mute">Tools and tech</p>
+    <div class="mt-12 reveal">
+      <p class="caption">Tools and tech</p>
       <div class="marquee mt-5 overflow-hidden">
         <ul class="flex w-max gap-3" style="animation: marquee 40s linear infinite">
-          {[...stack, ...stack].map((s, i) => <li class="chip !px-4 !py-2 whitespace-nowrap" aria-hidden={i >= stack.length ? 'true' : undefined}>{s}</li>)}
+          {[...stack, ...stack].map((s, i) => <li class="chip !px-4 !py-2 !text-sm whitespace-nowrap" aria-hidden={i >= stack.length ? 'true' : undefined}>{s}</li>)}
         </ul>
       </div>
     </div>

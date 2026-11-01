@@ -12,7 +12,7 @@ const phone = [
   { icon: 'fi-rr-flag-alt', title: 'Arrive', text: 'Within 60 m the gold pin appears; at the end the voice says you arrived and the place card opens.' },
 ];
 ---
-<section id="how" class="relative py-24 md:py-32">
+<section id="how" class="relative py-16 md:py-24">
   <div class="wrap">
     <div class="max-w-3xl">
       <p class="eyebrow reveal">How it works</p>
@@ -20,17 +20,17 @@ const phone = [
       <p class="lead mt-6 reveal">No routing server and no internet needed during a walk. The hard work happens before the app is built.</p>
     </div>
 
-    <div class="mt-14 grid gap-6 lg:grid-cols-2">
+    <div class="mt-10 grid gap-5 lg:grid-cols-2">
       {[{ label: 'Once, on the laptop', items: offline }, { label: 'Every walk, on the phone', items: phone }].map((lane, li) => (
         <div class="card reveal p-6 md:p-7">
-          <p class="font-mono text-xs uppercase tracking-[.16em] text-mute">{lane.label}</p>
+          <p class="inline-flex items-center gap-2 rounded-full bg-forest px-3 py-1.5 font-mono text-[.7rem] font-semibold uppercase tracking-[.14em] text-white"><i class={li === 0 ? 'fi-rr-laptop-code' : 'fi-rr-smartphone'}></i>{lane.label}</p>
           <ol class="pipeline mt-6 space-y-0">
             {lane.items.map((s, i) => (
               <li class="relative flex gap-4 pb-7 last:pb-0">
-                {i < lane.items.length - 1 && <span class="pipe-line absolute left-[1.2rem] top-11 bottom-1 w-px bg-white/10"><span class="pipe-fill block h-0 w-px bg-gold"></span></span>}
-                <span class:list={['grid size-10 shrink-0 place-items-center rounded-xl', li === 1 && i === 2 ? 'bg-gold text-ink' : 'bg-white/5 text-gold']}><i class={s.icon}></i></span>
+                {i < lane.items.length - 1 && <span class="pipe-line absolute left-[1.2rem] top-11 bottom-1 w-px bg-forest/15"><span class="pipe-fill block h-0 w-px bg-forest-2"></span></span>}
+                <span class:list={['grid size-10 shrink-0 place-items-center rounded-xl', li === 1 && i === 2 ? 'bg-forest text-gold' : 'icon-tile']}><i class={s.icon}></i></span>
                 <div>
-                  <p class="font-display font-semibold">{s.title}</p>
+                  <p class="font-display font-semibold text-fg">{s.title}</p>
                   <p class="mt-1 text-sm leading-relaxed text-mute">{s.text}</p>
                 </div>
               </li>
@@ -40,23 +40,23 @@ const phone = [
       ))}
     </div>
 
-    <div class="mt-6 card reveal overflow-hidden">
+    <div class="mt-5 card reveal overflow-hidden">
       <div class="grid lg:grid-cols-[1fr_300px]">
-        <div class="relative bg-[radial-gradient(circle_at_40%_50%,rgba(10,90,49,.35),transparent_70%)] p-4 md:p-8">
+        <div class="relative bg-[radial-gradient(circle_at_45%_50%,rgba(255,194,14,.22),transparent_70%)] p-4 md:p-8">
           <CampusNetwork id="map-net" variant="map" class="h-auto w-full" />
         </div>
-        <div class="flex flex-col justify-center gap-6 border-t border-white/10 p-6 lg:border-l lg:border-t-0 md:p-8">
+        <div class="flex flex-col justify-center gap-6 border-t border-forest/10 p-6 lg:border-l lg:border-t-0 md:p-8">
           <div>
-            <p class="font-display text-lg font-semibold">The real walk network</p>
+            <p class="font-display text-lg font-semibold text-fg">The real walk network</p>
             <p class="mt-2 text-sm leading-relaxed text-mute">Every line is a route the team walked with GPS. Gold dots are the four gates; green dots are places. Hover a line to see its name.</p>
           </div>
           <dl class="grid grid-cols-2 gap-4 text-sm">
-            <div><dt class="text-mute">Walks</dt><dd class="font-display text-2xl font-semibold">45</dd></div>
-            <div><dt class="text-mute">Walked routes</dt><dd class="font-display text-2xl font-semibold">{net.counts.walked}</dd></div>
-            <div><dt class="text-mute">Marked junctions</dt><dd class="font-display text-2xl font-semibold">{net.counts.intersections}</dd></div>
-            <div><dt class="text-mute">Joined routes</dt><dd class="font-display text-2xl font-semibold">{net.counts.joined.toLocaleString('en-US')}</dd></div>
+            <div><dt class="text-mute">Walks</dt><dd class="font-display text-2xl font-semibold text-fg">45</dd></div>
+            <div><dt class="text-mute">Walked routes</dt><dd class="font-display text-2xl font-semibold text-fg">{net.counts.walked}</dd></div>
+            <div><dt class="text-mute">Marked junctions</dt><dd class="font-display text-2xl font-semibold text-fg">{net.counts.intersections}</dd></div>
+            <div><dt class="text-mute">Joined routes</dt><dd class="font-display text-2xl font-semibold text-fg">{net.counts.joined.toLocaleString('en-US')}</dd></div>
           </dl>
-          <p class="text-xs text-mute/70">Source: route export of Oct 30, 2026.</p>
+          <p class="caption">Source: route export of Oct 30, 2026</p>
         </div>
       </div>
     </div>

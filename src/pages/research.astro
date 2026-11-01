@@ -23,13 +23,13 @@ const cite = 'Amoran, S. A. D., Herradura, B. R., & Villanueva, E. T. (2026). Ex
   description="The research behind ExploreNDMU: abstract, objectives, method and system design figures of the BS Information Technology capstone at Notre Dame of Marbel University."
 >
   <section class="relative overflow-hidden pt-32 pb-16 md:pt-40">
-    <div class="absolute inset-0 -z-10 bg-[radial-gradient(60%_60%_at_80%_0%,rgba(10,90,49,.5),transparent_70%)]" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(60%_60%_at_80%_0%,rgba(255,194,14,.28),transparent_70%)]" aria-hidden="true"></div>
     <div class="wrap max-w-4xl">
       <p class="eyebrow hero-in">Capstone research · October 2026</p>
-      <h1 class="mt-6 text-[clamp(2rem,5vw,3.6rem)] font-semibold leading-[1.05]" data-split>
+      <h1 class="mt-6 text-[clamp(2rem,5vw,3.6rem)] font-semibold leading-[1.08] text-fg" data-split>
         ExploreNDMU: An Augmented Reality-Based Campus Tour, Navigation, and Information System for Notre Dame of Marbel University
       </h1>
-      <div class="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm hero-in">
+      <div class="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm font-medium text-fg hero-in">
         <p><span class="text-mute">Researchers</span><br />Shuhari Alaihim D. Amoran · Ben Raffy Herradura · Edward T. Villanueva</p>
         <p><span class="text-mute">Adviser</span><br />Vince Marc B. Sabado, MSIT</p>
         <p><span class="text-mute">Program</span><br />BS Information Technology, NDMU</p>
@@ -40,8 +40,8 @@ const cite = 'Amoran, S. A. D., Herradura, B. R., & Villanueva, E. T. (2026). Ex
   <section class="pb-10">
     <div class="wrap max-w-4xl space-y-6">
       <article class="card reveal p-7 md:p-10">
-        <h2 class="text-2xl font-semibold">Abstract</h2>
-        <p class="mt-5 leading-[1.8] text-paper/85">
+        <h2 class="text-2xl font-semibold text-fg">Abstract</h2>
+        <p class="mt-5 leading-[1.8] text-fg">
           Finding buildings and offices on a large campus is difficult for freshmen, visitors, and parents, and Notre Dame of Marbel
           University (NDMU) still relies on printed maps, signs, a 3D campus model, and verbal directions. This study developed
           ExploreNDMU, an Android augmented reality (AR) application that combines a campus tour, AR-assisted navigation, and a campus
@@ -58,22 +58,22 @@ const cite = 'Amoran, S. A. D., Herradura, B. R., & Villanueva, E. T. (2026). Ex
       </article>
 
       <article class="card reveal p-7 md:p-10">
-        <h2 class="text-2xl font-semibold">Objectives</h2>
+        <h2 class="text-2xl font-semibold text-fg">Objectives</h2>
         <ol class="mt-6 space-y-5">
           {objectives.map((o, i) => (
-            <li class="flex gap-5"><span class="font-mono text-gold">0{i + 1}</span><p class="leading-relaxed text-paper/85">{o}</p></li>
+            <li class="flex gap-5"><span class="font-mono font-semibold text-gold-deep">0{i + 1}</span><p class="leading-relaxed text-fg">{o}</p></li>
           ))}
         </ol>
       </article>
 
       <article class="card reveal grid gap-6 p-7 md:grid-cols-2 md:p-10">
         <div>
-          <h2 class="text-2xl font-semibold">Method</h2>
-          <p class="mt-4 leading-relaxed text-mute">The team used the <span class="text-paper">Prototyping Model</span>: each version was built, tested on campus and refined before the next. This suits AR, where tracking, GPS and lighting only show their problems outdoors.</p>
+          <h2 class="text-2xl font-semibold text-fg">Method</h2>
+          <p class="mt-4 leading-relaxed text-mute">The team used the <span class="font-semibold text-fg">Prototyping Model</span>: each version was built, tested on campus and refined before the next. This suits AR, where tracking, GPS and lighting only show their problems outdoors.</p>
         </div>
         <div>
-          <h2 class="text-2xl font-semibold">Evaluation</h2>
-          <p class="mt-4 leading-relaxed text-mute">Usability (SUS), acceptance (TAM) and user acceptance testing (UAT) with students and visitors. <span class="text-paper">Evaluation is in progress; results will be posted here.</span></p>
+          <h2 class="text-2xl font-semibold text-fg">Evaluation</h2>
+          <p class="mt-4 leading-relaxed text-mute">Usability (SUS), acceptance (TAM) and user acceptance testing (UAT) with students and visitors. <span class="font-semibold text-fg">Evaluation is in progress; results will be posted here.</span></p>
         </div>
       </article>
     </div>
@@ -90,10 +90,10 @@ const cite = 'Amoran, S. A. D., Herradura, B. R., & Villanueva, E. T. (2026). Ex
         {figures.map((f) => (
           <li class="reveal">
             <button type="button" class="card card-glow group block w-full overflow-hidden text-left" data-lightbox={f.src} data-lightbox-alt={`${f.n}. ${f.t}`}>
-              <div class="bg-white p-3"><img src={f.src} alt={`${f.n}. ${f.t}`} width={f.w} height={f.h} loading="lazy" class="mx-auto max-h-80 w-auto object-contain transition-transform duration-500 group-hover:scale-[1.02]" /></div>
+              <div class="border-b border-forest/10 bg-white p-3"><img src={f.src} alt={`${f.n}. ${f.t}`} width={f.w} height={f.h} loading="lazy" class="mx-auto max-h-80 w-auto object-contain transition-transform duration-500 group-hover:scale-[1.02]" /></div>
               <div class="p-5">
-                <p class="font-mono text-xs uppercase tracking-[.14em] text-gold">{f.n}</p>
-                <p class="mt-1 font-display text-lg font-semibold">{f.t}</p>
+                <p class="font-mono text-xs font-semibold uppercase tracking-[.14em] text-gold-deep">{f.n}</p>
+                <p class="mt-1 font-display text-lg font-semibold text-fg">{f.t}</p>
                 <p class="mt-2 text-sm leading-relaxed text-mute">{f.d}</p>
               </div>
             </button>
@@ -106,15 +106,15 @@ const cite = 'Amoran, S. A. D., Herradura, B. R., & Villanueva, E. T. (2026). Ex
   <section class="py-16">
     <div class="wrap max-w-4xl">
       <div class="card reveal p-7 md:p-10">
-        <h2 class="text-2xl font-semibold">Cite this work</h2>
-        <p class="mt-5 rounded-xl border border-white/10 bg-ink p-5 font-mono text-sm leading-relaxed text-paper/85" data-cite>{cite}</p>
+        <h2 class="text-2xl font-semibold text-fg">Cite this work</h2>
+        <p class="mt-5 rounded-xl border border-forest/15 bg-[#fffbef] p-5 font-mono text-sm leading-relaxed text-fg" data-cite>{cite}</p>
         <button type="button" class="btn btn-ghost mt-5 !text-sm" data-copy-cite><i class="fi-rr-document"></i><span>Copy citation</span></button>
       </div>
     </div>
   </section>
 
-  <dialog class="m-auto max-h-[92vh] w-[min(96vw,1400px)] rounded-2xl bg-white p-0 backdrop:bg-black/80" data-lightbox-dialog>
-    <form method="dialog" class="absolute right-3 top-3"><button class="grid size-10 place-items-center rounded-full bg-ink text-paper" aria-label="Close"><i class="fi-rr-cross"></i></button></form>
+  <dialog class="m-auto max-h-[92vh] w-[min(96vw,1400px)] rounded-2xl bg-white p-0 backdrop:bg-[#06170e]/80" data-lightbox-dialog>
+    <form method="dialog" class="absolute right-3 top-3"><button class="grid size-10 place-items-center rounded-full bg-forest text-white shadow-lg" aria-label="Close"><i class="fi-rr-cross"></i></button></form>
     <img src="" alt="" class="h-auto w-full" data-lightbox-img />
   </dialog>
 </Base>

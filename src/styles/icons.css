@@ -2,12 +2,16 @@
 @font-face{font-family:"uicons-rr";src:url("/fonts/uicons-rr-subset.woff2") format("woff2");font-display:block}
 [class^="fi-rr-"],[class*=" fi-rr-"]{display:inline-flex;line-height:1}
 [class^="fi-rr-"]::before,[class*=" fi-rr-"]::before{font-family:"uicons-rr"!important;font-style:normal;font-weight:400!important;line-height:1;-webkit-font-smoothing:antialiased}
+.fi-rr-angle-left::before{content:"\f151"}
+.fi-rr-angle-right::before{content:"\f152"}
 .fi-rr-arrow-small-right::before{content:"\f19e"}
 .fi-rr-arrow-up-right-from-square::before{content:"\f1b3"}
 .fi-rr-bolt::before{content:"\f26c"}
 .fi-rr-book-alt::before{content:"\f274"}
 .fi-rr-brackets-curly::before{content:"\f2bf"}
+.fi-rr-building::before{content:"\f303"}
 .fi-rr-camera::before{content:"\f348"}
+.fi-rr-check::before{content:"\f3c8"}
 .fi-rr-cross::before{content:"\f4f7"}
 .fi-rr-cube::before{content:"\f500"}
 .fi-rr-database::before{content:"\f525"}

@@ -1,0 +1,20 @@
+---
+// A muted, looping screen capture. Nothing is downloaded until the clip is near the screen (see initVideos in core.js).
+interface Props { name: string; label: string; w?: number; h?: number; loop?: boolean; hold?: boolean; class?: string; dir?: string; poster?: string; }
+const { name, label, w = 540, h = 864, loop = true, hold = false, class: cls = '', dir = 'video', poster } = Astro.props;
+---
+<video
+  class={cls}
+  data-lazy
+  data-src={`${dir}/${name}.mp4`}
+  data-hold={hold ? '1' : undefined}
+  poster={poster ?? `${dir}/${name}.webp`}
+  width={w}
+  height={h}
+  muted
+  playsinline
+  loop={loop}
+  preload="none"
+  disablepictureinpicture
+  aria-label={label}
+></video>

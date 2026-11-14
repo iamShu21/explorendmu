@@ -266,8 +266,8 @@ export function createCampus(canvas, { net, mode = 'hero', route, phone = false,
     // a chase camera: behind and above the walker, looking down the route
     at(p, tmp); at(Math.min(1, p + 0.06), look); at(Math.max(0, p - 0.05), tmp2);
     const dx = look.x - tmp2.x, dz = look.z - tmp2.z, l = Math.hypot(dx, dz) || 1;
-    camPos.set(tmp.x - (dx / l) * 1.05, 0.92, tmp.z - (dz / l) * 1.05);
-    look.set(tmp.x + (dx / l) * 0.55, 0.04, tmp.z + (dz / l) * 0.55);
+    camPos.set(tmp.x - (dx / l) * 1.5, 1.45, tmp.z - (dz / l) * 1.5);
+    look.set(tmp.x + (dx / l) * 0.5, 0.02, tmp.z + (dz / l) * 0.5);
     if (first) { smoothPos.copy(camPos); smoothLook.copy(look); first = false; }
     smoothPos.lerp(camPos, 0.14); smoothLook.lerp(look, 0.18);
     camera.position.copy(smoothPos); camera.lookAt(smoothLook);

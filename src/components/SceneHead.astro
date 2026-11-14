@@ -1,0 +1,18 @@
+---
+// Scene heading: the junction counter ("04 / 15"), the headline, and one lead paragraph.
+import { scenes, numberOf, total } from '../data/scenes';
+interface Props { id: string; title: string; lead?: string; class?: string; }
+const { id, title, lead, class: cls = '' } = Astro.props;
+const scene = scenes.find((s) => s.id === id)!;
+---
+<header class:list={['scene-head', cls]}>
+  <p class="counter rv"><b>{numberOf(id)} / {String(total).padStart(2, '0')}</b><span>{scene.title}</span></p>
+  <h2 class="t-h2" data-split>{title}</h2>
+  {lead && <p class="t-lead rv">{lead}</p>}
+  <slot />
+</header>
+
+<style is:global>
+  .scene-head { display: grid; gap: clamp(0.9rem, 2.2vh, 1.5rem); justify-items: start; }
+  .scene-head .t-h2 { max-width: 11em; }
+</style>

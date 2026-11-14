@@ -1,0 +1,87 @@
+---
+// Scroll to walk: scrolling walks the real Gate 03 to Library route. Three things move together:
+// the camera on the 3D campus, the app's own recording of that walk, and the distance counter.
+import SceneHead from '../SceneHead.astro';
+import Device from '../Device.astro';
+import net from '../../data/campus-network.json';
+import routes from '../../data/routes.gen.json';
+import { scenes } from '../../data/scenes';
+const me = scenes.find((s) => s.id === 'walk')!;
+const metres = routes.walk.recordedMetres;
+const walkD = routes.walk.pts.map((p, i) => `${i ? 'L' : 'M'}${p[0]} ${p[1]}`).join(' ');
+---
+<section class="scene pin-scene walk" id="walk" data-scene data-travel={me.travel} style="--len: 3.4">
+  <div class="pin">
+    <canvas class="walk__canvas" data-walk-canvas aria-hidden="true"></canvas>
+    <div class="wrap walk__grid">
+      <div class="walk__copy">
+        <SceneHead id="walk" title="Scroll to walk." lead="Gate 03 to the Library, the way the team walked it. Keep scrolling: the camera, the recording and the counter move together." />
+        <div class="walk__meter" aria-live="off">
+          <p class="walk__num"><span class="t-num" data-walk-metres>0</span><span class="walk__unit"> m</span></p>
+          <p class="t-small">walked of {metres} m. <span data-walk-left>About {metres} m to go.</span></p>
+          <span class="walk__bar" aria-hidden="true"><span data-walk-bar></span></span>
+        </div>
+        <!-- The same route as a flat drawing: shown instead of the 3D view on weak devices and without WebGL. -->
+        <svg class="walk__map" viewBox={`0 0 ${net.width} ${net.height}`} role="img" aria-label={`The Gate 03 to Library route drawn over the ${net.counts.walked} walked routes`}>
+          <g fill="none" stroke="rgb(10 90 49 / .22)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            {net.walks.map((w) => <path d={w.d} />)}
+          </g>
+          <path d={walkD} fill="none" stroke="rgb(255 194 14 / .4)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" />
+          <path d={walkD} fill="none" stroke="#c98a00" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" data-walk-line />
+          <circle r="11" fill="#ffc20e" stroke="#06301d" stroke-width="3" data-walk-dot cx={routes.walk.pts[0][0]} cy={routes.walk.pts[0][1]} />
+        </svg>
+      </div>
+      <div class="walk__right">
+        <Device class="walk__device" label="The app's recording of the walk from Gate 03 to the Library, moving with the scroll">
+          <img src="seq/walk/001.webp" width="320" height="512" alt="" loading="lazy" decoding="async" />
+          <canvas data-walk-frames width="320" height="512" aria-hidden="true"></canvas>
+        </Device>
+        <p class="cap-note walk__note">Real recording of the walk, {Math.round(208 / 60 * 10) / 10} minutes long.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .walk .pin { background: linear-gradient(180deg, transparent, rgb(255 253 246 / 0.5) 30%, rgb(255 253 246 / 0.5) 70%, transparent); }
+  .walk__canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.8s ease; }
+  .walk.is-live .walk__canvas { opacity: 1; }
+  .walk__grid { position: relative; height: 100%; display: grid; gap: 1rem; grid-template-rows: auto minmax(0, 1fr); padding-top: calc(var(--header-h) + 0.75rem); padding-bottom: calc(var(--tourbar-h) + 1.75rem); }
+  .walk__copy { display: grid; gap: clamp(0.75rem, 2vh, 1.5rem); align-content: start; }
+  .walk__meter { display: grid; gap: 0.25rem; max-width: 22rem; }
+  .walk__num { font-family: var(--font-display); font-size: clamp(3.4rem, 9vw, 7rem); line-height: 0.9; color: var(--color-forest); letter-spacing: -0.02em; }
+  .walk__unit { font-size: 0.42em; letter-spacing: 0; }
+  .walk__bar { display: block; height: 3px; margin-top: 0.5rem; border-radius: 3px; background: rgb(10 90 49 / 0.16); overflow: hidden; }
+  .walk__bar span { display: block; height: 100%; background: var(--color-gold-deep); transform-origin: 0 50%; transform: scaleX(0); }
+  .walk__map { display: none; width: 100%; max-width: 30rem; height: auto; }
+  .walk:not(.is-live) .walk__map { display: block; }
+  .walk__right { min-height: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; justify-items: center; gap: 0.5rem; }
+  .walk__device { height: 100%; max-height: 36rem; aspect-ratio: 5.36 / 8.36; }
+  .walk__device .device { height: 100%; width: auto; }
+  .walk__note { text-align: center; }
+  @media (max-width: 59.99rem) {
+    .walk .scene-head .t-lead { display: none; }
+    .walk .scene-head .t-h2 { font-size: clamp(2rem, 9vw, 3rem); }
+    .walk__num { font-size: clamp(2.6rem, 13vw, 4rem); }
+    .walk__copy { padding: 0.9rem 1rem; border-radius: 1.1rem; background: rgb(255 253 246 / 0.86); box-shadow: 0 0 0 1px rgb(10 90 49 / 0.1); gap: 0.5rem; }
+    .walk .scene-head { gap: 0.4rem; }
+    .walk:not(.is-live) .walk__map { display: none; }
+    /* on a phone the 3D view fills the top half, behind the words, and the recording sits lower right */
+    .walk__right { justify-items: end; }
+    .walk__device { max-height: min(100%, 22rem); }
+    .walk__note { display: none; }
+  }
+  @media (min-width: 60rem) {
+    .walk__grid { grid-template-rows: none; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: clamp(2rem, 5vw, 5rem); }
+    .walk__copy { align-content: center; max-width: 30rem; padding: clamp(1.25rem, 2.5vw, 2rem); border-radius: 1.5rem; background: rgb(255 253 246 / 0.78); box-shadow: 0 0 0 1px rgb(10 90 49 / 0.1); }
+    @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) { .walk__copy { background: rgb(255 253 246 / 0.6); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); } }
+    .walk__right { height: 100%; }
+    .walk__device { max-height: min(100%, 36rem); }
+  }
+  html.reduced .walk__grid, html.no-js .walk__grid { height: auto; padding-block: 6rem 4rem; }
+  html.reduced .walk__device, html.no-js .walk__device { height: auto; width: min(100%, 18rem); }
+  html.reduced .walk__device .device, html.no-js .walk__device .device { height: auto; width: 100%; }
+  html.reduced .walk__canvas, html.no-js .walk__canvas { display: none; }
+  html.reduced .walk__map, html.no-js .walk__map { display: block !important; }
+  html.reduced [data-walk-line], html.no-js [data-walk-line] { stroke-dashoffset: 0; }
+</style>

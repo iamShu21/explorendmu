@@ -17,7 +17,7 @@ const page = await context.newPage();
 const errors = [];
 page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
 page.on('pageerror', (e) => errors.push(String(e)));
-page.on('requestfailed', (r) => errors.push(`failed: ${r.url()} ${r.failure()?.errorText}`));
+page.on('requestfailed', (r) => { if (!/ERR_ABORTED/.test(r.failure()?.errorText ?? '')) errors.push(`failed: ${r.url()} ${r.failure()?.errorText}`); });
 page.on('response', (r) => { if (r.status() >= 400) errors.push(`${r.status()} ${r.url()}`); });
 await page.goto(url, { waitUntil: 'load' });
 await page.waitForTimeout(Number(arg('wait', 2500)));

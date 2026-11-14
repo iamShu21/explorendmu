@@ -1,4 +1,11 @@
-// Sets up every scene below the hero, in page order.
+// Sets up every scene below the hero, in page order (ScrollTriggers must be created top to bottom).
+import { initFollow, initWalk, initHear, initArrive } from './story.js';
+import { initProblem } from './problem.js';
+
 export function initScenes(ctx) {
-  // scenes register themselves here as they are built
+  initProblem(ctx);
+  initFollow(ctx);
+  initWalk(ctx);
+  initHear(ctx);
+  initArrive(ctx);
 }

@@ -1,6 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
 import Hero from '../components/scenes/Hero.astro';
+import Problem from '../components/scenes/Problem.astro';
+import Follow from '../components/scenes/Follow.astro';
+import Walk from '../components/scenes/Walk.astro';
+import Hear from '../components/scenes/Hear.astro';
+import Arrive from '../components/scenes/Arrive.astro';
 import { FACTS } from '../config';
 ---
 <Base
@@ -9,6 +14,11 @@ import { FACTS } from '../config';
 >
   <link slot="head" rel="preload" as="image" type="image/avif" imagesrcset="img/hero-island-720.avif 720w, img/hero-island-1440.avif 1440w" imagesizes="(min-width: 60rem) 66vw, 100vw" fetchpriority="high" />
   <Hero />
+  <Problem />
+  <Follow />
+  <Walk />
+  <Hear />
+  <Arrive />
   <script>
     import '../scripts/main.js';
   </script>

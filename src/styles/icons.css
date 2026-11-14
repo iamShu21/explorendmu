@@ -4,6 +4,7 @@
 [class^="fi-rr-"]::before,[class*=" fi-rr-"]::before{font-family:"uicons-rr"!important;font-style:normal;font-weight:400!important;line-height:1;-webkit-font-smoothing:antialiased}
 .fi-rr-cross::before{content:"\f4f7"}
 .fi-rr-document::before{content:"\f57a"}
+.fi-rr-door-open::before{content:"\f587"}
 .fi-rr-download::before{content:"\f591"}
 .fi-rr-list::before{content:"\f8c4"}
 .fi-rr-pause::before{content:"\fa0c"}

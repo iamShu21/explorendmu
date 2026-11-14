@@ -1,0 +1,182 @@
+[
+ {
+  "at": "00:00",
+  "text": "Every school year, new students, transferees,"
+ },
+ {
+  "at": "00:03",
+  "text": "and visitors walk through the gates of Notre Dame of Marbel University."
+ },
+ {
+  "at": "00:08",
+  "text": "It's a big campus, full of buildings, offices, and places to discover."
+ },
+ {
+  "at": "00:14",
+  "text": "But finding your way isn't always easy."
+ },
+ {
+  "at": "00:17",
+  "text": "Most newcomers have to ask around, or rely on signs."
+ },
+ {
+  "at": "00:21",
+  "text": "So our study set out to build three things: an augmented reality campus tour,"
+ },
+ {
+  "at": "00:26",
+  "text": "AR assisted navigation, and one place for campus information."
+ },
+ {
+  "at": "00:33",
+  "text": "Meet ExploreNDMU."
+ },
+ {
+  "at": "00:36",
+  "text": "An Android app built with Unity, AR Foundation, and ARCore."
+ },
+ {
+  "at": "00:40",
+  "text": "It works fully offline, and it greets you with a quick tour of what it can do."
+ },
+ {
+  "at": "00:49",
+  "text": "Looking for an office?"
+ },
+ {
+  "at": "00:51",
+  "text": "Open the directory."
+ },
+ {
+  "at": "00:52",
+  "text": "Search, or browse by category, and read each place's details and services."
+ },
+ {
+  "at": "00:57",
+  "text": "Save the places you visit often, so they're always one tap away."
+ },
+ {
+  "at": "01:06",
+  "text": "Now, let's go to the Library."
+ },
+ {
+  "at": "01:08",
+  "text": "Tap Navigate here, and choose where you're starting from."
+ },
+ {
+  "at": "01:12",
+  "text": "Then, lift your phone."
+ },
+ {
+  "at": "01:14",
+  "text": "Gold arrows appear on the ground through your camera, showing the way,"
+ },
+ {
+  "at": "01:18",
+  "text": "step by step."
+ },
+ {
+  "at": "01:19",
+  "text": "A voice tells you when to turn,"
+ },
+ {
+  "at": "01:21",
+  "text": "and the screen shows how far you have left to go."
+ },
+ {
+  "at": "01:24",
+  "text": "No map reading."
+ },
+ {
+  "at": "01:25",
+  "text": "No need to ask for directions."
+ },
+ {
+  "at": "01:27",
+  "text": "Just follow the arrows."
+ },
+ {
+  "at": "01:43",
+  "text": "When you arrive, a gold pin marks your destination,"
+ },
+ {
+  "at": "01:46",
+  "text": "and an info card tells you about the place in front of you."
+ },
+ {
+  "at": "01:54",
+  "text": "New to campus?"
+ },
+ {
+  "at": "01:56",
+  "text": "Start a guided tour from any of the four gates."
+ },
+ {
+  "at": "01:59",
+  "text": "The app leads you from stop to stop, and you can skip a stop whenever you like."
+ },
+ {
+  "at": "02:06",
+  "text": "Scan a printed marker, and the university's statues appear in 3D."
+ },
+ {
+  "at": "02:11",
+  "text": "Mother Mary, Saint Marcellin Champagnat, and the Bronze Stallion."
+ },
+ {
+  "at": "02:16",
+  "text": "Walk around them, and see every detail up close."
+ },
+ {
+  "at": "02:26",
+  "text": "How does it work?"
+ },
+ {
+  "at": "02:27",
+  "text": "Our team walked the campus routes and recorded them."
+ },
+ {
+  "at": "02:30",
+  "text": "The app joins these paths,"
+ },
+ {
+  "at": "02:32",
+  "text": "and uses Dijkstra's shortest path algorithm to"
+ },
+ {
+  "at": "02:35",
+  "text": "find the best way to your destination."
+ },
+ {
+  "at": "02:38",
+  "text": "Everything lives inside the app, so newcomers can find their way,"
+ },
+ {
+  "at": "02:42",
+  "text": "get information in one place, and reach where they're going,"
+ },
+ {
+  "at": "02:45",
+  "text": "without asking for directions."
+ },
+ {
+  "at": "02:59",
+  "text": "ExploreNDMU."
+ },
+ {
+  "at": "03:01",
+  "text": "Your campus, in your hands."
+ },
+ {
+  "at": "03:03",
+  "text": "Explore."
+ },
+ {
+  "at": "03:04",
+  "text": "Navigate."
+ },
+ {
+  "at": "03:05",
+  "text": "Discover."
+ }
+]

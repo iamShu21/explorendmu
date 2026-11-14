@@ -1,0 +1,26 @@
+---
+// Short intro: the N logo is drawn in, then the gradient blooms behind the page.
+// Under 1.5 s, skippable with any click or key, shown once per visit, never with reduced motion.
+---
+<div class="intro" data-intro aria-hidden="true">
+  <svg class="intro__logo" viewBox="0 0 200 200" width="200" height="200">
+    <defs>
+      <!-- The logo is revealed through a stroke that follows the N: up the left stem, down the gold band, up into the pin. -->
+      <mask id="intro-draw" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="200">
+        <path data-intro-path d="M38 176 L38 44 L162 168 L162 30" fill="none" stroke="#fff" stroke-width="88" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" />
+      </mask>
+    </defs>
+    <image href="img/logo-n-512.webp" width="200" height="200" mask="url(#intro-draw)" />
+  </svg>
+  <svg class="intro__ring" viewBox="0 0 100 100" width="300" height="300">
+    <circle data-intro-ring cx="50" cy="50" r="48" fill="none" stroke="#ffc20e" stroke-width="0.7" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" transform="rotate(-90 50 50)" />
+  </svg>
+</div>
+
+<style is:global>
+  .intro { display: none; }
+  html.intro-on .intro { position: fixed; inset: 0; z-index: 120; display: grid; place-items: center; background: #fffdf6; cursor: pointer; }
+  .intro > * { grid-area: 1 / 1; }
+  .intro__logo { width: min(34vw, 9.5rem); height: auto; }
+  .intro__ring { width: min(62vw, 17rem); height: auto; }
+</style>

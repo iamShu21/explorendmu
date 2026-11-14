@@ -1,0 +1,80 @@
+---
+// Auto-scroll tour controls. Floating, bottom centre, above the iOS home indicator.
+import { scenes, total } from '../data/scenes';
+---
+<div class="tourbar glass" data-tourbar role="region" aria-label="Guided tour">
+  <button type="button" class="tourbar__play" data-tour-toggle aria-pressed="false">
+    <i class="fi-rr-play" data-tour-icon aria-hidden="true"></i>
+    <span data-tour-label>Start tour</span>
+    <kbd aria-hidden="true">P</kbd>
+  </button>
+  <div class="tourbar__speed" role="group" aria-label="Tour speed">
+    <button type="button" data-tour-speed="normal" aria-pressed="true">Normal</button>
+    <button type="button" data-tour-speed="fast" aria-pressed="false">Fast</button>
+  </div>
+  <ol class="tourbar__dots" aria-label="Scenes">
+    {scenes.map((s, i) => (
+      <li><button type="button" data-tour-jump={s.id} aria-label={`Scene ${i + 1} of ${total}: ${s.title}`} title={s.title}><span></span></button></li>
+    ))}
+  </ol>
+  <button type="button" class="tourbar__count" data-tour-list-toggle aria-expanded="false" aria-controls="tour-list" aria-label="Choose a scene">
+    <span class="t-num" data-tour-count>01 / {String(total).padStart(2, '0')}</span>
+    <i class="fi-rr-list" aria-hidden="true"></i>
+  </button>
+  <span class="tourbar__progress" aria-hidden="true"><span data-tour-progress></span></span>
+  <p class="tourbar__status" role="status" aria-live="polite" data-tour-status></p>
+</div>
+<div class="tourlist glass" id="tour-list" data-tour-list hidden>
+  <ol>
+    {scenes.map((s, i) => (
+      <li><button type="button" data-tour-jump={s.id}><span class="t-num">{String(i + 1).padStart(2, '0')}</span>{s.title}</button></li>
+    ))}
+  </ol>
+</div>
+
+<style is:global>
+  .tourbar {
+    position: fixed; left: 50%; bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px)); z-index: 60;
+    display: flex; align-items: center; gap: 0.35rem; padding: 0.3rem; border-radius: 999px;
+    transform: translateX(-50%); max-width: calc(100vw - 1rem); overflow: hidden;
+  }
+  html.no-js .tourbar, html.reduced .tourbar__play, html.reduced .tourbar__speed { display: none; }
+  .tourbar button { border: 0; background: none; }
+  .tourbar .tourbar__play { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 1rem 0 0.9rem; border-radius: 999px; background: var(--color-forest); color: #fff; font-weight: 600; font-size: 0.92rem; white-space: nowrap; transition: background-color var(--dur-micro); }
+  .tourbar .tourbar__play:hover { background: var(--color-forest-2); }
+  .tourbar .tourbar__play[aria-pressed="true"] { background: var(--color-gold); color: var(--color-ink); }
+  .tourbar__play kbd { font: 600 0.7rem/1 var(--font-sans); padding: 0.2rem 0.38rem; border-radius: 0.3rem; background: rgb(255 255 255 / 0.2); }
+  .tourbar__play[aria-pressed="true"] kbd { background: rgb(6 48 29 / 0.14); }
+  .tourbar__speed { display: inline-flex; padding: 0.15rem; border-radius: 999px; background: rgb(10 90 49 / 0.08); }
+  .tourbar__speed button { min-height: 2.45rem; padding: 0 0.8rem; border-radius: 999px; font-size: 0.85rem; font-weight: 500; color: var(--color-mute); transition: background-color var(--dur-micro), color var(--dur-micro); }
+  .tourbar .tourbar__speed button[aria-pressed="true"] { background: #fff; color: var(--color-ink); font-weight: 600; box-shadow: 0 1px 3px rgb(6 48 29 / 0.2); }
+  .tourbar__dots { display: none; align-items: center; margin: 0 0.2rem; padding: 0; list-style: none; }
+  .tourbar__dots button { display: grid; place-items: center; width: 1.5rem; height: 2.75rem; }
+  .tourbar__dots span { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: rgb(10 90 49 / 0.26); transition: transform var(--dur-micro) var(--ease-out), background-color var(--dur-micro); }
+  .tourbar__dots button:hover span { transform: scale(1.5); background: var(--color-forest); }
+  .tourbar__dots button.is-past span { background: var(--color-forest); }
+  .tourbar__dots button[aria-current="true"] span { transform: scale(1.7); background: var(--color-gold); box-shadow: 0 0 0 1.5px var(--color-gold-deep); }
+  .tourbar__count { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.85rem; border-radius: 999px; font-size: 0.85rem; font-weight: 600; color: var(--color-ink); white-space: nowrap; }
+  .tourbar .tourbar__count:hover { background: rgb(10 90 49 / 0.08); }
+  .tourbar__progress { position: absolute; left: 1.4rem; right: 1.4rem; bottom: 0; height: 2px; overflow: hidden; pointer-events: none; }
+  .tourbar__progress span { display: block; height: 100%; background: var(--color-gold-deep); transform-origin: 0 50%; transform: scaleX(0); }
+  .tourbar__status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  @media (min-width: 64rem) {
+    .tourbar__dots { display: flex; }
+    .tourbar__count i { display: none; }
+  }
+  @media (max-width: 26rem) {
+    .tourbar__play kbd { display: none; }
+    .tourbar .tourbar__play { padding: 0 0.85rem 0 0.75rem; }
+    .tourbar__speed button { padding: 0 0.6rem; }
+    .tourbar__count { padding: 0 0.6rem; }
+  }
+  @media (hover: none) { .tourbar__play kbd { display: none; } }
+
+  .tourlist { position: fixed; left: 50%; bottom: calc(4.6rem + env(safe-area-inset-bottom, 0px)); z-index: 61; width: min(22rem, calc(100vw - 1.5rem)); max-height: min(70vh, 34rem); overflow: auto; overscroll-behavior: contain; transform: translateX(-50%); border-radius: 1.25rem; padding: 0.5rem; }
+  .tourlist[hidden] { display: none; }
+  .tourlist ol { margin: 0; padding: 0; list-style: none; }
+  .tourlist button { display: flex; align-items: center; gap: 0.9rem; width: 100%; min-height: 2.75rem; padding: 0 0.9rem; border: 0; border-radius: 0.8rem; background: none; text-align: left; font-size: 0.95rem; color: var(--color-ink); }
+  .tourlist button:hover, .tourlist button[aria-current="true"] { background: rgb(10 90 49 / 0.08); }
+  .tourlist button span { color: var(--color-gold-deep); font-weight: 600; font-size: 0.8rem; }
+</style>

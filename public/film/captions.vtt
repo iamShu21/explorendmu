@@ -1,0 +1,205 @@
+WEBVTT
+
+1
+00:00:00.800 --> 00:00:03.423
+Every school year, new
+students, transferees,
+
+2
+00:00:03.473 --> 00:00:07.940
+and visitors walk through the gates
+of Notre Dame of Marbel University.
+
+3
+00:00:08.290 --> 00:00:12.840
+It's a big campus, full of buildings,
+offices, and places to discover.
+
+4
+00:00:14.500 --> 00:00:17.100
+But finding your way isn't always easy.
+
+5
+00:00:17.320 --> 00:00:20.930
+Most newcomers have to ask
+around, or rely on signs.
+
+6
+00:00:21.020 --> 00:00:26.315
+So our study set out to build three
+things: an augmented reality campus tour,
+
+7
+00:00:26.365 --> 00:00:30.850
+AR assisted navigation, and one
+place for campus information.
+
+8
+00:00:33.583 --> 00:00:36.023
+Meet ExploreNDMU.
+
+9
+00:00:36.073 --> 00:00:40.543
+An Android app built with Unity,
+AR Foundation, and ARCore.
+
+10
+00:00:40.603 --> 00:00:44.873
+It works fully offline, and it greets
+you with a quick tour of what it can do.
+
+11
+00:00:49.633 --> 00:00:51.113
+Looking for an office?
+
+12
+00:00:51.363 --> 00:00:52.793
+Open the directory.
+
+13
+00:00:52.843 --> 00:00:57.833
+Search, or browse by category, and
+read each place's details and services.
+
+14
+00:00:57.963 --> 00:01:02.133
+Save the places you visit often,
+so they're always one tap away.
+
+15
+00:01:06.283 --> 00:01:08.283
+Now, let's go to the Library.
+
+16
+00:01:08.333 --> 00:01:11.773
+Tap Navigate here, and choose
+where you're starting from.
+
+17
+00:01:12.043 --> 00:01:13.773
+Then, lift your phone.
+
+18
+00:01:14.023 --> 00:01:18.140
+Gold arrows appear on the ground
+through your camera, showing the way,
+
+19
+00:01:18.190 --> 00:01:19.463
+step by step.
+
+20
+00:01:19.513 --> 00:01:21.215
+A voice tells you when to turn,
+
+21
+00:01:21.265 --> 00:01:24.283
+and the screen shows how
+far you have left to go.
+
+22
+00:01:24.443 --> 00:01:25.643
+No map reading.
+
+23
+00:01:25.693 --> 00:01:27.703
+No need to ask for directions.
+
+24
+00:01:27.753 --> 00:01:29.343
+Just follow the arrows.
+
+25
+00:01:43.183 --> 00:01:45.971
+When you arrive, a gold
+pin marks your destination,
+
+26
+00:01:46.021 --> 00:01:49.553
+and an info card tells you
+about the place in front of you.
+
+27
+00:01:54.783 --> 00:01:56.043
+New to campus?
+
+28
+00:01:56.093 --> 00:01:58.963
+Start a guided tour from
+any of the four gates.
+
+29
+00:01:59.213 --> 00:02:03.833
+The app leads you from stop to stop, and
+you can skip a stop whenever you like.
+
+30
+00:02:06.783 --> 00:02:11.523
+Scan a printed marker, and the
+university's statues appear in 3D.
+
+31
+00:02:11.813 --> 00:02:16.143
+Mother Mary, Saint Marcellin
+Champagnat, and the Bronze Stallion.
+
+32
+00:02:16.393 --> 00:02:19.783
+Walk around them, and see
+every detail up close.
+
+33
+00:02:26.383 --> 00:02:27.773
+How does it work?
+
+34
+00:02:27.823 --> 00:02:30.703
+Our team walked the campus
+routes and recorded them.
+
+35
+00:02:30.953 --> 00:02:32.534
+The app joins these paths,
+
+36
+00:02:32.584 --> 00:02:35.420
+and uses Dijkstra's
+shortest path algorithm to
+
+37
+00:02:35.470 --> 00:02:38.103
+find the best way to your destination.
+
+38
+00:02:38.413 --> 00:02:42.045
+Everything lives inside the app,
+so newcomers can find their way,
+
+39
+00:02:42.095 --> 00:02:45.444
+get information in one place,
+and reach where they're going,
+
+40
+00:02:45.494 --> 00:02:47.443
+without asking for directions.
+
+41
+00:02:59.483 --> 00:03:01.343
+ExploreNDMU.
+
+42
+00:03:01.393 --> 00:03:03.553
+Your campus, in your hands.
+
+43
+00:03:03.663 --> 00:03:04.543
+Explore.
+
+44
+00:03:04.593 --> 00:03:05.433
+Navigate.
+
+45
+00:03:05.483 --> 00:03:06.933
+Discover.

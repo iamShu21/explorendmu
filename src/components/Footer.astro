@@ -1,40 +1,38 @@
 ---
-const year = 2026;
+import { REPO_URL, STALLION } from '../config';
 ---
-<footer class="border-t border-forest/10 bg-white/50">
-  <div class="wrap grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+<footer class="site-footer scene">
+  <div class="wrap site-footer__grid">
     <div>
-      <a href="index.html" class="flex items-center gap-2.5 font-display font-semibold text-fg">
-        <img src="/logo-64.png" alt="" width="28" height="28" class="size-7" />
-        <span>Explore<span class="text-gold-deep">NDMU</span></span>
-      </a>
-      <p class="mt-4 max-w-sm text-sm leading-relaxed text-mute">
-        An augmented reality campus tour, navigation and information app for Notre Dame of Marbel University,
-        Koronadal City. A BS Information Technology capstone project.
-      </p>
+      <p class="site-footer__brand"><img src="img/logo-n-96.webp" alt="" width="40" height="40" loading="lazy" />Explore<span>NDMU</span></p>
+      <p class="t-small" style="max-width:30em;margin-top:1rem">An augmented reality campus tour, navigation and information app for Notre Dame of Marbel University, Koronadal City. A BS Information Technology capstone project.</p>
+      <p class="t-small" style="margin-top:1rem;display:flex;gap:1.5rem;flex-wrap:wrap"><a class="link" href="research.html">Research</a><a class="link" href={REPO_URL} rel="noopener">Source on GitHub</a></p>
     </div>
-    <div class="text-sm">
-      <p class="font-mono text-xs uppercase tracking-[.14em] text-gold-deep font-semibold">Explore</p>
-      <ul class="mt-4 space-y-2.5 text-mute">
-        <li><a class="hover:text-forest" href="index.html#features">Features</a></li>
-        <li><a class="hover:text-forest" href="index.html#places">Places</a></li>
-        <li><a class="hover:text-forest" href="index.html#how">How it works</a></li>
-        <li><a class="hover:text-forest" href="index.html#engineering">Engineering notes</a></li>
-        <li><a class="hover:text-forest" href="research.html">Research</a></li>
-        <li><a class="hover:text-forest" href="index.html#download">Get the app</a></li>
-      </ul>
-    </div>
-    <div class="text-sm">
-      <p class="font-mono text-xs uppercase tracking-[.14em] text-gold-deep font-semibold">Credits</p>
-      <ul class="mt-4 space-y-2.5 text-mute leading-relaxed">
-        <li>Bronze Stallion: “Horse Run Cycle On Place” by Amitesh Nandan (Sketchfab), licensed <a class="underline decoration-forest/40 hover:text-forest" href="https://creativecommons.org/licenses/by-nd/4.0/" rel="noopener" target="_blank">CC BY-ND 4.0</a>. Used in the app only.</li>
-        <li>Icons: Flaticon UIcons.</li>
-        <li>Campus photos: ExploreNDMU team.</li>
+    <div>
+      <h2 class="site-footer__h">Credits</h2>
+      <ul class="site-footer__list t-small">
+        <li>Bronze Stallion 3D model: <a class="link" href={STALLION.url} rel="noopener">“{STALLION.title}”</a> by <a class="link" href={STALLION.authorUrl} rel="noopener">{STALLION.author}</a> (Sketchfab), <a class="link" href={STALLION.licenceUrl} rel="noopener license">{STALLION.licence}</a>. Shown on this site only as an unmodified render.</li>
+        <li>Fonts: Instrument Serif and Inter, SIL Open Font License.</li>
+        <li>Icons: Flaticon UIcons, regular rounded.</li>
+        <li>Film: narration voice by ElevenLabs (Sarah). Original score and sound design made for the film. Film fonts: Poppins and Inter, SIL Open Font License.</li>
+        <li>App voice: ElevenLabs (Matilda), generated ahead of time and stored in the app.</li>
+        <li>Route data: walked and recorded on the NDMU campus by the team.</li>
       </ul>
     </div>
   </div>
-  <div class="wrap flex flex-col gap-2 border-t border-forest/10 py-6 text-xs text-mute md:flex-row md:justify-between">
-    <p>© {year} Amoran, Herradura, Villanueva · Notre Dame of Marbel University</p>
-    <p>Built with Astro, GSAP and model-viewer.</p>
+  <div class="wrap site-footer__base t-small">
+    <p>ExploreNDMU is a student project, not an official Notre Dame of Marbel University service.</p>
+    <p>Free to use. No account, no payment.</p>
   </div>
 </footer>
+
+<style is:global>
+  .site-footer { padding: clamp(3rem, 8vh, 5rem) 0 calc(6rem + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--color-line); background: rgb(255 253 246 / 0.82); }
+  .site-footer__grid { display: grid; gap: 2.5rem; }
+  @media (min-width: 56rem) { .site-footer__grid { grid-template-columns: 1fr 1.25fr; gap: 4rem; } }
+  .site-footer__brand { display: flex; align-items: center; gap: 0.7rem; font-size: 1.3rem; font-weight: 600; color: var(--color-forest); letter-spacing: -0.01em; }
+  .site-footer__brand span { color: var(--color-gold-deep); }
+  .site-footer__h { font-family: var(--font-sans); font-size: 0.95rem; font-weight: 600; letter-spacing: 0; color: var(--color-ink); }
+  .site-footer__list { margin: 0.9rem 0 0; padding: 0; list-style: none; display: grid; gap: 0.55rem; max-width: 46em; }
+  .site-footer__base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 2rem; margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid var(--color-line); }
+</style>

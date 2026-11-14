@@ -2,199 +2,221 @@
 @import "./icons.css";
 
 /*
-  Light "white and gold" theme.
-  Rule of thumb used everywhere: dark green text on light surfaces, white text on dark surfaces
-  (phone frames, the code block, photo overlays, the download card). Never dark text on a dark surface.
+  ExploreNDMU showcase, v3.
+  One rule for colour: deep forest text on light surfaces, cream text on the dark stage. Never the other way round.
+  Motion animates transform and opacity only (plus shader uniforms and SVG stroke draws).
 */
 @theme {
-  --color-bg: #fffaf0;          /* page */
-  --color-fg: #0b2a1b;          /* main text: deep forest */
-  --color-mute: #4c6456;        /* secondary text, ≥ 5.5:1 on the page */
-  --color-line: rgb(10 90 49 / 0.13);
-  --color-ink: #06170e;         /* dark surfaces + text on gold */
-  --color-ink-2: #0a2216;
-  --color-forest: #0a5a31;
-  --color-forest-2: #0e7a43;
-  --color-leaf: #5fd395;
-  --color-gold: #ffc20e;        /* fills, buttons, icons on dark */
+  --color-paper: #fffdf6;     /* page */
+  --color-cream: #fff6dc;
+  --color-ink: #06301d;       /* body text: the app's own card green */
+  --color-forest: #0a5a31;    /* headlines, main brand green */
+  --color-forest-2: #0a6b3b;
+  --color-mute: #3f5b4c;      /* secondary text, at least 4.5:1 on every gradient state */
+  --color-gold: #ffc20e;      /* actions and highlights */
   --color-gold-2: #ffd75e;
-  --color-gold-deep: #8a5a00;   /* gold for text on light surfaces (≥ 5:1) */
-  --color-cream: #fff3d1;
+  --color-gold-deep: #8a5a00; /* gold-coloured text on light surfaces */
+  --color-mint: #5fd395;      /* rare accent, and text accent on the dark stage */
+  --color-stage: #04170f;     /* dark stage: statues, film */
+  --color-stage-2: #0a4229;
+  --color-line: rgb(10 90 49 / 0.14);
 
-  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
-
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-display: "Instrument Serif", "Instrument Serif Fallback", "Iowan Old Style", Georgia, serif;
+  --font-sans: "Inter Variable", "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Base styles are deliberately NOT in a layer, so a host page's own body rules can't override them. */
 :root {
-  background: var(--color-bg);
-  color: var(--color-fg);
+  /* motion tokens (mirrored in src/scripts/core.js) */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-enter: 0.9s;
+  --dur-micro: 0.25s;
+
+  /* layout */
+  --gutter: clamp(1.25rem, 5vw, 5rem);
+  --max: 1360px;
+  --header-h: 4.25rem;
+  --tourbar-h: 3.5rem;
+
+  /* type scale */
+  --fs-hero: clamp(2.85rem, 9.4vw, 8.2rem);
+  --fs-h2: clamp(2.4rem, 6.4vw, 5.6rem);
+  --fs-h3: clamp(1.45rem, 2.4vw, 2rem);
+  --fs-lead: clamp(1.06rem, 1.45vw, 1.3rem);
+  --fs-small: 0.875rem;
+}
+
+/* Metric-matched fallbacks, so the page does not jump when the web fonts arrive. */
+@font-face { font-family: "Instrument Serif Fallback"; src: local("Georgia"); size-adjust: 88%; ascent-override: 104%; descent-override: 32%; line-gap-override: 0%; }
+@font-face { font-family: "Inter Fallback"; src: local("Arial"); size-adjust: 107%; ascent-override: 90%; descent-override: 22%; line-gap-override: 0%; }
+
+/* Base colour, background and font rules are deliberately NOT in a layer, so nothing can override them by accident. */
+:root {
+  background: var(--color-paper);
+  color: var(--color-ink);
   color-scheme: light;
   -webkit-text-size-adjust: 100%;
-  scroll-padding-top: 5rem;
+  scroll-padding-top: var(--header-h);
 }
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: clip; }
 html body {
   margin: 0;
   font-family: var(--font-sans);
-  font-size: 16px;
-  line-height: 1.5;
-  color: var(--color-fg);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--color-ink);
   overflow-x: clip;
   text-rendering: optimizeLegibility;
-  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  /* The still version of the living gradient: what you see without WebGL, on weak devices and with reduced motion. */
+  background-color: var(--color-paper);
   background-image:
-    radial-gradient(1100px 720px at 100% -4%, rgb(255 194 14 / 0.28), transparent 62%),
-    radial-gradient(900px 640px at -12% 14%, rgb(255 215 94 / 0.22), transparent 60%),
-    radial-gradient(1000px 800px at 108% 46%, rgb(255 194 14 / 0.16), transparent 60%),
-    radial-gradient(900px 700px at -10% 74%, rgb(255 215 94 / 0.18), transparent 60%),
-    linear-gradient(180deg, #ffffff 0%, #fff8e6 18%, #fffdf7 36%, #fff4d6 58%, #fffcf3 78%, #fff2cc 100%);
+    radial-gradient(120% 60% at 100% 0%, rgb(255 194 14 / 0.30), transparent 60%),
+    radial-gradient(90% 50% at 0% 30%, rgb(95 211 149 / 0.16), transparent 62%),
+    radial-gradient(110% 55% at 100% 62%, rgb(255 215 94 / 0.24), transparent 60%),
+    radial-gradient(90% 50% at 0% 100%, rgb(10 90 49 / 0.10), transparent 60%);
 }
+html.defense { font-size: 112.5%; }
+html.defense, html.defense * { cursor: none !important; }
 
-/* Element defaults stay in the base layer so utility classes (margins, display) still win. */
 @layer base {
   ::selection { background: var(--color-gold); color: var(--color-ink); }
   :focus-visible { outline: 2px solid var(--color-forest); outline-offset: 3px; border-radius: 6px; }
-  h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.02em; text-wrap: balance; }
-  p { text-wrap: pretty; }
-  img, video { max-width: 100%; display: block; }
+  .on-stage :focus-visible { outline-color: var(--color-gold); }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.012em; color: var(--color-forest); }
+  img, video, canvas { max-width: 100%; display: block; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  a { color: inherit; }
 }
 
 @layer components {
-  .wrap { width: 100%; max-width: 1200px; margin-inline: auto; padding-inline: 1.25rem; }
-  @media (min-width: 768px) { .wrap { padding-inline: 2rem; } }
+  .wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+  .sr-only-focus:not(:focus) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
-  .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.75rem; font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-gold-deep);
-    display: inline-flex; align-items: center; gap: 0.6rem;
-  }
-  .eyebrow::before { content: ""; width: 1.5rem; height: 2px; border-radius: 2px; background: var(--color-gold); }
-  .on-dark .eyebrow, .eyebrow.on-dark { color: var(--color-gold); }
+  /* ---------- type ---------- */
+  .t-hero { font-size: var(--fs-hero); line-height: 0.94; letter-spacing: -0.022em; }
+  .t-h2 { font-size: var(--fs-h2); line-height: 0.98; letter-spacing: -0.018em; }
+  .t-h3 { font-size: var(--fs-h3); line-height: 1.1; }
+  .t-lead { font-size: var(--fs-lead); line-height: 1.55; color: var(--color-ink); max-width: 34em; text-wrap: pretty; }
+  .t-body { color: var(--color-mute); max-width: 38em; text-wrap: pretty; }
+  .t-small { font-size: var(--fs-small); color: var(--color-mute); }
+  /* The app's spoken words are always set in the italic serif. */
+  .t-voice { font-family: var(--font-display); font-style: italic; letter-spacing: 0; }
+  .t-num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1, "cv11" 1; }
+  .on-stage { color: #f4f1e4; }
+  .on-stage h2, .on-stage h3 { color: #fffdf6; }
+  .on-stage .t-lead { color: #f4f1e4; }
+  .on-stage .t-body, .on-stage .t-small { color: #c3d3c8; }
+  .link { text-decoration: underline; text-decoration-color: var(--color-gold); text-decoration-thickness: 2px; text-underline-offset: 0.22em; transition: text-decoration-color var(--dur-micro); }
+  .link:hover { text-decoration-color: var(--color-forest); }
+  .on-stage .link:hover { text-decoration-color: #fff; }
 
-  .h-section { font-size: clamp(2rem, 4.4vw, 3.4rem); line-height: 1.06; font-weight: 600; color: var(--color-fg); }
-  .lead { font-size: clamp(1.02rem, 1.4vw, 1.18rem); line-height: 1.65; color: var(--color-mute); }
+  /* ---------- scene frame ---------- */
+  .scene { position: relative; z-index: 1; }
+  .scene-pad { padding-block: clamp(5rem, 14vh, 10rem); }
+  /* Section counter: "04 / 15  Scroll to walk". The page is a route and each scene is a junction on it. */
+  .counter { display: inline-flex; align-items: baseline; gap: 0.75rem; font-size: var(--fs-small); font-weight: 500; color: var(--color-mute); }
+  .counter b { font-weight: 600; color: var(--color-gold-deep); font-variant-numeric: tabular-nums; }
+  .on-stage .counter { color: #c3d3c8; }
+  .on-stage .counter b { color: var(--color-gold); }
 
-  /* Highlighted words: forest text on a gold marker stroke (readable on any light surface). */
-  .gold-text {
-    color: var(--color-forest);
-    background-image: linear-gradient(transparent 60%, rgb(255 194 14 / 0.6) 60%, rgb(255 194 14 / 0.6) 92%, transparent 92%);
-    background-repeat: no-repeat;
-    -webkit-box-decoration-break: clone; box-decoration-break: clone;
-    padding-inline: 0.06em;
-  }
-  /* when the hero headline is split into words, each word carries its own part of the stroke */
-  .gold-text.is-split { background-image: none; padding-inline: 0; }
-  .hl-word {
-    background-image: linear-gradient(transparent 60%, rgb(255 194 14 / 0.6) 60%, rgb(255 194 14 / 0.6) 92%, transparent 92%);
-    background-repeat: no-repeat; background-size: 100% 100%;
-    color: var(--color-forest);
-  }
-  .hl-word:not(:last-child) { padding-right: 0.27em; margin-right: -0.27em; }
+  /* Pinned scenes use position: sticky, which stays smooth with native touch scrolling. */
+  .pin-scene { height: calc((1 + var(--len, 2)) * 100vh); height: calc((1 + var(--len, 2)) * 100svh); }
+  .pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: clip; }
+  html.reduced .pin-scene, html.no-js .pin-scene { height: auto; }
+  html.reduced .pin, html.no-js .pin { position: relative; height: auto; overflow: visible; }
 
-  .card {
-    position: relative;
-    background: rgb(255 255 255 / 0.78);
-    border: 1px solid var(--color-line);
-    border-radius: 1.25rem;
-    box-shadow: 0 1px 0 rgb(255 255 255 / 0.9) inset, 0 18px 40px -26px rgb(10 60 32 / 0.28);
-    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-    color: var(--color-fg);
-  }
-  .card-glow { overflow: hidden; transition: transform .4s var(--ease-out-expo), box-shadow .4s, border-color .4s; }
-  .card-glow::after {
-    content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
-    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgb(255 194 14 / 0.16), transparent 60%);
-    opacity: 0; transition: opacity .4s;
-  }
-  .card-glow:hover { border-color: rgb(255 194 14 / 0.55); box-shadow: 0 1px 0 #fff inset, 0 26px 50px -24px rgb(138 90 0 / 0.30); }
-  .card-glow:hover::after { opacity: 1; }
-
-  .icon-tile { display: grid; place-items: center; border-radius: .8rem; background: linear-gradient(145deg, #fff1c2, #ffe08a); color: var(--color-ink); box-shadow: 0 0 0 1px rgb(138 90 0 / .14) inset; }
-
+  /* ---------- buttons ---------- */
   .btn {
-    display: inline-flex; align-items: center; gap: .6rem;
-    padding: .9rem 1.4rem; border-radius: 999px;
-    font-family: var(--font-sans); font-weight: 600; font-size: .95rem; line-height: 1;
-    transition: transform .25s var(--ease-out-expo), background-color .25s, box-shadow .25s, color .25s, border-color .25s;
-    will-change: transform; cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+    min-height: 3rem; padding: 0.85rem 1.5rem; border-radius: 999px; border: 0;
+    font-weight: 600; font-size: 0.98rem; line-height: 1; text-decoration: none; white-space: nowrap;
+    transition: background-color var(--dur-micro), color var(--dur-micro), box-shadow var(--dur-micro), transform var(--dur-micro) var(--ease-out);
   }
-  .btn:active { transform: scale(.96); }
-  .btn-gold { background: var(--color-gold); color: var(--color-ink); box-shadow: 0 10px 30px -10px rgb(214 150 0 / .6), 0 0 0 1px rgb(138 90 0 / .12) inset; }
-  .btn-gold:hover { background: var(--color-gold-2); box-shadow: 0 14px 40px -10px rgb(214 150 0 / .7); }
-  .btn-forest { background: var(--color-forest); color: #fff; box-shadow: 0 10px 30px -12px rgb(10 90 49 / .6); }
+  .btn:active { transform: scale(0.97); }
+  .btn-gold { background: var(--color-gold); color: var(--color-ink); box-shadow: 0 12px 28px -14px rgb(138 90 0 / 0.75), inset 0 0 0 1px rgb(138 90 0 / 0.16); }
+  .btn-gold:hover { background: var(--color-gold-2); }
+  .btn-forest { background: var(--color-forest); color: #fff; box-shadow: 0 12px 28px -14px rgb(6 48 29 / 0.7); }
   .btn-forest:hover { background: var(--color-forest-2); }
-  .btn-ghost { border: 1px solid rgb(10 90 49 / .22); color: var(--color-fg); background: rgb(255 255 255 / .7); }
-  .btn-ghost:hover { background: #fff; border-color: rgb(10 90 49 / .4); }
-  .btn-ghost-dark { border: 1px solid rgb(255 255 255 / .35); color: #fff; background: rgb(255 255 255 / .08); }
-  .btn-ghost-dark:hover { background: rgb(255 255 255 / .16); }
-  .btn[aria-disabled="true"] { pointer-events: none; cursor: default; box-shadow: none; }
+  .btn-line { background: rgb(255 253 246 / 0.72); color: var(--color-ink); box-shadow: inset 0 0 0 1px rgb(10 90 49 / 0.28); }
+  .btn-line:hover { background: #fff; box-shadow: inset 0 0 0 1px rgb(10 90 49 / 0.5); }
+  .on-stage .btn-line { background: rgb(255 255 255 / 0.08); color: #fff; box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.35); }
+  .on-stage .btn-line:hover { background: rgb(255 255 255 / 0.16); }
+  .btn:disabled, .btn[aria-disabled="true"] { background: rgb(6 48 29 / 0.08); color: var(--color-mute); box-shadow: inset 0 0 0 1px rgb(10 90 49 / 0.16); cursor: default; }
+  .btn:disabled:active, .btn[aria-disabled="true"]:active { transform: none; }
+  .btn-icon { width: 2.75rem; min-height: 2.75rem; padding: 0; }
 
-  .chip {
-    display: inline-flex; align-items: center; gap: .45rem;
-    padding: .4rem .75rem; border-radius: 999px; font-size: .8rem; font-weight: 500;
-    border: 1px solid var(--color-line); background: rgb(255 255 255 / .8); color: var(--color-fg);
+  /* ---------- glass (with a solid fallback) ---------- */
+  .glass { background: rgb(255 253 246 / 0.94); box-shadow: 0 0 0 1px rgb(10 90 49 / 0.12), 0 18px 40px -22px rgb(6 48 29 / 0.45); }
+  @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+    .glass { background: rgb(255 253 246 / 0.72); -webkit-backdrop-filter: blur(18px) saturate(1.3); backdrop-filter: blur(18px) saturate(1.3); }
   }
 
-  .grain::before {
-    content: ""; position: fixed; inset: -50%; z-index: 60; pointer-events: none; opacity: .028; mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* ---------- device: the tablet the app was recorded on (5:8 screen), so captures are never cropped ---------- */
+  .device-stage { perspective: 1600px; }
+  .device {
+    position: relative; width: 100%; aspect-ratio: 5.36 / 8.36; padding: 2.2%;
+    border-radius: 7% / 4.6%;
+    background: linear-gradient(150deg, #3b4841, #101a15 38%, #27332d);
+    box-shadow: 0 0 0 1px rgb(6 48 29 / 0.35), 1.2rem 2.4rem 4rem -1.6rem rgb(6 48 29 / 0.6), inset 0 0 0 1.5px rgb(255 255 255 / 0.08);
+    transform-style: preserve-3d; will-change: transform;
   }
+  .device__screen { position: relative; width: 100%; height: 100%; border-radius: 5% / 3.2%; overflow: hidden; background: #0b1410; isolation: isolate; }
+  .device__screen > :is(img, video, canvas, picture) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .device__screen picture > img { width: 100%; height: 100%; object-fit: cover; }
+  .device__glare { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: linear-gradient(115deg, rgb(255 255 255 / 0.16), transparent 28%); mix-blend-mode: screen; }
+  .cap-note { font-size: var(--fs-small); color: var(--color-mute); }
 
-  /* Phone mockup (a dark object on the light page) */
-  .phone {
-    position: relative; aspect-ratio: 9 / 18.6; width: 100%;
-    border-radius: 2.6rem; padding: .55rem;
-    background: linear-gradient(145deg, #3a4a41, #121c17 40%, #26332c);
-    box-shadow: 0 0 0 1px rgb(10 60 32 / .25), 0 40px 70px -28px rgb(10 50 28 / .55), 0 0 90px -20px rgb(255 194 14 / .45);
+  /* ---------- reveals: content is visible by default; JS hides only what is below the fold ---------- */
+  .line-mask { overflow: clip; padding-bottom: 0.12em; margin-bottom: -0.12em; }
+
+  /* ---------- the app's own card look (arrival card, place card) ---------- */
+  .app-card {
+    color: #fff; border-radius: 1.4rem; padding: 1.4rem;
+    background: linear-gradient(180deg, #0a4229, #06301d);
+    box-shadow: inset 0 0 0 1.5px rgb(255 194 14 / 0.85), 0 0 2.4rem -0.4rem rgb(255 194 14 / 0.45), 0 2rem 3rem -1.6rem rgb(4 23 15 / 0.7);
   }
-  .phone-screen { position: relative; width: 100%; height: 100%; border-radius: 2.1rem; overflow: hidden; background: #000; }
-  .phone-screen > img, .phone-screen > video { width: 100%; height: 100%; object-fit: cover; }
+  .app-card h3, .app-card h4 { color: #fff; font-family: var(--font-sans); font-weight: 600; letter-spacing: -0.01em; }
+  .app-card .app-label { font-size: 0.75rem; font-weight: 700; color: var(--color-gold); letter-spacing: 0.04em; }
+  .app-card .app-soft { color: #c9d8ce; }
+  .app-chip { display: block; padding: 0.55rem 0.8rem; border-radius: 0.7rem; background: rgb(255 255 255 / 0.08); font-size: 0.88rem; color: #fff; }
+  .app-tile { display: grid; place-items: center; flex: none; width: 2.6rem; height: 2.6rem; border-radius: 0.8rem; background: var(--color-gold); color: var(--color-ink); }
 
-  /* Code blocks (dark surface, light text) */
-  .code {
-    font-family: var(--font-mono); font-size: .8rem; line-height: 1.7;
-    background: #0b1f15; border-radius: .9rem;
-    padding: 1.1rem 1.25rem 1.3rem; overflow-x: auto; color: #e3efe7; tab-size: 2; margin: 0; scrollbar-color: #2b4a3a transparent;
+  /* film grain, very light */
+  .grain::after {
+    content: ""; position: fixed; inset: 0; z-index: 70; pointer-events: none; opacity: 0.05; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
-  .code .k { color: #ffcf4a; } .code .s { color: #7be0a8; } .code .c { color: #8fb3a0; font-style: italic; } .code .n { color: #9fd3ff; }
-
-  .code-tab { display: inline-flex; align-items: center; gap: .45rem; padding: .5rem .85rem; border-radius: .6rem; font-family: var(--font-mono); font-size: .78rem; color: #c4dacd; cursor: pointer; transition: background-color .2s, color .2s; }
-  .code-tab i { color: #ffc20e; }
-  .code-tab:hover { background: rgb(255 255 255 / .06); color: #fff; }
-  .code-tab[aria-selected="true"] { background: rgb(255 255 255 / .12); color: #fff; }
-
-  .step-line { transition: background-color .5s; }
-  .feature-step.is-active .step-line { background: var(--color-gold); }
-
-  .caption { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--color-mute); }
-
-  .marquee { mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
-
-  .rail {
-    --gutter: 1.25rem;
-    scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain;
-    padding-inline: var(--gutter); scroll-padding-inline: var(--gutter);
-  }
-  @media (min-width: 768px) { .rail { --gutter: max(2rem, calc((100% - 1200px) / 2 + 2rem)); } }
-  .rail::after { content: ""; flex: 0 0 1px; }
-  .rail::-webkit-scrollbar { display: none; }
-  .rail > * { scroll-snap-align: start; }
 }
+
+/* ---------- the route spine and its chevron (built in src/scripts/spine.js) ---------- */
+#main { position: relative; }
+.spine { position: absolute; left: 0; top: 0; z-index: 0; pointer-events: none; overflow: visible; }
+.spine path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.spine__line { stroke: #f2b200; stroke-width: 2; }
+.spine__glow { stroke: rgb(255 194 14 / 0.3); stroke-width: 9; }
+.spine__dots circle { fill: #fffdf6; stroke: #c98a00; stroke-width: 2; }
+.chev { position: fixed; left: 0; top: 0; z-index: 5; width: 2.1rem; height: 1.65rem; margin: -0.82rem 0 0 -1.05rem; pointer-events: none; will-change: transform; filter: drop-shadow(0 6px 6px rgb(138 90 0 / 0.35)); }
+.chev__tilt { width: 100%; height: 100%; transform: perspective(14rem) rotateX(48deg); transform-style: preserve-3d; }
+.chev__turn { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; }
+.chev__turn i { position: absolute; inset: 0; background: #ffc20e; clip-path: polygon(50% 0, 100% 100%, 72.2% 100%, 50% 42.9%, 27.8% 100%, 0 100%); }
+.chev__turn i:nth-child(1) { background: #8a5a00; transform: translateZ(-5px); }
+.chev__turn i:nth-child(2) { background: #c98a00; transform: translateZ(-2.5px); }
+html.no-js .chev, html.defense .chev { display: none; }
+@media (max-width: 47.99rem) { .chev { width: 1.5rem; height: 1.18rem; margin: -0.59rem 0 0 -0.75rem; } .spine__glow { stroke-width: 6; } }
+
+/* Still gradient: weak devices, no WebGL */
+.gradient.is-still { opacity: 1; background: url("../img-static/gradient.avif") center / cover no-repeat; }
+
+/* Lazy videos show their poster until they start. */
+video[data-lazy] { background: #0b1410; }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
 }
 
-@keyframes marquee { to { transform: translateX(-50%); } }
-@keyframes pulse-ring { 0% { transform: scale(.6); opacity: .9; } 100% { transform: scale(2.4); opacity: 0; } }
-@keyframes float-y { 50% { transform: translateY(-10px); } }
-@keyframes chevron-run { 0% { transform: translateY(18px); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(-18px); opacity: 0; } }
-@keyframes wave { 0%, 100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
+@media print {
+  .site-header, .tourbar, .gradient, .spine, .intro, .cursor { display: none !important; }
+}

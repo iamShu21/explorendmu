@@ -2,11 +2,15 @@
 @font-face{font-family:"uicons-rr";src:url("../assets/fonts/uicons-rr-subset.woff2") format("woff2");font-display:block}
 [class^="fi-rr-"],[class*=" fi-rr-"]{display:inline-flex;line-height:1}
 [class^="fi-rr-"]::before,[class*=" fi-rr-"]::before{font-family:"uicons-rr"!important;font-style:normal;font-weight:400!important;line-height:1;-webkit-font-smoothing:antialiased}
+.fi-rr-arrow-small-right::before{content:"\f19e"}
+.fi-rr-check::before{content:"\f3c8"}
 .fi-rr-cross::before{content:"\f4f7"}
 .fi-rr-cube::before{content:"\f500"}
 .fi-rr-document::before{content:"\f57a"}
 .fi-rr-door-open::before{content:"\f587"}
 .fi-rr-download::before{content:"\f591"}
+.fi-rr-graduation-cap::before{content:"\f70f"}
+.fi-rr-laptop-code::before{content:"\f86b"}
 .fi-rr-list::before{content:"\f8c4"}
 .fi-rr-navigation::before{content:"\f99d"}
 .fi-rr-pause::before{content:"\fa0c"}
@@ -15,3 +19,4 @@
 .fi-rr-search::before{content:"\fbba"}
 .fi-rr-volume::before{content:"\fed0"}
 .fi-rr-volume-slash::before{content:"\fecf"}
+.fi-rr-walking::before{content:"\fed9"}

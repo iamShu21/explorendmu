@@ -1,0 +1,56 @@
+---
+// Built from real walks: every recorded route drawn as a gold line, with the counted facts.
+import SceneHead from '../SceneHead.astro';
+import net from '../../data/campus-network.json';
+import { FACTS } from '../../config';
+import { scenes } from '../../data/scenes';
+const me = scenes.find((s) => s.id === 'walks')!;
+const stats = [
+  { n: FACTS.walkedRoutes, label: 'walked routes', text: 'Each one walked on campus with the team’s recording app, NDMU Walker.' },
+  { n: FACTS.junctions, label: 'marked junctions', text: 'Doors and corners where one walk meets another.' },
+  { n: FACTS.joinedRoutes, label: 'joined routes', text: 'Built from those walks, so the app can lead you from one place to another.' },
+];
+---
+<section class="scene scene-pad walks" id="walks" data-scene data-dwell={me.dwell}>
+  <div class="wrap walks__grid">
+    <div class="walks__copy">
+      <SceneHead id="walks" title="Built from real walks." lead="The team walked every one of these routes on campus, device in hand, before the app could lead anyone along it." />
+      <dl class="walks__stats">
+        {stats.map((s) => (
+          <div class="rv">
+            <dd class="walks__num t-num" data-count={s.n}>{s.n.toLocaleString('en-US')}</dd>
+            <dt><b>{s.label}</b><span>{s.text}</span></dt>
+          </div>
+        ))}
+      </dl>
+    </div>
+    <figure class="walks__map rv" data-walks-map>
+      <svg viewBox={`-20 -20 ${net.width + 40} ${net.height + 40}`} role="img" aria-label={`The ${net.counts.walked} walked routes drawn as lines between ${net.counts.places} places on campus`}>
+        <g fill="none" stroke="rgb(255 194 14 / .28)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+          {net.walks.map((w) => <path d={w.d} />)}
+        </g>
+        <g fill="none" stroke="#c98a00" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+          {net.walks.map((w) => <path d={w.d} pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" data-walks-line />)}
+        </g>
+        <g>
+          {net.places.map((p) => <circle data-walks-dot cx={p.x} cy={p.y} r={/^Gate/.test(p.name) ? 10 : 6} fill={/^Gate/.test(p.name) ? '#ffc20e' : '#0a5a31'} stroke={/^Gate/.test(p.name) ? '#06301d' : '#fffdf6'} stroke-width="2.5" />)}
+        </g>
+      </svg>
+      <figcaption class="t-small">Gold dots are the four gates. Green dots are the {FACTS.placesWithRoutes - 4} other places with a route.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<style is:global>
+  .walks__grid { display: grid; gap: clamp(2.5rem, 6vw, 5rem); align-items: center; }
+  .walks__copy { display: grid; gap: clamp(1.5rem, 4vh, 2.75rem); }
+  .walks__stats { margin: 0; display: grid; }
+  .walks__stats > div { display: grid; grid-template-columns: minmax(6.2rem, auto) 1fr; align-items: baseline; gap: 0 1.5rem; padding: 1rem 0; border-top: 1px solid var(--color-line); }
+  .walks__stats > div:last-child { border-bottom: 1px solid var(--color-line); }
+  .walks__num { margin: 0; font-family: var(--font-display); font-size: clamp(3rem, 6vw, 5rem); line-height: 0.95; color: var(--color-forest); }
+  .walks__stats dt { display: grid; gap: 0.15rem; color: var(--color-mute); font-size: 0.95rem; }
+  .walks__stats dt b { font-size: 1.1rem; font-weight: 600; color: var(--color-ink); }
+  .walks__map { margin: 0; display: grid; gap: 0.9rem; }
+  .walks__map svg { width: 100%; height: auto; overflow: visible; }
+  @media (min-width: 60rem) { .walks__grid { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); } }
+</style>

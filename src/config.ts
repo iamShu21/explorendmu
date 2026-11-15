@@ -1,10 +1,10 @@
 // Public address of the site (used for the canonical link, the QR code and social cards).
-export const LIVE_URL = 'https://iamshu21.github.io/explorendmu/';
-export const REPO_URL = 'https://github.com/iamShu21/explorendmu';
-// Direct link to the APK on the latest release, e.g.
-// 'https://github.com/iamShu21/explorendmu/releases/latest/download/ExploreNDMU.apk'
+export const LIVE_URL = 'https://explorendmu.github.io/';
+export const REPO_URL = 'https://github.com/explorendmu/explorendmu.github.io';
+// Direct link to the APK on the latest release. A new release with a file named
+// ExploreNDMU.apk updates every download button without changing the site.
 // While this is empty, every download button stays disabled and says "APK release coming soon".
-export const APK_URL = 'https://github.com/iamShu21/explorendmu/releases/latest/download/ExploreNDMU.apk';
+export const APK_URL = 'https://github.com/explorendmu/explorendmu.github.io/releases/latest/download/ExploreNDMU.apk';
 
 // Facts from the team's own data. Nothing else on the site is a hard-coded number.
 export const FACTS = {

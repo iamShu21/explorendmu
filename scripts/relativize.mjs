@@ -1,5 +1,5 @@
 // Makes every root-absolute URL in the built site relative ("/assets/x" -> "./assets/x"),
-// so the same build works under any sub-path: https://<user>.github.io/explorendmu/, a preview, a file server.
+// so the same build works under any sub-path: https://explorendmu.github.io/, a preview, a file server.
 // All pages are emitted at the root of dist/ (build.format 'file'), and the site's own asset URLs are already
 // written relative in the source; this pass only fixes what the bundler emits.
 import { readdirSync, readFileSync, writeFileSync, statSync } from 'node:fs';

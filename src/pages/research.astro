@@ -7,41 +7,36 @@ const objectives = [
   'Evaluate the usability, functionality, and effectiveness of the system using the System Usability Scale (SUS), the Technology Acceptance Model (TAM), and User Acceptance Testing (UAT).',
 ];
 const figures = [
-  { src: '/fig/fig2.webp', w: 1800, h: 1087, n: 'Figure 2', t: 'Conceptual framework (Input-Process-Output)', d: 'Campus data, GPS, AR assets, camera, markers and user requests are processed into AR navigation, a campus tour and campus information.' },
-  { src: '/fig/fig7.webp', w: 1800, h: 1473, n: 'Figure 7', t: 'Use case diagram', d: 'What a user can do: browse and search places, save them, start AR navigation, hear voice guidance and scan markers.' },
-  { src: '/fig/fig8.webp', w: 1800, h: 1860, n: 'Figure 8', t: 'Activity diagram', d: 'The user flow from launch, through the welcome and Home, to Places, Saved, Scan and About.' },
-  { src: '/fig/fig9.webp', w: 1800, h: 1266, n: 'Figure 9', t: 'System architecture', d: 'Client, application modules, local data and assets, and AR and device services (AR Foundation, ARCore, camera, GPS, sensors, text-to-speech).' },
-  { src: '/fig/fig10.webp', w: 1800, h: 1191, n: 'Figure 10', t: 'Deployment diagram', d: 'One Android APK holding the Unity runtime, the modules and all campus data, using the phone’s camera, GPS and sensors.' },
-  { src: '/fig/fig11.webp', w: 1800, h: 1329, n: 'Figure 11', t: 'Entity relationship diagram', d: 'How places, info cards, routes, saved places and marker models relate in the app’s local data.' },
-  { src: '/fig/fig12.webp', w: 1800, h: 1166, n: 'Figure 12', t: 'Class diagram', d: 'The main classes behind the directory, navigation, voice and marker scanning.' },
+  { src: 'fig/fig2.webp', w: 1800, h: 1087, n: 'Figure 2', t: 'Conceptual framework (Input-Process-Output)', d: 'Campus data, GPS, AR assets, camera, markers and user requests are processed into AR navigation, a campus tour and campus information.' },
+  { src: 'fig/fig7.webp', w: 1800, h: 1473, n: 'Figure 7', t: 'Use case diagram', d: 'What a user can do: browse and search places, save them, start AR navigation, hear voice guidance and scan markers.' },
+  { src: 'fig/fig8.webp', w: 1800, h: 1860, n: 'Figure 8', t: 'Activity diagram', d: 'The user flow from launch, through the welcome and Home, to Places, Saved, Scan and About.' },
+  { src: 'fig/fig9.webp', w: 1800, h: 1266, n: 'Figure 9', t: 'System architecture', d: 'Client, application modules, local data and assets, and the AR and device services the app relies on.' },
+  { src: 'fig/fig10.webp', w: 1800, h: 1191, n: 'Figure 10', t: 'Deployment diagram', d: 'One Android APK holding the Unity runtime, the modules and all campus data, using the phone’s camera, GPS and sensors.' },
+  { src: 'fig/fig11.webp', w: 1800, h: 1329, n: 'Figure 11', t: 'Entity relationship diagram', d: 'How places, info cards, routes, saved places and marker models relate in the app’s local data.' },
+  { src: 'fig/fig12.webp', w: 1800, h: 1166, n: 'Figure 12', t: 'Class diagram', d: 'The main classes behind the directory, navigation, voice and marker scanning.' },
 ];
 const cite = 'Amoran, S. A. D., Herradura, B. R., & Villanueva, E. T. (2026). ExploreNDMU: An augmented reality-based campus tour, navigation, and information system for Notre Dame of Marbel University [Capstone project, Notre Dame of Marbel University].';
 ---
 <Base
   page="research"
-  title="Research · ExploreNDMU capstone project"
+  title="Research: the ExploreNDMU capstone project"
   description="The research behind ExploreNDMU: abstract, objectives, method and system design figures of the BS Information Technology capstone at Notre Dame of Marbel University."
 >
-  <section class="relative overflow-hidden pt-32 pb-16 md:pt-40">
-    <div class="absolute inset-0 -z-10 bg-[radial-gradient(60%_60%_at_80%_0%,rgba(255,194,14,.28),transparent_70%)]" aria-hidden="true"></div>
-    <div class="wrap max-w-4xl">
-      <p class="eyebrow hero-in">Capstone research · October 2026</p>
-      <h1 class="mt-6 text-[clamp(2rem,5vw,3.6rem)] font-semibold leading-[1.08] text-fg" data-split>
-        ExploreNDMU: An Augmented Reality-Based Campus Tour, Navigation, and Information System for Notre Dame of Marbel University
-      </h1>
-      <div class="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm font-medium text-fg hero-in">
-        <p><span class="text-mute">Researchers</span><br />Shuhari Alaihim D. Amoran · Ben Raffy Herradura · Edward T. Villanueva</p>
-        <p><span class="text-mute">Adviser</span><br />Vince Marc B. Sabado, MSIT</p>
-        <p><span class="text-mute">Program</span><br />BS Information Technology, NDMU</p>
-      </div>
-    </div>
-  </section>
+  <article class="research">
+    <header class="wrap research__head">
+      <p class="hero__kicker">Capstone research, BS Information Technology</p>
+      <h1 class="research__title">ExploreNDMU: An Augmented Reality-Based Campus Tour, Navigation, and Information System for Notre Dame of Marbel University</h1>
+      <dl class="research__meta">
+        <div><dt>Researchers</dt><dd>S. A. D. Amoran, B. R. Herradura, E. T. Villanueva</dd></div>
+        <div><dt>Adviser</dt><dd>Vince Marc B. Sabado, MSIT</dd></div>
+        <div><dt>University</dt><dd>Notre Dame of Marbel University, Koronadal City</dd></div>
+      </dl>
+    </header>
 
-  <section class="pb-10">
-    <div class="wrap max-w-4xl space-y-6">
-      <article class="card reveal p-7 md:p-10">
-        <h2 class="text-2xl font-semibold text-fg">Abstract</h2>
-        <p class="mt-5 leading-[1.8] text-fg">
+    <div class="wrap research__body">
+      <section class="research__block rv">
+        <h2 class="t-h3">Abstract</h2>
+        <p>
           Finding buildings and offices on a large campus is difficult for freshmen, visitors, and parents, and Notre Dame of Marbel
           University (NDMU) still relies on printed maps, signs, a 3D campus model, and verbal directions. This study developed
           ExploreNDMU, an Android augmented reality (AR) application that combines a campus tour, AR-assisted navigation, and a campus
@@ -52,69 +47,99 @@ const cite = 'Amoran, S. A. D., Herradura, B. R., & Villanueva, E. T. (2026). Ex
           models of campus landmarks. Navigation is limited to outdoor walkways. The system was developed using the Prototyping Model
           and is evaluated using the System Usability Scale (SUS), the Technology Acceptance Model (TAM), and user acceptance testing (UAT).
         </p>
-        <p class="mt-6 flex flex-wrap gap-2">
-          {['augmented reality', 'campus navigation', 'campus tour', 'campus information system', 'Unity', 'Android'].map((k) => <span class="chip">{k}</span>)}
-        </p>
-      </article>
+        <ul class="research__keys" aria-label="Keywords">
+          {['augmented reality', 'campus navigation', 'campus tour', 'campus information system', 'Unity', 'Android'].map((k) => <li>{k}</li>)}
+        </ul>
+      </section>
 
-      <article class="card reveal p-7 md:p-10">
-        <h2 class="text-2xl font-semibold text-fg">Objectives</h2>
-        <ol class="mt-6 space-y-5">
-          {objectives.map((o, i) => (
-            <li class="flex gap-5"><span class="font-mono font-semibold text-gold-deep">0{i + 1}</span><p class="leading-relaxed text-fg">{o}</p></li>
-          ))}
+      <section class="research__block rv">
+        <h2 class="t-h3">Objectives</h2>
+        <ol class="research__list">
+          {objectives.map((o, i) => <li><span class="t-num" aria-hidden="true">{i + 1}</span><p>{o}</p></li>)}
         </ol>
-      </article>
+      </section>
 
-      <article class="card reveal grid gap-6 p-7 md:grid-cols-2 md:p-10">
-        <div>
-          <h2 class="text-2xl font-semibold text-fg">Method</h2>
-          <p class="mt-4 leading-relaxed text-mute">The team used the <span class="font-semibold text-fg">Prototyping Model</span>: each version was built, tested on campus and refined before the next. This suits AR, where tracking, GPS and lighting only show their problems outdoors.</p>
-        </div>
-        <div>
-          <h2 class="text-2xl font-semibold text-fg">Evaluation</h2>
-          <p class="mt-4 leading-relaxed text-mute">Usability (SUS), acceptance (TAM) and user acceptance testing (UAT) with students and visitors. <span class="font-semibold text-fg">Evaluation is in progress; results will be posted here.</span></p>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <section class="py-16">
-    <div class="wrap">
-      <div class="max-w-3xl">
-        <p class="eyebrow reveal">System design</p>
-        <h2 class="h-section mt-5 reveal">The diagrams behind the app.</h2>
-        <p class="lead mt-5 reveal">Figures from the paper, redrawn to match the final build. Tap one to enlarge it.</p>
+      <div class="research__pair">
+        <section class="research__block rv">
+          <h2 class="t-h3">Method</h2>
+          <p>The team used the Prototyping Model: each version was built, tested on campus and refined before the next. This suits AR, where tracking, GPS and lighting only show their problems outdoors.</p>
+        </section>
+        <section class="research__block rv">
+          <h2 class="t-h3">Evaluation</h2>
+          <p>Usability (SUS), acceptance (TAM) and user acceptance testing (UAT). <b>Evaluation in progress.</b> Results will be posted here when they are complete.</p>
+        </section>
       </div>
-      <ul class="mt-12 grid gap-5 md:grid-cols-2">
+    </div>
+
+    <section class="wrap research__figs">
+      <h2 class="t-h2" data-split>The diagrams behind the app.</h2>
+      <p class="t-lead rv">Figures from the paper. Select one to enlarge it.</p>
+      <ul>
         {figures.map((f) => (
-          <li class="reveal">
-            <button type="button" class="card card-glow group block w-full overflow-hidden text-left" data-lightbox={f.src} data-lightbox-alt={`${f.n}. ${f.t}`}>
-              <div class="border-b border-forest/10 bg-white p-3"><img src={f.src} alt={`${f.n}. ${f.t}`} width={f.w} height={f.h} loading="lazy" class="mx-auto max-h-80 w-auto object-contain transition-transform duration-500 group-hover:scale-[1.02]" /></div>
-              <div class="p-5">
-                <p class="font-mono text-xs font-semibold uppercase tracking-[.14em] text-gold-deep">{f.n}</p>
-                <p class="mt-1 font-display text-lg font-semibold text-fg">{f.t}</p>
-                <p class="mt-2 text-sm leading-relaxed text-mute">{f.d}</p>
-              </div>
+          <li class="rv">
+            <button type="button" data-lightbox={f.src} data-lightbox-alt={`${f.n}. ${f.t}`}>
+              <span class="research__figimg"><img src={f.src} alt={`${f.n}. ${f.t}`} width={f.w} height={f.h} loading="lazy" decoding="async" /></span>
+              <span class="research__figtext"><span class="research__fign">{f.n}</span><b>{f.t}</b><span>{f.d}</span></span>
             </button>
           </li>
         ))}
       </ul>
-    </div>
-  </section>
+    </section>
 
-  <section class="py-16">
-    <div class="wrap max-w-4xl">
-      <div class="card reveal p-7 md:p-10">
-        <h2 class="text-2xl font-semibold text-fg">Cite this work</h2>
-        <p class="mt-5 rounded-xl border border-forest/15 bg-[#fffbef] p-5 font-mono text-sm leading-relaxed text-fg" data-cite>{cite}</p>
-        <button type="button" class="btn btn-ghost mt-5 !text-sm" data-copy-cite><i class="fi-rr-document"></i><span>Copy citation</span></button>
+    <section class="wrap research__body">
+      <div class="research__block rv">
+        <h2 class="t-h3">Cite this work</h2>
+        <p class="research__cite" data-cite>{cite}</p>
+        <p class="research__actions">
+          <button type="button" class="btn btn-line" data-copy-cite><i class="fi-rr-document" aria-hidden="true"></i><span>Copy citation</span></button>
+          <a class="btn btn-forest" href="./">See the app<i class="fi-rr-arrow-small-right" aria-hidden="true"></i></a>
+        </p>
       </div>
-    </div>
-  </section>
+    </section>
+  </article>
 
-  <dialog class="m-auto max-h-[92vh] w-[min(96vw,1400px)] rounded-2xl bg-white p-0 backdrop:bg-[#06170e]/80" data-lightbox-dialog>
-    <form method="dialog" class="absolute right-3 top-3"><button class="grid size-10 place-items-center rounded-full bg-forest text-white shadow-lg" aria-label="Close"><i class="fi-rr-cross"></i></button></form>
-    <img src="" alt="" class="h-auto w-full" data-lightbox-img />
+  <dialog class="lightbox" data-lightbox-dialog aria-label="Figure, enlarged">
+    <form method="dialog"><button class="btn btn-forest btn-icon" aria-label="Close"><i class="fi-rr-cross" aria-hidden="true"></i></button></form>
+    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" data-lightbox-img />
   </dialog>
+  <script>
+    import '../scripts/research.js';
+  </script>
 </Base>
+
+<style is:global>
+  .research { position: relative; z-index: 1; padding-top: calc(var(--header-h) + clamp(2rem, 8vh, 5rem)); padding-bottom: clamp(4rem, 10vh, 7rem); display: grid; gap: clamp(2.5rem, 7vh, 5rem); }
+  .research__title { font-size: clamp(2.1rem, 5.4vw, 4.4rem); line-height: 1.02; letter-spacing: -0.016em; max-width: 18em; }
+  .research__meta { margin: clamp(1.5rem, 4vh, 2.5rem) 0 0; display: grid; gap: 1rem 3rem; }
+  @media (min-width: 48rem) { .research__meta { grid-template-columns: repeat(3, auto); justify-content: start; } }
+  .research__meta dt { font-size: var(--fs-small); color: var(--color-mute); }
+  .research__meta dd { margin: 0.15rem 0 0; font-weight: 600; color: var(--color-ink); }
+  .research__body { display: grid; gap: 1.5rem; }
+  .research__body > *, .research__pair { max-width: 62rem; }
+  .research__block { padding: clamp(1.4rem, 3.5vw, 2.5rem); border-radius: 1.5rem; background: rgb(255 253 246 / 0.9); box-shadow: 0 0 0 1px rgb(10 90 49 / 0.1); }
+  .research__block > p { margin-top: 1rem; line-height: 1.75; color: var(--color-ink); max-width: 44em; }
+  .research__pair { display: grid; gap: 1.5rem; }
+  @media (min-width: 48rem) { .research__pair { grid-template-columns: 1fr 1fr; } }
+  .research__keys { list-style: none; margin: 1.5rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .research__keys li { padding: 0.4rem 0.8rem; border-radius: 999px; background: rgb(10 90 49 / 0.08); font-size: 0.9rem; font-weight: 500; }
+  .research__list { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; }
+  .research__list li { display: grid; grid-template-columns: 2rem 1fr; gap: 1rem; padding: 1rem 0; border-top: 1px solid var(--color-line); }
+  .research__list span { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: var(--color-gold); font-weight: 600; font-size: 0.9rem; }
+  .research__list p { line-height: 1.65; max-width: 44em; }
+  .research__figs { display: grid; gap: 1.25rem; }
+  .research__figs ul { list-style: none; margin: 1.5rem 0 0; padding: 0; display: grid; gap: 1.5rem; }
+  @media (min-width: 52rem) { .research__figs ul { grid-template-columns: 1fr 1fr; } }
+  .research__figs button { display: grid; width: 100%; height: 100%; padding: 0; border: 0; border-radius: 1.25rem; overflow: hidden; background: rgb(255 253 246 / 0.94); box-shadow: 0 0 0 1px rgb(10 90 49 / 0.1); text-align: left; transition: box-shadow var(--dur-micro); }
+  .research__figs button:hover { box-shadow: 0 0 0 2px var(--color-gold), 0 2rem 3rem -2.4rem rgb(6 48 29 / 0.5); }
+  .research__figimg { display: grid; place-items: center; padding: 0.9rem; background: #fff; border-bottom: 1px solid var(--color-line); }
+  .research__figimg img { max-height: 19rem; width: auto; object-fit: contain; }
+  .research__figtext { display: grid; gap: 0.25rem; padding: 1.1rem 1.25rem 1.3rem; color: var(--color-mute); font-size: 0.93rem; }
+  .research__figtext b { font-size: 1.1rem; font-weight: 600; color: var(--color-ink); }
+  .research__fign { font-size: var(--fs-small); font-weight: 600; color: var(--color-gold-deep); }
+  .research__cite { padding: 1.1rem 1.25rem; border-radius: 0.9rem; background: #fff; box-shadow: inset 0 0 0 1px var(--color-line); }
+  .research__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .lightbox { margin: auto; width: min(96vw, 1400px); max-height: 92vh; padding: 0; border: 0; border-radius: 1rem; background: #fff; overflow: auto; }
+  .lightbox::backdrop { background: rgb(4 23 15 / 0.82); }
+  .lightbox form { position: sticky; top: 0.75rem; height: 0; display: flex; justify-content: flex-end; padding-right: 0.75rem; z-index: 1; }
+  .lightbox img { width: 100%; height: auto; }
+</style>

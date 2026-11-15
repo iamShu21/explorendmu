@@ -102,6 +102,7 @@ html.defense, html.defense * { cursor: none !important; }
   .t-lead { font-size: var(--fs-lead); line-height: 1.55; color: var(--color-ink); max-width: 34em; text-wrap: pretty; }
   .t-body { color: var(--color-mute); max-width: 38em; text-wrap: pretty; }
   .t-small { font-size: var(--fs-small); color: var(--color-mute); }
+  .hero__kicker { font-size: 0.95rem; font-weight: 500; color: var(--color-mute); }
   /* The app's spoken words are always set in the italic serif. */
   .t-voice { font-family: var(--font-display); font-style: italic; letter-spacing: 0; }
   .t-num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1, "cv11" 1; }

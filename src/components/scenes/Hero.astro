@@ -2,6 +2,10 @@
 import DownloadButton from '../DownloadButton.astro';
 import { FACTS } from '../../config';
 import { scenes, total } from '../../data/scenes';
+import QRCode from 'qrcode';
+import { LIVE_URL } from '../../config';
+// Shown only in defense mode, so panelists can follow along on their own phones.
+const qr = await QRCode.toString(LIVE_URL, { type: 'svg', margin: 1, errorCorrectionLevel: 'M', color: { dark: '#06301d', light: '#ffffff' } });
 const me = scenes.find((s) => s.id === 'top')!;
 ---
 <section class="scene hero" id="top" data-scene data-dwell={me.dwell}>
@@ -25,6 +29,10 @@ const me = scenes.find((s) => s.id === 'top')!;
     </div>
     <p class="counter hero__counter hero-in"><b>01 / {String(total).padStart(2, '0')}</b><span>Scroll to walk the page, or start the tour</span></p>
   </div>
+  <aside class="hero__qr" aria-label="Open this page on your phone">
+    <div class="hero__qrcode" role="img" aria-label="QR code that opens this page" set:html={qr} />
+    <p><b>Scan to open on your phone</b><span>{LIVE_URL.replace('https://', '').replace(/\/$/, '')}</span></p>
+  </aside>
 </section>
 
 <style is:global>
@@ -59,6 +67,12 @@ const me = scenes.find((s) => s.id === 'top')!;
     .hero__title { font-size: clamp(3.4rem, 11.5vh, 6rem); }
     .hero__art { width: min(52vw, 56rem); }
   }
+  .hero__qr { display: none; }
+  html.defense .hero__qr { position: absolute; right: var(--gutter); top: calc(var(--header-h) + 1.5rem); z-index: 2; display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1.1rem 0.9rem 0.9rem; border-radius: 1.25rem; background: #fffdf6; box-shadow: 0 0 0 1px rgb(10 90 49 / 0.14), 0 1.6rem 3rem -1.8rem rgb(6 48 29 / 0.5); }
+  .hero__qrcode { width: 8.5rem; height: 8.5rem; }
+  .hero__qrcode svg { display: block; width: 100%; height: 100%; }
+  .hero__qr p { display: grid; gap: 0.2rem; max-width: 11rem; font-size: var(--fs-small); color: var(--color-mute); overflow-wrap: anywhere; }
+  .hero__qr b { font-size: 1.05rem; font-weight: 600; color: var(--color-ink); }
   html.weak:not(.reduced) .hero__poster { animation: hero-float 7s ease-in-out infinite; }
   @keyframes hero-float { 50% { transform: translateY(-1.4%); } }
 </style>

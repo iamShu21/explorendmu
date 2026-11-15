@@ -1,0 +1,53 @@
+---
+// Watch the film. Only the poster is on the page; the film itself is fetched after the visitor presses play.
+// The film has its captions as part of the picture, so they are on for everyone. The same captions are also
+// offered as a caption track and as a transcript.
+import SceneHead from '../SceneHead.astro';
+import transcript from '../../data/film-transcript.json';
+import { scenes } from '../../data/scenes';
+const me = scenes.find((s) => s.id === 'film')!;
+---
+<section class="scene film" id="film" data-scene data-dwell={me.dwell}>
+  <div class="stage on-stage">
+    <div class="wrap film__inner">
+      <SceneHead id="film" title="Watch the film." lead="The whole story in three minutes and thirteen seconds: the problem, the app at work on campus, and how it was built." />
+      <div class="film__box rv" data-film>
+        <video data-src="film/explorendmu-film-720p.mp4" poster="film/poster.jpg" preload="none" playsinline width="1280" height="720" aria-label="ExploreNDMU, the film">
+          <track kind="captions" src="film/captions.vtt" srclang="en" label="English" />
+        </video>
+        <button type="button" class="film__play" data-film-play aria-label="Play the film, 3 minutes 13 seconds">
+          <span class="film__playicon"><i class="fi-rr-play" aria-hidden="true"></i></span>
+          <span>Play the film</span>
+          <span class="t-num film__time">3:13</span>
+        </button>
+        <p class="film__error">The film could not load. Check your connection and press play again.</p>
+      </div>
+      <details class="film__transcript rv">
+        <summary>Read the narration</summary>
+        <ol>
+          {transcript.map((c) => <li><span class="t-num">{c.at}</span>{c.text}</li>)}
+        </ol>
+      </details>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .film { padding-block: clamp(2rem, 6vh, 4rem); }
+  .film__inner { padding-block: clamp(3.5rem, 9vh, 6.5rem); display: grid; gap: clamp(1.75rem, 4vh, 3rem); }
+  .film__box { position: relative; width: min(100%, 64rem); aspect-ratio: 16 / 9; border-radius: 1.1rem; overflow: hidden; background: #000; box-shadow: 0 0 0 1px rgb(255 255 255 / 0.1), 0 3rem 5rem -3rem #000; }
+  .film__box video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .film__play { position: absolute; inset: 0; display: flex; align-items: flex-end; gap: 0.9rem; padding: clamp(1rem, 3vw, 2rem); border: 0; background: linear-gradient(180deg, transparent 45%, rgb(4 23 15 / 0.82)); color: #fff; font-size: clamp(1.05rem, 2vw, 1.4rem); font-weight: 600; text-align: left; }
+  .film__play > span:nth-child(2) { align-self: center; margin-top: auto; }
+  .film__playicon { display: grid; place-items: center; width: clamp(3.25rem, 6vw, 4.5rem); height: clamp(3.25rem, 6vw, 4.5rem); border-radius: 50%; background: var(--color-gold); color: var(--color-ink); font-size: 1.2rem; transition: transform var(--dur-micro) var(--ease-out); }
+  .film__play:hover .film__playicon { transform: scale(1.08); }
+  .film__play > span:nth-child(2), .film__time { align-self: flex-end; padding-bottom: clamp(0.9rem, 1.8vw, 1.4rem); }
+  .film__time { margin-left: auto; font-weight: 500; color: #d9e4dc; }
+  .film__box.is-playing .film__play { display: none; }
+  .film__error { display: none; position: absolute; inset: auto 1rem 1rem; margin: 0; padding: 0.7rem 1rem; border-radius: 0.7rem; background: rgb(4 23 15 / 0.9); color: #fff; font-size: var(--fs-small); }
+  .film__box.is-broken .film__error { display: block; }
+  .film__transcript summary { display: inline-flex; align-items: center; min-height: 2.75rem; cursor: pointer; font-weight: 600; color: #fff; text-decoration: underline; text-decoration-color: var(--color-gold); text-underline-offset: 0.25em; }
+  .film__transcript ol { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: 0.5rem; max-width: 46rem; color: #dbe6de; }
+  .film__transcript li { display: grid; grid-template-columns: 3.2rem 1fr; gap: 0.75rem; }
+  .film__transcript li span { color: var(--color-gold); font-size: var(--fs-small); padding-top: 0.15em; }
+</style>

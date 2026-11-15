@@ -3,6 +3,7 @@
 [class^="fi-rr-"],[class*=" fi-rr-"]{display:inline-flex;line-height:1}
 [class^="fi-rr-"]::before,[class*=" fi-rr-"]::before{font-family:"uicons-rr"!important;font-style:normal;font-weight:400!important;line-height:1;-webkit-font-smoothing:antialiased}
 .fi-rr-cross::before{content:"\f4f7"}
+.fi-rr-cube::before{content:"\f500"}
 .fi-rr-document::before{content:"\f57a"}
 .fi-rr-door-open::before{content:"\f587"}
 .fi-rr-download::before{content:"\f591"}

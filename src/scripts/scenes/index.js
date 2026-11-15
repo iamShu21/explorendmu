@@ -2,6 +2,7 @@
 import { initFollow, initWalk, initHear, initArrive } from './story.js';
 import { initProblem } from './problem.js';
 import { initFind } from './find.js';
+import { initStatues } from './statues.js';
 
 export function initScenes(ctx) {
   initProblem(ctx);
@@ -10,4 +11,5 @@ export function initScenes(ctx) {
   initHear(ctx);
   initArrive(ctx);
   initFind(ctx);
+  initStatues(ctx);
 }

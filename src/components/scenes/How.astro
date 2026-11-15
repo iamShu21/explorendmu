@@ -1,0 +1,87 @@
+---
+// How it works, and a few engineering notes. Links to the research page.
+import SceneHead from '../SceneHead.astro';
+import { scenes } from '../../data/scenes';
+const me = scenes.find((s) => s.id === 'how')!;
+const lanes = [
+  {
+    title: 'Once, before the app is built', icon: 'fi-rr-laptop-code',
+    steps: [
+      ['Walk the real paths', 'The team walks the campus with NDMU Walker, a recording app they built. It logs GPS and the path of the AR camera.'],
+      ['Join the walks', 'A tool on the laptop joins the walks at the doors and junctions the team marked, then finds the shortest way between places with Dijkstra’s algorithm.'],
+      ['Pack everything in', 'Routes, place cards and voice lines are saved as files inside the app.'],
+    ],
+  },
+  {
+    title: 'Every walk, on your phone', icon: 'fi-rr-walking',
+    steps: [
+      ['Find where you are', 'GPS gives the starting point. From there Google ARCore follows every step through the camera.'],
+      ['Lead the way', 'Your position is matched to the route. Gold arrows are placed on the walkway ahead and each turn is spoken.'],
+      ['Arrive', 'A gold pin marks the place, the voice tells you that you have arrived, and the place card opens.'],
+    ],
+  },
+];
+const notes = [
+  ['A start that waits for a good fix', 'GPS on campus drifts by metres. The app averages several fixes, trusting the accurate ones more, and will not start if you are more than 20 m from the route.'],
+  ['Works with no signal', 'Routes, place cards and voice lines all live on the phone. Nothing is fetched while you walk.'],
+  ['Tested at a desk first', 'A simulated walker follows each route at walking pace with GPS noise, so the logic is checked before anyone steps outside.'],
+];
+const stack = ['Unity', 'C#', 'AR Foundation', 'Google ARCore'];
+---
+<section class="scene scene-pad how" id="how" data-scene data-dwell={me.dwell}>
+  <div class="wrap how__grid">
+    <SceneHead id="how" title="How it works." lead="The hard work is done before you install the app. Routes are built once, and the phone only follows them, so a walk never needs the internet." />
+    <div class="how__lanes">
+      {lanes.map((lane) => (
+        <section class="how__lane rv">
+          <h3><i class={lane.icon} aria-hidden="true"></i>{lane.title}</h3>
+          <ol>
+            {lane.steps.map(([t, d], i) => (
+              <li><span class="how__n t-num" aria-hidden="true">{i + 1}</span><div><b>{t}</b><p>{d}</p></div></li>
+            ))}
+          </ol>
+        </section>
+      ))}
+    </div>
+    <div class="how__notes">
+      <h3 class="t-h3 rv">Engineering notes</h3>
+      <ul>
+        {notes.map(([t, d]) => <li class="rv"><b>{t}</b><p>{d}</p></li>)}
+      </ul>
+    </div>
+    <div class="how__foot rv">
+      <div>
+        <p class="how__label">Built with</p>
+        <ul class="how__stack">{stack.map((s) => <li>{s}</li>)}</ul>
+      </div>
+      <div>
+        <p class="how__label">Evaluation</p>
+        <p class="how__eval">Evaluation in progress. The study measures the app with the System Usability Scale, the Technology Acceptance Model and User Acceptance Testing. Results will be added to the research page when they are complete.</p>
+      </div>
+      <a class="btn btn-forest" href="research.html" data-magnetic>Read the research<i class="fi-rr-arrow-small-right" aria-hidden="true"></i></a>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .how__grid { display: grid; gap: clamp(2rem, 5vh, 3.5rem); }
+  .how__lanes { display: grid; gap: 1.25rem; }
+  @media (min-width: 56rem) { .how__lanes { grid-template-columns: 1fr 1fr; gap: 1.75rem; } }
+  .how__lane { padding: clamp(1.25rem, 3vw, 2rem); border-radius: 1.5rem; background: rgb(255 253 246 / 0.86); box-shadow: 0 0 0 1px rgb(10 90 49 / 0.1); }
+  .how__lane h3 { display: flex; align-items: center; gap: 0.7rem; font-family: var(--font-sans); font-size: 1.05rem; font-weight: 600; letter-spacing: 0; color: var(--color-forest); }
+  .how__lane h3 i { display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 0.75rem; background: var(--color-forest); color: var(--color-gold); }
+  .how__lane ol { list-style: none; margin: 1.1rem 0 0; padding: 0; display: grid; }
+  .how__lane li { display: grid; grid-template-columns: 2rem 1fr; gap: 0.9rem; padding: 0.9rem 0; border-top: 1px solid var(--color-line); }
+  .how__n { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: var(--color-gold); color: var(--color-ink); font-weight: 600; font-size: 0.9rem; }
+  .how__lane b, .how__notes b { font-weight: 600; color: var(--color-ink); }
+  .how__lane p, .how__notes p { margin-top: 0.2rem; color: var(--color-mute); font-size: 0.95rem; }
+  .how__notes ul { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: 1.25rem 2.5rem; }
+  .how__notes li { padding-top: 1rem; border-top: 2px solid var(--color-gold); }
+  @media (min-width: 56rem) { .how__notes ul { grid-template-columns: repeat(3, 1fr); } }
+  .how__foot { display: grid; gap: 1.5rem; align-items: start; padding-top: 1.5rem; border-top: 1px solid var(--color-line); }
+  @media (min-width: 56rem) { .how__foot { grid-template-columns: auto 1fr auto; gap: 3rem; align-items: center; } }
+  .how__label { font-size: var(--fs-small); font-weight: 600; color: var(--color-gold-deep); }
+  .how__stack { list-style: none; margin: 0.5rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .how__stack li { padding: 0.4rem 0.8rem; border-radius: 999px; background: rgb(10 90 49 / 0.08); font-size: 0.9rem; font-weight: 500; color: var(--color-ink); }
+  .how__eval { margin-top: 0.4rem; max-width: 34em; color: var(--color-ink); font-size: 0.95rem; }
+</style>

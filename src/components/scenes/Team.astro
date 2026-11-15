@@ -4,9 +4,9 @@ import SceneHead from '../SceneHead.astro';
 import { scenes } from '../../data/scenes';
 const me = scenes.find((s) => s.id === 'team')!;
 const team = [
-  { initials: 'SA', surname: 'Amoran', role: 'Full-stack developer', text: 'Built the whole system: the app, the AR navigation, the 3D scan mode, the route tools and the interface.', lead: true },
-  { initials: 'BR', surname: 'Herradura', role: 'Research and field mapping', text: 'Wrote the research paper and walked the campus routes with NDMU Walker.' },
-  { initials: 'EV', surname: 'Villanueva', role: 'Research and field mapping', text: 'Wrote the research paper and walked the campus routes with NDMU Walker.' },
+  { initials: 'SA', surname: 'Amoran', role: 'Full-stack developer', lead: true },
+  { initials: 'BR', surname: 'Herradura', role: 'Research and field mapping' },
+  { initials: 'EV', surname: 'Villanueva', role: 'Research and field mapping' },
 ];
 ---
 <section class="scene scene-pad team" id="team" data-scene data-dwell={me.dwell}>
@@ -18,11 +18,10 @@ const team = [
           <p class="team__initials" aria-hidden="true">{m.initials}</p>
           <h3><span class="sr-only-focus">{m.initials}, </span>{m.surname}</h3>
           <p class="team__role">{m.role}</p>
-          <p class="t-body">{m.text}</p>
         </li>
       ))}
     </ul>
-    <p class="team__adviser rv"><i class="fi-rr-graduation-cap" aria-hidden="true"></i><span><span class="t-small">Thesis adviser</span><b>Vince Marc B. Sabado, MSIT</b></span></p>
+    <p class="team__adviser rv"><i class="fi-rr-graduation-cap" aria-hidden="true"></i><span><span class="t-small">Research Capstone adviser</span><b>Vince Marc B. Sabado, MSIT</b></span></p>
   </div>
 </section>
 
@@ -36,7 +35,6 @@ const team = [
   .team__card.is-lead .team__initials { color: var(--color-gold-deep); }
   .team__card h3 { margin-top: 0.6rem; font-family: var(--font-sans); font-size: 1.15rem; font-weight: 600; letter-spacing: 0; color: var(--color-ink); }
   .team__role { font-size: var(--fs-small); font-weight: 600; color: var(--color-gold-deep); }
-  .team__card .t-body { margin-top: 0.5rem; }
   .team__adviser { display: flex; align-items: center; gap: 1rem; padding-top: 1.5rem; border-top: 1px solid var(--color-line); }
   .team__adviser i { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: 0.8rem; background: var(--color-forest); color: var(--color-gold); font-size: 1.1rem; }
   .team__adviser > span { display: grid; }

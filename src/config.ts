@@ -4,7 +4,7 @@ export const REPO_URL = 'https://github.com/iamShu21/explorendmu';
 // Direct link to the APK on the latest release, e.g.
 // 'https://github.com/iamShu21/explorendmu/releases/latest/download/ExploreNDMU.apk'
 // While this is empty, every download button stays disabled and says "APK release coming soon".
-export const APK_URL = '';
+export const APK_URL = 'https://github.com/iamShu21/explorendmu/releases/latest/download/ExploreNDMU.apk';
 
 // Facts from the team's own data. Nothing else on the site is a hard-coded number.
 export const FACTS = {

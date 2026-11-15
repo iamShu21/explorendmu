@@ -1,0 +1,123 @@
+---
+// Scan a statue in 3D: three plinths on a dark stage.
+// Mother Mary and Saint Marcellin Champagnat are the team's own models, shown in <model-viewer>.
+// The Bronze Stallion is CC BY-ND (Amitesh Nandan): its model file is never hosted here. It is shown only as the
+// unmodified turntable render, loaded after a tap, with the credit beside it.
+import SceneHead from '../SceneHead.astro';
+import Device from '../Device.astro';
+import Clip from '../Clip.astro';
+import { STALLION } from '../../config';
+import { scenes } from '../../data/scenes';
+const me = scenes.find((s) => s.id === 'statues')!;
+const own = [
+  {
+    key: 'mary', name: 'Mother Mary', line: 'The statue of Mother Mary, as it stands on campus.',
+    model: 'models/mother-mary.glb', ar: true,
+    // camera: whole statue
+    orbit: '20deg 82deg auto', target: 'auto auto auto', fov: 'auto', minOrbit: 'auto 60deg auto', maxOrbit: 'auto 100deg auto',
+    alt: 'A 3D model of the Mother Mary statue. Drag to turn it.',
+    scanLabel: 'Screen recording: the Mother Mary model stands on its marker in the app',
+    photoAlt: 'The Mother Mary statue on campus, in a blue mantle on a pedestal marked Our Lady of Grace',
+  },
+  {
+    key: 'champagnat', name: 'Saint Marcellin Champagnat', line: 'The statue of Saint Marcellin Champagnat, founder of the Marist Brothers.',
+    model: 'models/champagnat.glb', ar: false,
+    // camera: kept above the plinth. The view starts above the feet and cannot zoom out or tilt far enough to show the base.
+    orbit: '20deg 84deg 5.2m', target: '0m 1.22m 0m', fov: '18.5deg', minOrbit: 'auto 76deg 5.2m', maxOrbit: 'auto 94deg 5.2m',
+    alt: 'A 3D model of the Saint Marcellin Champagnat statue. Drag to turn it.',
+    scanLabel: 'Screen recording: the Saint Marcellin Champagnat model stands on its marker in the app',
+    photoAlt: 'The Saint Marcellin Champagnat statue on campus, in white on a stone pedestal',
+  },
+];
+---
+<section class="scene statues" id="statues" data-scene data-dwell={me.dwell}>
+  <div class="stage on-stage">
+    <span class="stage__sweep" aria-hidden="true"></span>
+    <div class="wrap statues__inner">
+      <SceneHead id="statues" title="Scan a statue in 3D." lead="Scan mode stands a 3D model of a campus statue in front of you, so you can walk around it and read what it is." />
+      <ul class="statues__row">
+        {own.map((s) => (
+          <li class="statue rv" data-statue={s.key}>
+            <div class="statue__view" data-statue-view data-model={s.model} data-orbit={s.orbit} data-target={s.target} data-fov={s.fov} data-min-orbit={s.minOrbit} data-max-orbit={s.maxOrbit} data-ar={s.ar ? '1' : undefined} data-alt={s.alt}>
+              <Clip name={`turn-${s.key}`} w={540} h={s.key === 'champagnat' ? 616 : 720} class="statue__turn" label={`Turntable render of the ${s.name} model`} />
+              <button type="button" class="btn btn-line statue__open" data-statue-open><i class="fi-rr-cube" aria-hidden="true"></i>Explore in 3D</button>
+              <p class="statue__state" data-statue-state role="status" hidden></p>
+            </div>
+            <span class="statue__plinth" aria-hidden="true"></span>
+            <h3 class="t-h3">{s.name}</h3>
+            <p class="t-body">{s.line}</p>
+            <div class="statue__proof">
+              <figure>
+                <Device class="statue__device"><Clip name={`scan-${s.key}`} label={s.scanLabel} /></Device>
+                <figcaption class="t-small">In the app</figcaption>
+              </figure>
+              <figure>
+                <picture>
+                  <source type="image/avif" srcset={`img/statue-${s.key}-480.avif 480w, img/statue-${s.key}-960.avif 960w`} sizes="(min-width: 60rem) 14vw, 44vw" />
+                  <img src={`img/statue-${s.key}-480.webp`} width="960" height="540" alt={s.photoAlt} loading="lazy" decoding="async" />
+                </picture>
+                <figcaption class="t-small">On campus</figcaption>
+              </figure>
+            </div>
+          </li>
+        ))}
+
+        <li class="statue rv" data-statue="stallion">
+          <div class="statue__view" data-stallion>
+            <!-- The poster and the two videos are the artist's render files, byte for byte. Nothing loads until the tap. -->
+            <img class="statue__turn" src="stallion/stallion_still.png" width="1080" height="1440" alt="Turntable render of the Bronze Stallion model, a galloping horse in bronze" loading="lazy" decoding="async" />
+            <button type="button" class="btn btn-line statue__open" data-stallion-play><i class="fi-rr-play" aria-hidden="true"></i>Play the turntable</button>
+          </div>
+          <span class="statue__plinth" aria-hidden="true"></span>
+          <h3 class="t-h3">The Bronze Stallion</h3>
+          <p class="t-body">A galloping bronze stallion.</p>
+          <p class="t-small statue__credit">3D model: <a class="link" href={STALLION.url} rel="noopener">“{STALLION.title}”</a> by <a class="link" href={STALLION.authorUrl} rel="noopener">{STALLION.author}</a> on Sketchfab, <a class="link" href={STALLION.licenceUrl} rel="noopener license">{STALLION.licence}</a>. Shown here as an unmodified render.</p>
+          <div class="statue__proof">
+            <figure>
+              <Device class="statue__device"><Clip name="scan-stallion" label="Screen recording: the Bronze Stallion model stands on its marker in the app" /></Device>
+              <figcaption class="t-small">In the app</figcaption>
+            </figure>
+            <figure>
+              <picture>
+                <source type="image/avif" srcset="img/statue-stallion-480.avif 480w, img/statue-stallion-960.avif 960w" sizes="(min-width: 60rem) 14vw, 44vw" />
+                <img src="img/statue-stallion-480.webp" width="960" height="540" alt="The Bronze Stallion statue on campus, rearing above trimmed hedges" loading="lazy" decoding="async" />
+              </picture>
+              <figcaption class="t-small">On campus</figcaption>
+            </figure>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  /* The dark stage is an inset panel, so the gold route keeps running beside it. */
+  .stage { position: relative; margin-inline: max(1.15rem, calc(var(--gutter) * 0.72)); border-radius: clamp(1.25rem, 3vw, 2.5rem); background: var(--color-stage); overflow: clip; isolation: isolate; }
+  .stage > .wrap { padding-inline: clamp(1rem, 4vw, 4rem); }
+  .stage__sweep { position: absolute; z-index: -1; inset: -20% auto -20% -30%; width: 46%; background: linear-gradient(100deg, transparent, rgb(255 233 168 / 0.1) 45%, rgb(255 233 168 / 0.16) 50%, rgb(255 233 168 / 0.1) 55%, transparent); transform: skewX(-14deg); will-change: transform; }
+  .statues__inner { padding-block: clamp(3.5rem, 9vh, 6.5rem); display: grid; gap: clamp(2rem, 5vh, 3.5rem); }
+  .statues__row { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(2.5rem, 4vw, 3rem); }
+  @media (min-width: 60rem) { .statues__row { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; } }
+  .statue { display: grid; gap: 0.6rem; justify-items: center; text-align: center; }
+  .statue .t-body { max-width: 24em; }
+  .statue__view { position: relative; width: min(100%, 21rem); aspect-ratio: 3 / 4; overflow: hidden; border-radius: 1rem; }
+  .statue__turn { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: var(--color-stage); }
+  .statue__view model-viewer { position: absolute; inset: 0; width: 100%; height: 100%; background: var(--color-stage); --poster-color: transparent; --progress-bar-color: #ffc20e; --progress-bar-height: 3px; }
+  .statue__view.is-3d model-viewer::part(default-progress-bar) { display: none; }
+  .statue__open { position: absolute; left: 50%; bottom: 0.9rem; transform: translateX(-50%); z-index: 2; }
+  .statue__view.is-3d .statue__open, .statue__view.is-3d .statue__turn, .statue__view.is-playing .statue__open { display: none; }
+  .statue__state { position: absolute; inset: auto 0.75rem 0.75rem; z-index: 3; margin: 0; padding: 0.6rem 0.8rem; border-radius: 0.7rem; background: rgb(255 255 255 / 0.1); color: #fff; font-size: var(--fs-small); }
+  .statue__state[hidden] { display: none; }
+  .statue__ar { position: absolute; right: 0.75rem; top: 0.75rem; z-index: 3; }
+  .statue__hint { position: absolute; left: 50%; bottom: 0.9rem; transform: translateX(-50%); z-index: 3; margin: 0; padding: 0.45rem 0.8rem; border-radius: 999px; background: rgb(4 23 15 / 0.7); color: #f4f1e4; font-size: 0.8rem; white-space: nowrap; pointer-events: none; }
+  /* the plinth: a lit disc under each statue */
+  .statue__plinth { width: min(70%, 15rem); height: 1.1rem; margin-top: -0.9rem; border-radius: 50%; background: radial-gradient(closest-side, rgb(255 233 168 / 0.5), rgb(255 194 14 / 0.16) 60%, transparent); }
+  .statue h3 { margin-top: 0.4rem; }
+  .statue__credit { max-width: 26em; color: #c3d3c8; }
+  .statue__proof { margin-top: 0.9rem; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.9rem; align-items: end; width: min(100%, 21rem); }
+  .statue__proof figure { margin: 0; display: grid; gap: 0.4rem; justify-items: center; }
+  .statue__device { width: 6.2rem; }
+  .statue__proof picture { display: block; width: 100%; }
+  .statue__proof img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 0.7rem; }
+</style>

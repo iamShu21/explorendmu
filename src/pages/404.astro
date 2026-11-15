@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base page="404" title="Page not found: ExploreNDMU" description="This page does not exist. Go back to the ExploreNDMU showcase.">
+  <section class="wrap lost">
+    <p class="hero__kicker">Error 404</p>
+    <h1 class="t-hero">You have left the route.</h1>
+    <p class="t-lead">There is no page at this address. The arrows lead back to the start.</p>
+    <p class="lost__actions">
+      <a class="btn btn-forest" href="./"><i class="fi-rr-navigation" aria-hidden="true"></i>Back to ExploreNDMU</a>
+      <a class="btn btn-line" href="research.html">Read the research</a>
+    </p>
+  </section>
+  <script>
+    import '../scripts/research.js';
+  </script>
+</Base>
+
+<style is:global>
+  .lost { position: relative; z-index: 1; min-height: 100vh; min-height: 100svh; display: grid; align-content: center; gap: 1.5rem; padding-block: 8rem 6rem; }
+  .lost .t-hero { font-size: clamp(2.9rem, 9vw, 7rem); max-width: 9em; }
+  .lost__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem; }
+</style>

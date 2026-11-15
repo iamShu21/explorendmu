@@ -1,0 +1,80 @@
+---
+// Hear every turn: the app's real voice lines, with the real moments they were spoken in.
+import SceneHead from '../SceneHead.astro';
+import Device from '../Device.astro';
+import Clip from '../Clip.astro';
+import { scenes } from '../../data/scenes';
+const me = scenes.find((s) => s.id === 'hear')!;
+const lines = [
+  { key: 'follow', text: 'Follow the arrows.', note: 'When the route starts' },
+  { key: 'left', text: 'Turn left now.', note: 'On the walk to the Library' },
+  { key: 'right', text: 'Turn right now.', note: 'On the campus tour' },
+];
+---
+<section class="scene pin-scene hear" id="hear" data-scene data-travel={me.travel} style="--len: 2.2">
+  <div class="pin">
+    <div class="wrap hear__grid">
+      <div class="hear__stage">
+        <Device class="hear__device">
+          <Clip name="turn-left" class="hear__clip is-on" label="Screen recording: the arrow at the top of the screen turns left and the prompt reads Turn left now" />
+          <Clip name="turn-right" class="hear__clip" hold label="Screen recording from the campus tour: the prompt reads Turn right now" />
+        </Device>
+      </div>
+      <div class="hear__copy">
+        <SceneHead id="hear" title="Hear every turn." lead="The app says each turn before you reach it, so you can keep your eyes on the path and not on the screen." />
+        <ol class="hear__lines">
+          {lines.map((l, i) => (
+            <li class:list={[i === 0 && 'is-on']} data-hear-line={l.key}>
+              <span class="hear__wave" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+              <span class="t-voice hear__say">“{l.text}”</span>
+              <span class="t-small">{l.note}</span>
+            </li>
+          ))}
+        </ol>
+        <p class="hear__sound rv">
+          <button type="button" class="btn btn-line" data-sound-on><i class="fi-rr-volume" aria-hidden="true"></i><span>Turn sound on</span></button>
+          <span class="t-small">Plays the app’s own voice. Off until you press it.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .hear__grid { height: 100%; display: grid; gap: 1rem; grid-template-rows: auto minmax(0, 1fr); padding-top: calc(var(--header-h) + 0.75rem); padding-bottom: calc(var(--tourbar-h) + 1.75rem); }
+  .hear__copy { display: grid; gap: clamp(0.8rem, 2vh, 1.5rem); align-content: center; }
+  .hear__stage { order: 2; min-height: 0; display: grid; place-items: center; }
+  .hear__device { height: 100%; max-height: 36rem; aspect-ratio: 5.36 / 8.36; }
+  .hear__device .device { height: 100%; width: auto; }
+  .hear__clip { opacity: 0; transition: opacity 0.5s ease; }
+  .hear__clip.is-on { opacity: 1; }
+  .hear__lines { list-style: none; margin: 0; padding: 0; display: grid; }
+  .hear__lines li { display: grid; grid-template-columns: 1.6rem 1fr; align-items: center; gap: 0 0.9rem; padding: clamp(0.4rem, 1.2vh, 0.9rem) 0; opacity: 0.32; transition: opacity 0.45s ease; }
+  .hear__lines li.is-on { opacity: 1; }
+  .hear__say { font-size: clamp(1.6rem, 3.6vw, 3rem); line-height: 1.05; color: var(--color-forest); }
+  .hear__lines .t-small { grid-column: 2; }
+  .hear__wave { grid-row: span 2; display: flex; align-items: center; gap: 2px; height: 1.5rem; }
+  .hear__wave i { flex: 1; height: 100%; border-radius: 2px; background: var(--color-gold-deep); transform: scaleY(0.2); }
+  .hear__lines li.is-on .hear__wave i { animation: hear-wave 0.9s ease-in-out infinite; }
+  .hear__wave i:nth-child(2) { animation-delay: -0.25s !important; }
+  .hear__wave i:nth-child(3) { animation-delay: -0.5s !important; }
+  .hear__wave i:nth-child(4) { animation-delay: -0.7s !important; }
+  @keyframes hear-wave { 0%, 100% { transform: scaleY(0.25); } 50% { transform: scaleY(1); } }
+  .hear__sound { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1rem; }
+  html.sound-on .hear__sound { display: none; }
+  @media (max-width: 59.99rem) {
+    .hear .scene-head .t-lead { display: none; }
+    .hear__lines .t-small { display: none; }
+    .hear__say { font-size: clamp(1.35rem, 6vw, 2rem); }
+    .hear__sound .t-small { display: none; }
+  }
+  @media (min-width: 60rem) {
+    .hear__grid { grid-template-rows: none; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: clamp(2.5rem, 7vw, 7rem); }
+    .hear__stage { order: 0; height: 100%; }
+  }
+  html.reduced .hear__grid, html.no-js .hear__grid { height: auto; padding-block: 6rem 4rem; }
+  html.reduced .hear__device, html.no-js .hear__device { height: auto; width: min(100%, 18rem); }
+  html.reduced .hear__device .device, html.no-js .hear__device .device { height: auto; width: 100%; }
+  html.reduced .hear__lines li, html.no-js .hear__lines li { opacity: 1; }
+  html.reduced .hear__wave i, html.no-js .hear__wave i { animation: none !important; }
+</style>

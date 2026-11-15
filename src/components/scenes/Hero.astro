@@ -1,0 +1,78 @@
+---
+import DownloadButton from '../DownloadButton.astro';
+import { FACTS } from '../../config';
+import { scenes, total } from '../../data/scenes';
+import QRCode from 'qrcode';
+import { LIVE_URL } from '../../config';
+// Shown only in defense mode, so panelists can follow along on their own phones.
+const qr = await QRCode.toString(LIVE_URL, { type: 'svg', margin: 1, errorCorrectionLevel: 'M', color: { dark: '#06301d', light: '#ffffff' } });
+const me = scenes.find((s) => s.id === 'top')!;
+---
+<section class="scene hero" id="top" data-scene data-dwell={me.dwell}>
+  <div class="hero__art" data-hero-art>
+    <!-- A still of the same 3D scene: shown first, kept on weak phones, with reduced motion and without WebGL. -->
+    <picture>
+      <source type="image/avif" srcset="img/hero-island-720.avif 720w, img/hero-island-960.avif 960w, img/hero-island-1440.avif 1440w" sizes="(min-width: 60rem) 60vw, (min-width: 40rem) 44rem, 80vw" />
+      <img class="hero__poster" src="img/hero-island-720.webp" srcset="img/hero-island-720.webp 720w, img/hero-island-960.webp 960w, img/hero-island-1440.webp 1440w" sizes="(min-width: 60rem) 60vw, (min-width: 40rem) 44rem, 80vw" width="1440" height="990" alt="A small clay model of the NDMU campus: cream walkways between green-roofed buildings and trees, with one route marked in gold" fetchpriority="high" decoding="async" />
+    </picture>
+    <canvas class="hero__canvas" data-hero-canvas aria-hidden="true"></canvas>
+  </div>
+  <div class="wrap hero__inner">
+    <p class="hero__kicker hero-in">An Android app for Notre Dame of Marbel University</p>
+    <h1 class="t-hero hero__title" data-hero-title>Find your way around NDMU, in Augmented Reality.</h1>
+    <div class="hero__below">
+      <p class="t-lead hero-in">Gold arrows on the real walkway lead you to {FACTS.placesWithRoutes} places on campus. The app says every turn out loud, shows you a card about the place when you arrive, and works fully offline.</p>
+      <div class="hero__actions hero-in">
+        <button type="button" class="btn btn-forest" data-tour-start data-magnetic><i class="fi-rr-play" aria-hidden="true"></i>Start the tour</button>
+        <DownloadButton />
+      </div>
+    </div>
+    <p class="counter hero__counter hero-in"><b>01 / {String(total).padStart(2, '0')}</b><span>Scroll to walk the page, or start the tour</span></p>
+  </div>
+  <aside class="hero__qr" aria-label="Open this page on your phone">
+    <div class="hero__qrcode" role="img" aria-label="QR code that opens this page" set:html={qr} />
+    <p><b>Scan to open on your phone</b><span>{LIVE_URL.replace('https://', '').replace(/\/$/, '')}</span></p>
+  </aside>
+</section>
+
+<style is:global>
+  .hero { min-height: 100vh; min-height: 100svh; display: flex; overflow: clip; }
+  .hero__inner { position: relative; display: flex; flex-direction: column; padding-top: calc(var(--header-h) + clamp(1.25rem, 6vh, 4.5rem)); padding-bottom: clamp(5.5rem, 12vh, 7.5rem); }
+  .hero__kicker { font-size: 0.95rem; font-weight: 500; color: var(--color-mute); margin-bottom: clamp(0.9rem, 2.4vh, 1.75rem); }
+  /* Two lines on wide screens, four short ones on a phone: the width is set in ems so the breaks stay put. */
+  .hero__title { font-size: clamp(2.9rem, 14.4vw, 4.6rem); max-width: 5.1em; }
+  .hero__below { margin-top: clamp(1.25rem, 3.6vh, 2.5rem); max-width: 30rem; display: grid; gap: clamp(1.25rem, 3vh, 2rem); }
+  .hero__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .hero__counter { margin-top: auto; padding-top: 2rem; }
+
+  .hero__art { position: relative; z-index: -1; pointer-events: none; }
+  .hero__art picture, .hero__poster, .hero__canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .hero__poster { object-fit: contain; transition: opacity 0.9s ease; }
+  .hero__canvas { opacity: 0; transition: opacity 0.9s ease; }
+  .hero__art.is-live .hero__canvas { opacity: 1; }
+  .hero__art.is-live .hero__poster { opacity: 0; }
+  /* On phones the art sits under the words, so the page still reads top to bottom. */
+  @media (max-width: 59.99rem) {
+    .hero { flex-direction: column; }
+    .hero__inner { order: 1; padding-bottom: 0; flex: none; }
+    .hero__counter { display: none; }
+    .hero__art { order: 2; width: min(112vw, 44rem); align-self: center; aspect-ratio: 16 / 11; margin: 0.5rem 0 4.75rem; }
+  }
+  @media (min-width: 36rem) and (max-width: 59.99rem) { .hero__title { font-size: clamp(3.4rem, 9.6vw, 5.6rem); max-width: 9.7em; } }
+  @media (min-width: 60rem) {
+    .hero__title { font-size: clamp(4.2rem, 7.5vw, 7.1rem); max-width: 9.7em; }
+    .hero__art { position: absolute; right: max(-5vw, -6rem); bottom: 1.5rem; width: min(60vw, 64rem); aspect-ratio: 16 / 11; }
+  }
+  @media (min-width: 60rem) and (max-height: 46rem) {
+    .hero__title { font-size: clamp(3.4rem, 11.5vh, 6rem); }
+    .hero__art { width: min(52vw, 56rem); }
+  }
+  .hero__qr { display: none; }
+  html.defense .hero__qr { position: absolute; right: var(--gutter); bottom: calc(var(--tourbar-h) + 2.5rem); z-index: 2; display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1.1rem 0.9rem 0.9rem; border-radius: 1.25rem; background: #fffdf6; box-shadow: 0 0 0 1px rgb(10 90 49 / 0.14), 0 1.6rem 3rem -1.8rem rgb(6 48 29 / 0.5); }
+  .hero__qrcode { width: 8.5rem; height: 8.5rem; }
+  .hero__qrcode svg { display: block; width: 100%; height: 100%; }
+  .hero__qr p { display: grid; gap: 0.2rem; max-width: 11rem; font-size: var(--fs-small); color: var(--color-mute); overflow-wrap: anywhere; }
+  .hero__qr b { font-size: 1.05rem; font-weight: 600; color: var(--color-ink); }
+  html.weak:not(.reduced) .hero__poster { animation: hero-float 7s ease-in-out infinite; }
+  @keyframes hero-float { 50% { transform: translateY(-1.4%); } }
+</style>

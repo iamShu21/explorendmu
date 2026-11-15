@@ -1,28 +1,44 @@
 ---
 import Base from '../layouts/Base.astro';
-import Hero from '../components/Hero.astro';
-import Stats from '../components/Stats.astro';
-import Problem from '../components/Problem.astro';
-import Features from '../components/Features.astro';
-import Models from '../components/Models.astro';
-import HowItWorks from '../components/HowItWorks.astro';
-import Engineering from '../components/Engineering.astro';
-import Places from '../components/Places.astro';
-import Team from '../components/Team.astro';
-import Download from '../components/Download.astro';
+import Hero from '../components/scenes/Hero.astro';
+import Problem from '../components/scenes/Problem.astro';
+import Follow from '../components/scenes/Follow.astro';
+import Walk from '../components/scenes/Walk.astro';
+import Hear from '../components/scenes/Hear.astro';
+import Arrive from '../components/scenes/Arrive.astro';
+import Find from '../components/scenes/Find.astro';
+import Tour from '../components/scenes/Tour.astro';
+import Statues from '../components/scenes/Statues.astro';
+import Places from '../components/scenes/Places.astro';
+import Walks from '../components/scenes/Walks.astro';
+import Film from '../components/scenes/Film.astro';
+import How from '../components/scenes/How.astro';
+import Team from '../components/scenes/Team.astro';
+import Download from '../components/scenes/Download.astro';
+import { FACTS } from '../config';
 ---
 <Base
-  title="ExploreNDMU · AR campus navigation for Notre Dame of Marbel University"
-  description="An Android AR app that guides you to 37 places at Notre Dame of Marbel University with gold arrows on the walkway, voice prompts, place cards and 3D statues. Built with Unity, AR Foundation and ARCore."
+  title="ExploreNDMU: find your way around NDMU in Augmented Reality"
+  description={`An Android app that guides you to ${FACTS.placesWithRoutes} places at Notre Dame of Marbel University with gold AR arrows on the real walkway, spoken turns and a place card on arrival. Works fully offline.`}
 >
+  <link slot="head" rel="preload" as="image" type="image/avif" imagesrcset="img/hero-island-720.avif 720w, img/hero-island-960.avif 960w, img/hero-island-1440.avif 1440w" imagesizes="(min-width: 60rem) 60vw, (min-width: 40rem) 44rem, 80vw" fetchpriority="high" />
   <Hero />
-  <Stats />
   <Problem />
-  <Features />
+  <Follow />
+  <Walk />
+  <Hear />
+  <Arrive />
+  <Find />
+  <Tour />
+  <Statues />
   <Places />
-  <Models />
-  <HowItWorks />
-  <Engineering />
+  <Walks />
+  <Film />
+  <How />
   <Team />
   <Download />
+  <script>
+    // The app starts right after the first paint, so nothing it does can hold that paint back.
+    requestAnimationFrame(() => setTimeout(() => import('../scripts/main.js'), 0));
+  </script>
 </Base>

@@ -1,0 +1,14 @@
+---
+// The tablet the app was recorded on. The screen is 5:8, the shape of the real recordings (1080 x 1728),
+// so a capture is never cropped or stretched. Only real captures of the app go inside.
+interface Props { class?: string; label?: string; }
+const { class: cls = '', label } = Astro.props;
+---
+<div class:list={['device-stage', cls]}>
+  <div class="device" data-device role={label ? 'img' : undefined} aria-label={label}>
+    <div class="device__screen">
+      <slot />
+      <span class="device__glare" aria-hidden="true"></span>
+    </div>
+  </div>
+</div>

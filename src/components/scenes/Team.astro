@@ -1,0 +1,42 @@
+---
+// Team and adviser. The team is shown by initials.
+import SceneHead from '../SceneHead.astro';
+import { scenes } from '../../data/scenes';
+const me = scenes.find((s) => s.id === 'team')!;
+const team = [
+  { initials: 'SA', surname: 'Amoran', role: 'Full-stack developer', lead: true },
+  { initials: 'BR', surname: 'Herradura', role: 'Research and field mapping' },
+  { initials: 'EV', surname: 'Villanueva', role: 'Research and field mapping' },
+];
+---
+<section class="scene scene-pad team" id="team" data-scene data-dwell={me.dwell}>
+  <div class="wrap team__grid">
+    <SceneHead id="team" title="Three students, one campus." lead="A capstone project of the BS Information Technology program at Notre Dame of Marbel University." />
+    <ul class="team__row">
+      {team.map((m) => (
+        <li class:list={['team__card rv', m.lead && 'is-lead']}>
+          <p class="team__initials" aria-hidden="true">{m.initials}</p>
+          <h3><span class="sr-only-focus">{m.initials}, </span>{m.surname}</h3>
+          <p class="team__role">{m.role}</p>
+        </li>
+      ))}
+    </ul>
+    <p class="team__adviser rv"><i class="fi-rr-graduation-cap" aria-hidden="true"></i><span><span class="t-small">Research Capstone adviser</span><b>Vince Marc B. Sabado, MSIT</b></span></p>
+  </div>
+</section>
+
+<style is:global>
+  .team__grid { display: grid; gap: clamp(2rem, 5vh, 3.5rem); }
+  .team__row { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25rem; }
+  @media (min-width: 52rem) { .team__row { grid-template-columns: repeat(3, 1fr); gap: 1.75rem; } }
+  .team__card { display: grid; gap: 0.35rem; align-content: start; padding: clamp(1.25rem, 3vw, 2rem); border-radius: 1.5rem; background: rgb(255 253 246 / 0.86); box-shadow: 0 0 0 1px rgb(10 90 49 / 0.1); }
+  .team__card.is-lead { box-shadow: 0 0 0 2px var(--color-gold), 0 2rem 3rem -2.4rem rgb(138 90 0 / 0.6); }
+  .team__initials { font-family: var(--font-display); font-size: clamp(4rem, 8vw, 6.5rem); line-height: 0.9; color: var(--color-forest); letter-spacing: -0.02em; }
+  .team__card.is-lead .team__initials { color: var(--color-gold-deep); }
+  .team__card h3 { margin-top: 0.6rem; font-family: var(--font-sans); font-size: 1.15rem; font-weight: 600; letter-spacing: 0; color: var(--color-ink); }
+  .team__role { font-size: var(--fs-small); font-weight: 600; color: var(--color-gold-deep); }
+  .team__adviser { display: flex; align-items: center; gap: 1rem; padding-top: 1.5rem; border-top: 1px solid var(--color-line); }
+  .team__adviser i { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: 0.8rem; background: var(--color-forest); color: var(--color-gold); font-size: 1.1rem; }
+  .team__adviser > span { display: grid; }
+  .team__adviser b { font-size: 1.15rem; font-weight: 600; color: var(--color-ink); }
+</style>

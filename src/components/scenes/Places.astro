@@ -1,0 +1,77 @@
+---
+// Places on campus: the team's own photos with the text of the app's place cards.
+// A pinned horizontal gallery on wide screens; a row you swipe on phones.
+import SceneHead from '../SceneHead.astro';
+import { entries } from '../../data/directory';
+import { FACTS } from '../../config';
+import { scenes } from '../../data/scenes';
+const me = scenes.find((s) => s.id === 'places')!;
+const picks: [string, string, string][] = [
+  ['University Library', 'library', 'The entrance of the University Library'],
+  ['University Clinic', 'clinic', 'The front of the University Clinic'],
+  ['Gate 03', 'gate03', 'Gate 03, the Pantua Gate'],
+  ['University Gymnasium', 'gym', 'The covered entrance of the University Gymnasium'],
+  ['Audio Visual Room 3', 'avr3', 'A window into Audio Visual Room 3'],
+  ['Alumni Center', 'alumni', 'Inside the Alumni Center, with the university heritage wall'],
+  ['Bro. James Maurus Doherty Hall', 'doherty', 'Two floors of classrooms at Doherty Hall'],
+  ['Bro. Xavier Creegan Hall', 'creegan', 'Bro. Xavier Creegan Hall'],
+  ['San Lorenzo Ruiz Hall', 'slr', 'San Lorenzo Ruiz Hall across the green lawn'],
+];
+const first = (t: string) => (t.match(/^.*?[.!?](\s|$)/)?.[0] ?? t).trim();
+const items = picks.map(([name, img, alt]) => {
+  const e = entries.find((x) => x.name === name || x.name.startsWith(name))!;
+  return { ...e, img, alt, about: first(e.about), hours: e.schedule[0] ?? '' };
+});
+---
+<section class="scene pin-scene places" id="places" data-scene data-travel={me.travel} data-dwell="9" style="--len: 1.8">
+  <div class="pin">
+    <div class="places__inner">
+      <div class="wrap">
+        <SceneHead id="places" title="Places on campus." lead={`A few of the ${FACTS.directoryPlaces} places in the directory, in the team’s own photos.`} />
+      </div>
+      <div class="places__viewport" data-places-viewport tabindex="0" role="region" aria-label="Campus places, a row of photos">
+        <ul class="places__track" data-places-track>
+          {items.map((p) => (
+            <li class="place">
+              <picture>
+                <source type="image/avif" srcset={`img/place-${p.img}-480.avif 480w, img/place-${p.img}.avif 960w`} sizes="(min-width: 60rem) 26rem, 78vw" />
+                <img src={`img/place-${p.img}.webp`} srcset={`img/place-${p.img}-480.webp 480w, img/place-${p.img}.webp 960w`} sizes="(min-width: 60rem) 26rem, 78vw" width="960" height="480" alt={p.alt} loading="lazy" decoding="async" />
+              </picture>
+              <div class="place__text">
+                <h3 class="t-h3">{p.name}</h3>
+                {p.where && <p class="t-small">{p.where}</p>}
+                <p class="place__about">{p.about}</p>
+                <p class="place__meta">{p.route || p.gate ? <span class="place__route"><i class="fi-rr-navigation" aria-hidden="true"></i>{p.gate ? 'AR routes start here' : p.route!.metres ? `${p.route!.metres} m from ${p.route!.from}` : `AR route from ${p.route!.from}`}</span> : <span>Information card</span>}{p.hours && <span>{p.hours}</span>}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .places__inner { height: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr); gap: clamp(1.25rem, 3vh, 2.5rem); padding-top: calc(var(--header-h) + 1rem); padding-bottom: calc(var(--tourbar-h) + 2rem); align-content: center; }
+  .places__viewport { overflow: hidden; display: flex; align-items: center; }
+  .places__track { list-style: none; margin: 0; display: flex; gap: clamp(1rem, 2vw, 1.75rem); padding: 0.5rem var(--gutter) 1.5rem; padding-left: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter))); will-change: transform; }
+  .place { flex: none; width: min(78vw, 26rem); display: grid; grid-template-rows: auto 1fr; border-radius: 1.25rem; overflow: hidden; background: rgb(255 253 246 / 0.94); box-shadow: 0 0 0 1px rgb(10 90 49 / 0.1), 0 1.8rem 3rem -2rem rgb(6 48 29 / 0.5); }
+  .place picture { display: block; aspect-ratio: 2 / 1; overflow: hidden; }
+  .place img { width: 100%; height: 100%; object-fit: cover; }
+  .place__text { display: grid; gap: 0.35rem; align-content: start; padding: 1.1rem 1.25rem 1.25rem; }
+  .place__text .t-h3 { font-size: 1.55rem; }
+  .place__about { margin-top: 0.3rem; color: var(--color-ink); font-size: 0.95rem; line-height: 1.5; }
+  .place__meta { margin-top: 0.6rem; padding-top: 0.7rem; border-top: 1px solid var(--color-line); display: grid; gap: 0.25rem; font-size: var(--fs-small); color: var(--color-mute); }
+  .place__route { display: inline-flex; align-items: center; gap: 0.45rem; font-weight: 600; color: var(--color-gold-deep); }
+  /* Phones and tablets: an ordinary row you swipe sideways. */
+  @media (max-width: 59.99rem) {
+    .places.pin-scene { height: auto; }
+    .places .pin { position: relative; height: auto; overflow: visible; }
+    .places__inner { height: auto; padding-block: clamp(4rem, 10vh, 6rem) 3rem; }
+    .places__viewport { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
+    .places__viewport::-webkit-scrollbar { display: none; }
+    .place { scroll-snap-align: center; }
+  }
+  html.reduced .places__inner, html.no-js .places__inner { height: auto; padding-block: 6rem 3rem; }
+  html.reduced .places__viewport, html.no-js .places__viewport { overflow-x: auto; }
+</style>

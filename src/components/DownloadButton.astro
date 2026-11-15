@@ -1,0 +1,9 @@
+---
+// One download button for the whole site. It stays disabled until APK_URL is set in src/config.ts.
+import { APK_URL } from '../config';
+interface Props { class?: string; magnetic?: boolean; }
+const { class: cls = '', magnetic = false } = Astro.props;
+---
+{APK_URL
+  ? <a class:list={['btn btn-gold', cls]} href={APK_URL} data-magnetic={magnetic ? '' : undefined} download><i class="fi-rr-download" aria-hidden="true"></i>Download for Android</a>
+  : <button type="button" class:list={['btn', cls]} disabled aria-disabled="true"><i class="fi-rr-download" aria-hidden="true"></i>APK release coming soon</button>}

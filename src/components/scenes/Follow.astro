@@ -1,0 +1,73 @@
+---
+// Follow the arrows: a matched transition. The camera clip of someone holding the tablet ends on the very
+// moment the screen recording starts (0:31 in the camera clip is 3:23 in the app's recording), and the
+// scroll wipes one into the other.
+import SceneHead from '../SceneHead.astro';
+import Device from '../Device.astro';
+import Clip from '../Clip.astro';
+import { scenes } from '../../data/scenes';
+const me = scenes.find((s) => s.id === 'follow')!;
+---
+<section class="scene pin-scene follow" id="follow" data-scene data-travel={me.travel} style="--len: 2.2">
+  <div class="pin">
+    <div class="wrap follow__grid">
+      <div class="follow__copy">
+        <SceneHead id="follow" title="Follow the arrows." lead="Hold the screen up as you walk. Gold arrows lie on the real walkway in front of you, and you go where they point." />
+        <ol class="follow__steps" aria-label="What this scene shows">
+          <li class="is-on" data-follow-step><b>Beside the walker</b><span>A second camera films the walk to the Library.</span></li>
+          <li data-follow-step><b>On the screen</b><span>The same second, recorded by the app itself.</span></li>
+        </ol>
+      </div>
+      <div class="follow__stage" data-follow-stage>
+        <Device class="follow__device" label="The app's own screen recording: gold arrows on the covered walkway, 66 metres from the Library">
+          <div class="wipe" data-follow-wipe><div class="wipe__in">
+            <Clip name="follow-screen" hold label="Screen recording of AR navigation: gold chevrons on the walkway and the prompt Follow the arrows" />
+          </div><span class="wipe__edge" aria-hidden="true"></span></div>
+        </Device>
+        <figure class="follow__cam" data-follow-cam>
+          <Clip name="follow-cam" w={960} h={540} loop={false} label="A person walks under a covered walkway holding a tablet; gold arrows show on its screen" />
+          <!-- the last frame of the clip: the moment the screen recording picks up from -->
+          <img class="follow__match" data-follow-match src="video/follow-cam-end.webp" width="960" height="540" alt="" loading="lazy" decoding="async" />
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .follow__grid { height: 100%; display: grid; gap: clamp(1rem, 3vh, 2rem); grid-template-rows: auto minmax(0, 1fr); padding-top: calc(var(--header-h) + 1rem); padding-bottom: calc(var(--tourbar-h) + 1.75rem); }
+  .follow__copy { display: grid; gap: clamp(0.9rem, 2.4vh, 1.75rem); align-content: center; }
+  .follow__steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.2rem; max-width: 26rem; }
+  .follow__steps li { display: grid; gap: 0.1rem; padding: 0.55rem 0 0.55rem 1rem; border-left: 2px solid var(--color-line); color: var(--color-mute); font-size: var(--fs-small); transition: border-color 0.4s, opacity 0.4s; opacity: 0.6; }
+  .follow__steps li b { font-weight: 600; font-size: 1rem; color: var(--color-ink); }
+  .follow__steps li.is-on { border-left-color: var(--color-gold); opacity: 1; }
+  .follow__stage { position: relative; min-height: 0; display: grid; place-items: center; overflow: clip; border-radius: 1.25rem; }
+  .follow__device { height: 100%; max-height: min(100%, 38rem); aspect-ratio: 5.36 / 8.36; }
+  .follow__device .device { height: 100%; width: auto; }
+  .follow__cam { position: absolute; margin: 0; width: min(100%, 46rem); aspect-ratio: 16 / 9; border-radius: 1.1rem; overflow: hidden; box-shadow: 0 2.2rem 3.4rem -2rem rgb(6 48 29 / 0.6); will-change: transform, opacity; background: #0b1410; }
+  .follow__cam video, .follow__match { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .follow__match { opacity: 0; }
+  /* the wipe: the outer box slides in while its content slides the other way, so the picture stays put */
+  .wipe { position: absolute; inset: 0; overflow: hidden; will-change: transform; }
+  .wipe__in { position: absolute; inset: 0; will-change: transform; }
+  .wipe__in video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .wipe__edge { position: absolute; top: 0; bottom: 0; right: 0; width: 3px; background: var(--color-gold); box-shadow: 0 0 1rem 0.2rem rgb(255 194 14 / 0.7); }
+  @media (max-width: 59.99rem) {
+    .follow .scene-head .t-lead { font-size: 1rem; }
+    .follow__steps { grid-template-columns: 1fr 1fr; gap: 0.75rem; max-width: none; }
+    .follow__steps li span { display: none; }
+    .follow__steps li { padding-block: 0.2rem; }
+  }
+  @media (min-width: 60rem) {
+    .follow__grid { grid-template-rows: none; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); align-items: center; gap: clamp(2rem, 5vw, 5rem); }
+    .follow__stage { height: 100%; }
+  }
+  /* Without the scroll animation (reduced motion, no JS) both pictures simply sit one after the other. */
+  html.reduced .follow__grid, html.no-js .follow__grid { height: auto; padding-block: 6rem 4rem; }
+  html.reduced .follow__stage, html.no-js .follow__stage { gap: 1.5rem; overflow: visible; }
+  html.reduced .follow__match, html.no-js .follow__match { display: none; }
+  html.reduced .follow__cam, html.no-js .follow__cam { position: relative; }
+  html.reduced .follow__device, html.no-js .follow__device { height: auto; width: min(100%, 20rem); }
+  html.reduced .follow__device .device, html.no-js .follow__device .device { height: auto; width: 100%; }
+  html.reduced .wipe__edge, html.no-js .wipe__edge { display: none; }
+</style>

@@ -52,7 +52,13 @@
 
 /* Base colour, background and font rules are deliberately NOT in a layer, so nothing can override them by accident. */
 :root {
-  background: var(--color-paper);
+  /* The plain-CSS version of the living gradient: what shows before, and without, the canvas. */
+  background-color: var(--color-paper);
+  background-image:
+    radial-gradient(120% 60% at 100% 0%, rgb(255 194 14 / 0.30), transparent 60%),
+    radial-gradient(90% 50% at 0% 30%, rgb(95 211 149 / 0.16), transparent 62%),
+    radial-gradient(110% 55% at 100% 62%, rgb(255 215 94 / 0.24), transparent 60%),
+    radial-gradient(90% 50% at 0% 100%, rgb(10 90 49 / 0.10), transparent 60%);
   color: var(--color-ink);
   color-scheme: light;
   -webkit-text-size-adjust: 100%;
@@ -70,13 +76,9 @@ html body {
   overflow-x: clip;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  /* The still version of the living gradient: what you see without WebGL, on weak devices and with reduced motion. */
-  background-color: var(--color-paper);
-  background-image:
-    radial-gradient(120% 60% at 100% 0%, rgb(255 194 14 / 0.30), transparent 60%),
-    radial-gradient(90% 50% at 0% 30%, rgb(95 211 149 / 0.16), transparent 62%),
-    radial-gradient(110% 55% at 100% 62%, rgb(255 215 94 / 0.24), transparent 60%),
-    radial-gradient(90% 50% at 0% 100%, rgb(10 90 49 / 0.10), transparent 60%);
+  /* No background here: the gradient canvas and the gold route sit behind the page (z-index -1), and a
+     background on <body> would paint over both. The page colour lives on the root element above. */
+  background: none;
 }
 html.defense { font-size: 112.5%; }
 html.defense, html.defense * { cursor: none !important; }
@@ -171,7 +173,9 @@ html.defense, html.defense * { cursor: none !important; }
   .cap-note { font-size: var(--fs-small); color: var(--color-mute); }
 
   /* ---------- reveals: content is visible by default; JS hides only what is below the fold ---------- */
-  .line-mask { overflow: clip; padding-bottom: 0.12em; margin-bottom: -0.12em; }
+  /* SplitText wraps each headline line in a clipping mask. The mask gets room below and above the line,
+     so descenders (g, p, y) and tall capitals are never cut off by the tight line height. */
+  .split-line-mask { padding-block: 0.08em 0.22em; margin-block: -0.08em -0.22em; }
 
   /* ---------- the app's own card look (arrival card, place card) ---------- */
   .app-card {

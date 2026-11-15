@@ -182,8 +182,9 @@ export function initGradient() {
     const draw = () => {
       gl.uniform2f(uni.uRes, canvas.width, canvas.height);
       gl.uniform1f(uni.uTime, state.t);
-      gl.uniform1f(uni.uGold, clamp(base.gold_ * state.g, 0, 0.95));
-      gl.uniform1f(uni.uGreen, clamp(base.green * state.m, 0, 0.7));
+      // kept gentle: the page should read as white and cream first, with gold and green drifting through it
+      gl.uniform1f(uni.uGold, clamp(base.gold_ * state.g * 0.55, 0, 0.6));
+      gl.uniform1f(uni.uGreen, clamp(base.green * state.m * 0.7, 0, 0.5));
       gl.uniform1f(uni.uDeep, clamp(base.deep * state.m, 0, 0.4));
       gl.uniform1f(uni.uZoom, state.z);
       gl.uniform1f(uni.uBloom, state.bloom);

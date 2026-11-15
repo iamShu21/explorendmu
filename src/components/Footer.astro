@@ -4,7 +4,7 @@ import { REPO_URL, STALLION } from '../config';
 <footer class="site-footer scene">
   <div class="wrap site-footer__grid">
     <div>
-      <p class="site-footer__brand"><img src="img/logo-n-96.webp" alt="" width="40" height="40" loading="lazy" />Explore<span>NDMU</span></p>
+      <p class="site-footer__brand"><img src="img/logo-n-96.webp" alt="" width="40" height="40" loading="lazy" /><span class="site-footer__word">Explore<span>NDMU</span></span></p>
       <p class="t-small" style="max-width:30em;margin-top:1rem">An augmented reality campus tour, navigation and information app for Notre Dame of Marbel University, Koronadal City. A BS Information Technology capstone project.</p>
       <p class="t-small" style="margin-top:1rem;display:flex;gap:1.5rem;flex-wrap:wrap"><a class="link" href="research.html">Research</a><a class="link" href={REPO_URL} rel="noopener">Source on GitHub</a></p>
     </div>
@@ -31,7 +31,7 @@ import { REPO_URL, STALLION } from '../config';
   .site-footer__grid { display: grid; gap: 2.5rem; }
   @media (min-width: 56rem) { .site-footer__grid { grid-template-columns: 1fr 1.25fr; gap: 4rem; } }
   .site-footer__brand { display: flex; align-items: center; gap: 0.7rem; font-size: 1.3rem; font-weight: 600; color: var(--color-forest); letter-spacing: -0.01em; }
-  .site-footer__brand span { color: var(--color-gold-deep); }
+  .site-footer__word span { color: var(--color-gold-deep); }
   .site-footer__h { font-family: var(--font-sans); font-size: 0.95rem; font-weight: 600; letter-spacing: 0; color: var(--color-ink); }
   .site-footer__list { margin: 0.9rem 0 0; padding: 0; list-style: none; display: grid; gap: 0.55rem; max-width: 46em; }
   .site-footer__base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 2rem; margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid var(--color-line); }

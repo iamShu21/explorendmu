@@ -32,6 +32,7 @@ export const env = {
   phone: matchMedia('(max-width: 599px), (max-height: 599px)').matches,
   defense: params.get('defense') === '1',
   tourParam: params.get('tour') === '1',
+  interacted: false, // set once the visitor has touched, scrolled or typed
   webgl: hasWebGL(),
   saveData: !!conn.saveData,
   // "weak" = little memory or few cores, or the visitor asked to save data. Real frame time can lower this later.
@@ -121,10 +122,9 @@ export const perf = { slow: false };
 /* ---------- reveals ---------- */
 // Content is visible by default. JS hides only what is below the first screen, an IntersectionObserver brings it in,
 // and a timer shows anything that is on screen but somehow still hidden.
-export const initReveals = () => {
+const below = (el) => el.getBoundingClientRect().top > innerHeight * 0.92;
+export const initHeadlines = () => {
   if (env.reduced) return;
-  const below = (el) => el.getBoundingClientRect().top > innerHeight * 0.92;
-
   // Headlines: line by line through masks.
   $$('[data-split]').forEach((el) => {
     const waiting = below(el) && !el.closest('[data-no-reveal]');
@@ -140,7 +140,9 @@ export const initReveals = () => {
     el._reveal = () => { if (shown) return; shown = true; tween ? tween.play() : gsap.set(split.lines, { yPercent: 0 }); };
     if (waiting) onVisibleOnce(el, el._reveal);
   });
-
+};
+export const initReveals = () => {
+  if (env.reduced) return;
   // Everything else: a single quiet rise.
   const items = $$('.rv').filter(below);
   gsap.set(items, { opacity: 0, y: 26 });

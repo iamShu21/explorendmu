@@ -41,7 +41,7 @@ export function initHero() {
   const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 600));
   const arm = () => idle(() => boot(), { timeout: 2500 });
   const whenLoaded = (fn) => (document.readyState === 'complete' ? fn() : addEventListener('load', fn, { once: true }));
-  if (env.touch) {
+  if (env.touch && !env.interacted) {
     // Phones show the still of the same scene until the visitor first touches or scrolls the page:
     // building a 3D scene is the heaviest thing this page does, and a phone should not pay for it before it is wanted.
     const wake = () => { removeEventListener('touchstart', wake); removeEventListener('scroll', wake); whenLoaded(arm); };

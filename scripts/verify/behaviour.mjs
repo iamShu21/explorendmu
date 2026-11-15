@@ -7,14 +7,15 @@ const base = process.env.SITE ?? 'http://localhost:4173/explorendmu/';
 const browser = await chromium.launch({ args: ['--use-angle=d3d11', '--enable-gpu', '--ignore-gpu-blocklist', '--autoplay-policy=no-user-gesture-required'] });
 const results = [];
 const check = (name, ok, detail = '') => { results.push(ok); console.log(`${ok ? 'ok  ' : 'FAIL'} ${name}${detail ? '  (' + detail + ')' : ''}`); };
-const open = async (query = '', context = { viewport: { width: 1440, height: 900 } }) => {
+const open = async (query = '', context = { viewport: { width: 1440, height: 900 } }, lazy = false) => {
   const ctx = await browser.newContext(context);
   const page = await ctx.newPage();
   const errors = [];
   page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
   page.on('pageerror', (e) => errors.push(String(e)));
-  await page.goto(`${base}?nointro${query}`, { waitUntil: 'load' });
-  await page.waitForTimeout(1500);
+  await page.goto(`${base}?nointro${lazy ? '' : '&eager'}${query}`, { waitUntil: 'load' });
+  if (!lazy) await page.waitForFunction(() => window.__site?.ready, null, { timeout: 20000 });
+  await page.waitForTimeout(lazy ? 1500 : 400);
   return { ctx, page, errors };
 };
 const y = (page) => page.evaluate(() => Math.round(window.scrollY));
@@ -70,6 +71,13 @@ const state = (page) => page.evaluate(() => ({ ...window.__site.tour.state, tota
   const box = await page.locator('[data-tourbar]').boundingBox();
   const sizes = await page.$$eval('[data-tourbar] button', (bs) => bs.filter((b) => b.offsetParent).map((b) => Math.round(Math.min(b.getBoundingClientRect().height, 99))));
   check('tour buttons are at least 39 px tall on a phone', sizes.every((h) => h >= 39), `heights ${sizes.join(',')}; bar ${Math.round(box.width)}x${Math.round(box.height)}`);
+  await ctx.close();
+}
+{ // the page sets itself up on the first interaction; the press that wakes it must still count
+  const { ctx, page } = await open('', { viewport: { width: 1440, height: 900 } }, true);
+  const before = await page.evaluate(() => window.__site.ready);
+  await page.click('[data-tour-toggle]'); await page.waitForTimeout(2500);
+  check('lazy start: idle until touched, and the first press on Start tour plays', before === false && (await state(page)).playing);
   await ctx.close();
 }
 { // ?tour=1

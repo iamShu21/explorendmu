@@ -226,7 +226,7 @@ export function initGradient() {
     const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 400));
     const whenLoaded = (fn) => (document.readyState === 'complete' ? fn() : addEventListener('load', fn, { once: true }));
     const arm = () => whenLoaded(() => idle(() => api.boot(), { timeout: 3000 }));
-    if (env.touch) {
+    if (env.touch && !env.interacted) {
       const wake = () => { ['touchstart', 'scroll', 'keydown'].forEach((t) => removeEventListener(t, wake)); arm(); };
       ['touchstart', 'scroll', 'keydown'].forEach((t) => addEventListener(t, wake, { passive: true }));
     } else arm();

@@ -16,7 +16,7 @@ const png = (dataUrl) => Buffer.from(dataUrl.split(',')[1], 'base64');
 // 1. hero island
 {
   const page = await browser.newPage({ viewport: { width: 1600, height: 1100 }, deviceScaleFactor: 1 });
-  await page.goto(`${base}?nointro&hour=13`, { waitUntil: 'load' });
+  await page.goto(`${base}?nointro&eager&hour=13`, { waitUntil: 'load' });
   await page.waitForFunction(() => window.__heroCampus, null, { timeout: 30000 });
   const data = await page.evaluate(() => {
     const art = document.querySelector('[data-hero-art]');
@@ -38,7 +38,7 @@ const png = (dataUrl) => Buffer.from(dataUrl.split(',')[1], 'base64');
 // 2. gradient still (the daytime look)
 {
   const page = await browser.newPage({ viewport: { width: 900, height: 1350 }, deviceScaleFactor: 1 });
-  await page.goto(`${base}?nointro&hour=13`, { waitUntil: 'load' });
+  await page.goto(`${base}?nointro&eager&hour=13`, { waitUntil: 'load' });
   await page.waitForFunction(() => window.__site?.gradient, null, { timeout: 30000 });
   const data = await page.evaluate(async () => {
     const g = window.__site.gradient;
@@ -56,7 +56,7 @@ const png = (dataUrl) => Buffer.from(dataUrl.split(',')[1], 'base64');
 // 3. social card
 {
   const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
-  await page.goto(`${base}?nointro&hour=13`, { waitUntil: 'load' });
+  await page.goto(`${base}?nointro&eager&hour=13`, { waitUntil: 'load' });
   await page.waitForFunction(() => window.__heroCampus, null, { timeout: 30000 });
   await page.addStyleTag({ content: '.site-header,.tourbar,.chev,.spine,.hero__counter,.hero__actions{display:none!important}' });
   await page.waitForTimeout(2500);

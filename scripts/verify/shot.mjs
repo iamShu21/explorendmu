@@ -5,7 +5,7 @@ import { chromium, firefox, webkit, devices } from 'playwright';
 
 const arg = (name, def) => { const i = process.argv.indexOf(`--${name}`); return i > 0 ? process.argv[i + 1] : def; };
 const has = (name) => process.argv.includes(`--${name}`);
-const url = arg('url', 'http://localhost:4321/?nointro');
+const url = arg('url', 'http://localhost:4321/?nointro&eager');
 const out = arg('out', 'shot.png');
 const browserType = { chromium, firefox, webkit }[arg('browser', 'chromium')];
 const device = arg('device');

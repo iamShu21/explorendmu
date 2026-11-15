@@ -1,5 +1,5 @@
 // Entry for the research page and the 404 page: the same gradient, header and quiet reveals, without the tour.
-import { ScrollTrigger, $, $$, boot, initReveals, initPointer, initHeader } from './core.js';
+import { ScrollTrigger, $, $$, boot, initHeadlines, initReveals, initPointer, initHeader } from './core.js';
 import { initGradient } from './gradient.js';
 
 initHeader();
@@ -25,6 +25,7 @@ copy?.addEventListener('click', async () => {
 requestAnimationFrame(() => setTimeout(() => {
   boot();
   initGradient()?.bloom(0);
+  initHeadlines();
   initReveals();
   initPointer();
   document.fonts?.ready.then(() => ScrollTrigger.refresh());

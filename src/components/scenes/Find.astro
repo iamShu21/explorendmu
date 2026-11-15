@@ -1,0 +1,152 @@
+---
+// Find any place: a live search over the app's real 51 info cards. Tap a place to read its card;
+// if the team walked a route to it, the route draws itself on the campus art.
+import SceneHead from '../SceneHead.astro';
+import Device from '../Device.astro';
+import Clip from '../Clip.astro';
+import net from '../../data/campus-network.json';
+import { entries, withRoute } from '../../data/directory';
+import { scenes } from '../../data/scenes';
+const me = scenes.find((s) => s.id === 'find')!;
+const first = entries.find((e) => e.name === 'University Library')!;
+const gateOf = (name: string) => net.places.find((p) => p.name === name)!;
+const rows = (s: string[]) => s.map((line) => { const i = line.indexOf(':'); return i > 0 ? { day: line.slice(0, i), time: line.slice(i + 1).trim() } : { day: line, time: '' }; });
+---
+<section class="scene scene-pad find" id="find" data-scene data-dwell={me.dwell}>
+  <div class="wrap find__grid">
+    <div class="find__left">
+      <SceneHead id="find" title="Find any place." lead={`Search the ${entries.length} places in the directory and tap one to read its card. If the app can walk you there, the route draws itself.`} />
+      <div class="find__panel rv" data-find>
+        <label class="find__search">
+          <i class="fi-rr-search" aria-hidden="true"></i>
+          <input type="search" placeholder="Search a building or an office" aria-label="Search places" autocomplete="off" spellcheck="false" enterkeyhint="search" data-find-input />
+        </label>
+        <div class="find__filters" role="group" aria-label="Show">
+          <button type="button" aria-pressed="true" data-find-filter="all">All {entries.length}</button>
+          <button type="button" aria-pressed="false" data-find-filter="route">With an AR route, {withRoute}</button>
+        </div>
+        <ul class="find__list" data-find-list data-lenis-prevent tabindex="-1">
+          {entries.map((e) => (
+            <li>
+              <button type="button" data-find-item={e.id} data-route={e.route || e.gate ? '' : undefined} aria-pressed={e.id === first.id ? 'true' : 'false'}>
+                <span class="find__name">{e.name}</span>
+                {e.where && <span class="find__where">{e.where}</span>}
+                {(e.route || e.gate) && <i class="fi-rr-navigation" aria-label="Has an AR route"></i>}
+              </button>
+            </li>
+          ))}
+        </ul>
+        <p class="find__status t-small" role="status" aria-live="polite" data-find-status>{entries.length} places</p>
+      </div>
+    </div>
+
+    <div class="find__right">
+      <div class="find__art rv" aria-hidden="true">
+        <div class="find__plane">
+          <svg viewBox={`0 0 ${net.width} ${net.height}`} data-find-map>
+            <g fill="none" stroke="#fffaf0" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+              {net.walks.map((w) => <path d={w.d} />)}
+            </g>
+            <g>{net.places.map((p) => <circle cx={p.x} cy={p.y} r={/^Gate/.test(p.name) ? 9 : 5.5} fill={/^Gate/.test(p.name) ? '#ffc20e' : '#0a5a31'} stroke="#fffdf6" stroke-width="2.5" />)}</g>
+            <path data-find-halo d={first.route?.d} fill="none" stroke="rgb(255 194 14 / .45)" stroke-width="26" stroke-linecap="round" stroke-linejoin="round" />
+            <path data-find-route d={first.route?.d} fill="none" stroke="#f2b200" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" />
+            <g data-find-start transform={`translate(${gateOf(first.route!.from).x} ${gateOf(first.route!.from).y})`}><circle r="15" fill="#fffdf6" stroke="#c98a00" stroke-width="5" /></g>
+            <g data-find-end transform={`translate(${first.route!.d.match(/[\d.]+ [\d.]+$/)![0].replace(' ', ' ')})`}><circle r="26" fill="rgb(255 194 14 / .35)" /><circle r="13" fill="#ffc20e" stroke="#06301d" stroke-width="5" /></g>
+          </svg>
+        </div>
+      </div>
+      <article class="app-card find__card rv" data-find-card aria-live="polite" aria-atomic="true">
+        <header class="find__cardhead">
+          <span class="app-tile"><i class="fi-rr-door-open" aria-hidden="true"></i></span>
+          <div>
+            <h3 data-find-name>{first.name}</h3>
+            <p class="app-soft t-small" data-find-where style="color:#c9d8ce">{first.where}</p>
+          </div>
+        </header>
+        <p class="find__route" data-find-routetext><i class="fi-rr-navigation" aria-hidden="true"></i><span>{first.routeText}</span></p>
+        <div>
+          <p class="app-label">ABOUT</p>
+          <p class="find__about" data-find-about>{first.about}</p>
+        </div>
+        <div data-find-hours-wrap>
+          <p class="app-label">SCHEDULE</p>
+          <dl class="find__hours" data-find-hours>
+            {rows(first.schedule).map((r) => <><dt>{r.day}</dt><dd>{r.time}</dd></>)}
+          </dl>
+        </div>
+        <div data-find-services-wrap>
+          <p class="app-label">SERVICES</p>
+          <ul class="find__services" data-find-services>{first.services.map((s) => <li class="app-chip">{s}</li>)}</ul>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div class="wrap find__captures">
+    <figure class="rv">
+      <Device class="find__device"><Clip name="directory" label="Screen recording of the app: searching the directory for the Library and opening its details" /></Device>
+      <figcaption><b>In the app</b><span>Search or browse by type, then open a place to see its photo, hours and services.</span></figcaption>
+    </figure>
+    <figure class="rv">
+      <Device class="find__device"><Clip name="saved" label="Screen recording of the app: the Library is saved and appears under Saved places" /></Device>
+      <figcaption><b>Saved places</b><span>Tap the heart on any place to keep it one tap away.</span></figcaption>
+    </figure>
+  </div>
+  <script type="application/json" data-find-data set:html={JSON.stringify({ entries, gates: Object.fromEntries(net.places.filter((p) => /^Gate/.test(p.name)).map((p) => [p.name, [p.x, p.y]])) })} />
+</section>
+
+<style is:global>
+  .find__grid { display: grid; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  .find__left { display: grid; gap: clamp(1.25rem, 3vh, 2rem); min-width: 0; }
+  .find__panel { display: grid; gap: 0.75rem; padding: 0.9rem; border-radius: 1.4rem; background: rgb(255 253 246 / 0.9); box-shadow: 0 0 0 1px rgb(10 90 49 / 0.12), 0 1.6rem 3rem -2rem rgb(6 48 29 / 0.45); }
+  .find__search { display: flex; align-items: center; gap: 0.7rem; min-height: 3.1rem; padding: 0 1rem; border-radius: 0.95rem; background: #fff; box-shadow: inset 0 0 0 1px rgb(10 90 49 / 0.2); color: var(--color-mute); }
+  .find__search:focus-within { box-shadow: inset 0 0 0 2px var(--color-forest); }
+  .find__search input { flex: 1; min-width: 0; height: 3.1rem; border: 0; background: none; font: inherit; font-size: 1rem; color: var(--color-ink); outline: none; }
+  .find__search input::placeholder { color: #5a7265; }
+  .find__filters { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .find__filters button { min-height: 2.75rem; padding: 0 0.95rem; border: 0; border-radius: 999px; background: rgb(10 90 49 / 0.07); font-size: 0.9rem; font-weight: 500; color: var(--color-ink); transition: background-color var(--dur-micro), color var(--dur-micro); }
+  .find__filters button[aria-pressed="true"] { background: var(--color-forest); color: #fff; }
+  .find__list { list-style: none; margin: 0; padding: 0 0.2rem 0 0; max-height: min(24rem, 46vh); overflow-y: auto; overscroll-behavior: contain; display: grid; gap: 2px; scrollbar-width: thin; scrollbar-color: rgb(10 90 49 / 0.3) transparent; }
+  .find__list button { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 0 0.75rem; width: 100%; min-height: 3rem; padding: 0.45rem 0.8rem; border: 0; border-radius: 0.8rem; background: none; text-align: left; transition: background-color var(--dur-micro); }
+  .find__list button:hover { background: rgb(10 90 49 / 0.06); }
+  .find__list button[aria-pressed="true"] { background: #fff1c2; box-shadow: inset 0 0 0 1px rgb(138 90 0 / 0.3); }
+  .find__name { font-weight: 600; color: var(--color-ink); font-size: 0.97rem; }
+  .find__where { grid-column: 1; font-size: 0.82rem; color: var(--color-mute); }
+  .find__list i { grid-column: 2; grid-row: 1 / span 2; color: var(--color-gold-deep); }
+  .find__list li[hidden] { display: none; }
+  .find__status { padding: 0 0.4rem 0.1rem; }
+
+  .find__right { display: grid; gap: 0; min-width: 0; }
+  .find__art { perspective: 1100px; padding: 0 4% 0; margin-bottom: -9%; }
+  .find__plane { position: relative; border-radius: 9% / 14%; background: #cfe6cc; transform: rotateX(52deg) rotateZ(-9deg); transform-style: preserve-3d; box-shadow: 0 0 0 1px rgb(10 90 49 / 0.08); }
+  .find__plane::before, .find__plane::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+  .find__plane::before { background: #e6d6ae; transform: translateZ(-16px); }
+  .find__plane::after { background: rgb(6 48 29 / 0.28); filter: blur(22px); transform: translateZ(-80px) scale(0.92); }
+  .find__plane svg { position: relative; z-index: 1; display: block; width: 100%; height: auto; }
+  .find__card { position: relative; z-index: 2; display: grid; gap: 0.9rem; font-size: 0.92rem; width: min(100%, 27rem); justify-self: end; }
+  .find__cardhead { display: flex; align-items: center; gap: 0.8rem; }
+  .find__cardhead h3 { font-size: 1.2rem; line-height: 1.2; }
+  .find__route { display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.8rem; border-radius: 0.8rem; background: rgb(255 194 14 / 0.14); color: #ffe9a8; font-weight: 500; }
+  .find__route i { color: var(--color-gold); }
+  .find__about { margin-top: 0.3rem; line-height: 1.5; color: #fff; }
+  .find__hours { margin: 0.35rem 0 0; display: grid; grid-template-columns: 1fr auto; gap: 0.25rem 1rem; }
+  .find__hours dt { color: #c9d8ce; }
+  .find__hours dd { margin: 0; font-weight: 600; color: #fff; text-align: right; }
+  .find__services { list-style: none; margin: 0.4rem 0 0; padding: 0; display: grid; gap: 0.35rem; }
+  @media (min-width: 60rem) {
+    .find__grid { grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr); }
+    .find__right { position: sticky; top: calc(var(--header-h) + 1rem); }
+  }
+
+  .find__captures { margin-top: clamp(3rem, 8vh, 5rem); display: grid; gap: 2rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .find__captures figure { margin: 0; display: grid; gap: 1rem; justify-items: center; align-content: start; }
+  .find__device { width: min(100%, 15rem); }
+  .find__captures figcaption { display: grid; gap: 0.2rem; text-align: center; font-size: var(--fs-small); color: var(--color-mute); max-width: 19rem; }
+  .find__captures figcaption b { font-size: 1rem; font-weight: 600; color: var(--color-ink); }
+  @media (min-width: 60rem) {
+    .find__captures { grid-template-columns: repeat(2, auto); justify-content: start; gap: clamp(2rem, 6vw, 6rem); }
+    .find__captures figure { grid-template-columns: auto minmax(0, 17rem); align-items: center; justify-items: start; gap: 1.75rem; }
+    .find__captures figcaption { text-align: left; }
+    .find__device { width: 13.5rem; }
+  }
+</style>

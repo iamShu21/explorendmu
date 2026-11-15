@@ -1,0 +1,48 @@
+---
+// Take the campus tour from a gate. Both captures are real recordings of the app.
+import SceneHead from '../SceneHead.astro';
+import Device from '../Device.astro';
+import Clip from '../Clip.astro';
+import { scenes } from '../../data/scenes';
+const me = scenes.find((s) => s.id === 'tour')!;
+const steps = [
+  { t: 'Pick your gate', d: 'Choose the gate you came in through. The tour starts there.' },
+  { t: 'Walk from stop to stop', d: 'Gold arrows lead you to each stop, and the app says the turns.' },
+  { t: 'Arrive, read, go on', d: 'The place card opens at every stop. Tap Next stop when you are ready.' },
+];
+---
+<section class="scene scene-pad tour" id="tour" data-scene data-dwell={me.dwell}>
+  <div class="wrap tour__grid">
+    <div class="tour__stage rv">
+      <Device class="tour__device tour__device--back"><Clip name="home" label="Screen recording of the app's home screen, with the Take the campus tour card" /></Device>
+      <Device class="tour__device tour__device--front"><Clip name="tour-stop" label="Screen recording of a campus tour: arrows lead to a stop, the app says You have arrived and offers Next stop" /></Device>
+    </div>
+    <div class="tour__copy">
+      <SceneHead id="tour" title="Take the campus tour." lead="New to NDMU? Let the app show you around. The tour visits the main offices in order, one walk at a time." />
+      <ol class="tour__steps">
+        {steps.map((s, i) => (
+          <li class="rv"><span class="tour__n t-num" aria-hidden="true">{i + 1}</span><div><h3 class="t-h3">{s.t}</h3><p class="t-body">{s.d}</p></div></li>
+        ))}
+      </ol>
+      <p class="t-small rv">You can skip a stop, go somewhere else, or end the tour whenever you like.</p>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .tour__grid { display: grid; gap: clamp(2.5rem, 6vw, 5rem); align-items: center; }
+  .tour__copy { display: grid; gap: clamp(1.25rem, 3vh, 2rem); }
+  .tour__steps { list-style: none; margin: 0; padding: 0; display: grid; }
+  .tour__steps li { display: grid; grid-template-columns: 2.4rem 1fr; gap: 1rem; padding: 1.1rem 0; border-top: 1px solid var(--color-line); }
+  .tour__steps li:last-child { border-bottom: 1px solid var(--color-line); }
+  .tour__n { display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 50%; background: var(--color-gold); color: var(--color-ink); font-weight: 600; }
+  .tour__steps .t-h3 { font-size: clamp(1.35rem, 2vw, 1.7rem); }
+  .tour__steps .t-body { margin-top: 0.2rem; color: var(--color-ink); }
+  .tour__stage { position: relative; width: min(100%, 30rem); margin-inline: auto; aspect-ratio: 1 / 1.02; }
+  .tour__device { position: absolute; width: 56%; }
+  .tour__device--back { left: 0; top: 0; }
+  .tour__device--back .device { transform: rotateY(14deg) rotateX(3deg) rotateZ(-3deg); }
+  .tour__device--front { right: 0; bottom: 0; z-index: 1; }
+  .tour__device--front .device { transform: rotateY(-10deg) rotateX(2deg) rotateZ(2deg); }
+  @media (min-width: 60rem) { .tour__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+</style>

@@ -7,8 +7,10 @@
 .fi-rr-door-open::before{content:"\f587"}
 .fi-rr-download::before{content:"\f591"}
 .fi-rr-list::before{content:"\f8c4"}
+.fi-rr-navigation::before{content:"\f99d"}
 .fi-rr-pause::before{content:"\fa0c"}
 .fi-rr-play::before{content:"\fa9e"}
 .fi-rr-rotate-right::before{content:"\fb6a"}
+.fi-rr-search::before{content:"\fbba"}
 .fi-rr-volume::before{content:"\fed0"}
 .fi-rr-volume-slash::before{content:"\fecf"}

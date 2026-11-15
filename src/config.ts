@@ -12,7 +12,7 @@ export const FACTS = {
   walkedRoutes: 60,
   junctions: 39,
   joinedRoutes: 1194,
-  infoCards: 51,
+  directoryPlaces: 42, // the entries of the app's BuildingDirectory
   statues: 3,
 };
 

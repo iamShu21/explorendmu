@@ -1,0 +1,93 @@
+{
+ "note": "Copied unchanged from the app by scripts/import-app-cards.mjs.",
+ "cards": [
+  {
+   "name": "CASSC Office",
+   "about": "The CASSC Office serves as the coordination and administrative space for the student councils under the College of Arts, Sciences, and Social Sciences. It provides a venue for student leaders to organize activities, discuss student concerns, plan college programs, and coordinate with the college administration and other student organizations.",
+   "services": [
+    "Student council coordination and administrative assistance",
+    "Planning and organization of college activities and events",
+    "Student leadership and council-related concerns",
+    "Coordination of student programs and initiatives",
+    "Meetings and discussions among student council officers",
+    "Assistance with student concerns and suggestions",
+    "Communication and coordination with the college administration"
+   ],
+   "schedule": [
+    "Monday–Friday: 8:00 AM – 5:00 PM",
+    "Saturday: Subject to student council activities and meetings",
+    "Sunday: Closed"
+   ],
+   "match": [
+    "CASSC Office"
+   ]
+  },
+  {
+   "name": "OSAD (Office of Student Affairs and Development)",
+   "about": "The office that handles student affairs and student development at Notre Dame of Marbel University. It supports student organizations and the co-curricular and extra-curricular activities that help students grow as leaders and as members of the university community.",
+   "services": [
+    "Student affairs and development programs",
+    "Support for student organizations and their activities",
+    "Co-curricular and extra-curricular activities",
+    "Student leadership development"
+   ],
+   "schedule": [
+    "Monday–Friday: 8:00 AM–5:00 PM",
+    "Saturday: 8:00 AM–11:30 AM",
+    "Sunday: Closed"
+   ],
+   "match": [
+    "OSAD"
+   ]
+  },
+  {
+   "name": "Records Section",
+   "about": "An administrative office responsible for maintaining, organizing, and managing official university records and student academic documents. It assists students, faculty, alumni, and other authorized individuals with requests for records and related services.",
+   "services": [
+    "Request and release of academic records",
+    "Issuance of transcripts of records (TOR)",
+    "Issuance of certificates of enrollment and graduation",
+    "Verification of student academic records",
+    "Processing of student record requests",
+    "Updating and maintaining student records",
+    "Assistance with document authentication and certification",
+    "Retrieval and safekeeping of official university records"
+   ],
+   "schedule": [
+    "Monday–Saturday: By reservation / scheduled activity",
+    "Sunday: By special arrangement",
+    "Holidays: Subject to university approval"
+   ],
+   "match": [
+    "Records Section"
+   ]
+  },
+  {
+   "name": "Gate 01 (Main Gate)",
+   "about": "The primary entrance and exit of the NDMU Main Campus along Alunan Avenue. It provides access for students, employees, visitors, and guests and is monitored by university security.",
+   "services": [
+    "Main pedestrian entrance and exit",
+    "Primary access for students, personnel, and visitors",
+    "Campus security and identification checks",
+    "Visitor assistance and entry monitoring",
+    "Convenient access from Alunan Avenue"
+   ],
+   "schedule": [
+    "Monday–Friday: 6:00 AM – 8:00 PM",
+    "Saturday: 6:00 AM – 5:00 PM",
+    "Sunday: Closed / Limited Access",
+    "Holidays: Subject to university security arrangements"
+   ],
+   "match": [
+    "Gate 01"
+   ]
+  },
+  {
+   "name": "Bro. Renato B. Cruz Hall",
+   "about": "Brother Renato Cruz (BRC) is a learning and academic facility of Notre Dame of Marbel University.",
+   "services": [],
+   "schedule": [],
+   "match": []
+  }
+ ]
+}

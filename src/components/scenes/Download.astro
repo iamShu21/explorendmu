@@ -51,8 +51,8 @@ const qr = await QRCode.toString(LIVE_URL, { type: 'svg', margin: 1, errorCorrec
 </section>
 
 <style is:global>
-  .download__inner { display: grid; justify-items: center; gap: 1.5rem; padding-top: clamp(9rem, 26vh, 16rem); padding-bottom: clamp(5rem, 12vh, 8rem); }
-  .arrival { width: min(100%, 30rem); display: grid; gap: 0.75rem; will-change: transform, opacity; }
+  .download__inner { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 1.5rem; padding-top: clamp(9rem, 26vh, 16rem); padding-bottom: clamp(5rem, 12vh, 8rem); }
+  .arrival { width: min(100%, 30rem); display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.75rem; will-change: transform, opacity; }
   .arrival__bar { display: flex; align-items: center; gap: 0.9rem; padding: 0.85rem 1.1rem; border-radius: 1.2rem; background: rgb(19 32 26 / 0.94); color: #fff; }
   .arrival__check { display: grid; place-items: center; flex: none; width: 2.9rem; height: 2.9rem; border-radius: 50%; background: #0a6b3b; color: #fff; box-shadow: 0 0 0 2px var(--color-gold); }
   .arrival__bar h2 { font-family: var(--font-sans); font-size: 1.2rem; font-weight: 600; letter-spacing: -0.01em; color: #fff; }
@@ -62,12 +62,15 @@ const qr = await QRCode.toString(LIVE_URL, { type: 'svg', margin: 1, errorCorrec
   .arrival__head img { flex: none; width: 3.5rem; height: 3.5rem; padding: 0.4rem; border-radius: 1rem; background: #fffdf6; }
   .arrival__head h3 { font-size: 1.35rem; }
   .arrival__actions { margin-top: 0.6rem; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .arrival__actions .btn { white-space: normal; line-height: 1.2; max-width: 100%; }
+  .arrival__card { grid-template-columns: minmax(0, 1fr); }
   .arrival__card .btn:disabled { background: rgb(255 255 255 / 0.1); color: #e3ece6; box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.22); }
   .arrival__card .arrival__ghost { background: rgb(255 255 255 / 0.08); color: #fff; box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.35); }
   .arrival__card .arrival__ghost:hover { background: rgb(255 255 255 / 0.16); }
   .arrival__note { margin-top: 0.6rem; font-size: var(--fs-small); color: #c9d8ce; }
   .arrival__qr { display: grid; grid-template-columns: auto 1fr; gap: 1.1rem; align-items: center; padding-top: 1.25rem; border-top: 1px solid rgb(255 255 255 / 0.14); }
-  .arrival__code { width: 7.5rem; height: 7.5rem; padding: 0.35rem; border-radius: 0.8rem; background: #fff; }
+  .arrival__qr > div:last-child { min-width: 0; }
+  .arrival__code { width: clamp(5.5rem, 28vw, 7.5rem); height: clamp(5.5rem, 28vw, 7.5rem); padding: 0.35rem; border-radius: 0.8rem; background: #fff; }
   .arrival__code svg { display: block; width: 100%; height: 100%; }
   .arrival__scan { margin-top: 0.2rem; font-size: 1.1rem; font-weight: 600; color: #fff; }
   .arrival__url { margin-top: 0.2rem; font-size: var(--fs-small); color: #c9d8ce; overflow-wrap: anywhere; }

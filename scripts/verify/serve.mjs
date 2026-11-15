@@ -4,6 +4,8 @@ import { createServer } from 'node:http';
 import { createReadStream, existsSync, statSync } from 'node:fs';
 import { join, extname, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { gzipSync } from 'node:zlib';
+import { readFileSync } from 'node:fs';
 
 const dist = fileURLToPath(new URL('../../dist/', import.meta.url));
 const BASE = '/explorendmu/';
@@ -24,6 +26,12 @@ createServer((req, res) => {
     const start = range[1] ? Number(range[1]) : 0, end = range[2] ? Math.min(Number(range[2]), size - 1) : size - 1;
     res.writeHead(206, { ...head, 'content-range': `bytes ${start}-${end}/${size}`, 'content-length': end - start + 1 });
     return createReadStream(file, { start, end }).pipe(res);
+  }
+  // text is gzipped, as GitHub Pages does
+  if (/\.(html|js|css|json|svg|xml|vtt)$/.test(file) && /gzip/.test(req.headers['accept-encoding'] ?? '')) {
+    const body = gzipSync(readFileSync(file));
+    res.writeHead(status, { ...head, 'content-encoding': 'gzip', 'content-length': body.length });
+    return res.end(body);
   }
   res.writeHead(status, { ...head, 'content-length': size });
   createReadStream(file).pipe(res);

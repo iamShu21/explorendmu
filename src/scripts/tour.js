@@ -139,7 +139,9 @@ export function initTour() {
     if ((e.key === 'p' || e.key === 'P') && !e.metaKey && !e.ctrlKey && !e.altKey) { e.preventDefault(); toggle(); return; }
     if (env.defense) return; // presenter keys are handled in defense.js
     if (['Shift', 'Control', 'Alt', 'Meta', 'Tab'].includes(e.key)) return;
-    stop(e);
+    // Enter or Space on one of the tour's own buttons presses that button; every other key is the visitor taking over
+    if (mine(e) && (e.key === 'Enter' || e.key === ' ')) return;
+    pause();
   });
 
   /* ---------- scene tracking: counter, dots, gradient, sound ---------- */

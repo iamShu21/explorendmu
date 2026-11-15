@@ -6,7 +6,8 @@ import { chromium, firefox, webkit, devices } from 'playwright';
 
 const base = process.env.SITE ?? 'http://localhost:4173/explorendmu/';
 const quick = process.argv.includes('--quick');
-const widths = quick ? [390, 1440] : [320, 360, 390, 768, 1280, 1440, 1920];
+const only = process.argv.find((a) => a.startsWith('--widths='))?.slice(9).split(',').map(Number); // e.g. --widths=320,768
+const widths = only ?? (quick ? [390, 1440] : [320, 360, 390, 768, 1280, 1440, 1920]);
 const engines = quick ? { chromium } : { chromium, firefox, webkit };
 const runs = [];
 for (const [name, type] of Object.entries(engines)) for (const w of widths) runs.push({ label: `${name} ${w}`, type, context: { viewport: { width: w, height: w < 700 ? 780 : 900 } } });

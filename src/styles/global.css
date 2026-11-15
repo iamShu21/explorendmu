@@ -194,7 +194,7 @@ html.defense, html.defense * { cursor: none !important; }
 
 /* ---------- the route spine and its chevron (built in src/scripts/spine.js) ---------- */
 #main { position: relative; }
-.spine { position: absolute; left: 0; top: 0; z-index: 0; pointer-events: none; overflow: visible; }
+.spine { position: absolute; left: 0; top: 0; z-index: -1; pointer-events: none; overflow: visible; }
 .spine path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
 .spine__line { stroke: #f2b200; stroke-width: 2; }
 .spine__glow { stroke: rgb(255 194 14 / 0.3); stroke-width: 9; }

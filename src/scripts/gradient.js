@@ -52,9 +52,12 @@ void main(){
   col=mix(col,uForestC,smoothstep(.5,1.05,n3*.5+.5)*uDeep);
   // soft light falling from the upper right
   col+=vec3(.05,.045,.02)*smoothstep(-.2,1.1,uv.x*.6+uv.y*.7)*(1.-uDeep);
-  // never let it get darker than the floor, so dark green text keeps its contrast everywhere
-  float L=lum(col);
-  col=mix(col,uPaper,clamp((uFloor-L)/max(uFloor-L+.25,.001)*1.6,0.,1.));
+  // Never darker than the floor, so every text colour keeps at least 4.5:1 over it, everywhere and at every hour.
+  // The floor is a relative luminance (the WCAG measure), so the mix towards paper is done in linear light.
+  vec3 lin=pow(max(col,0.),vec3(2.2)),paperLin=pow(uPaper,vec3(2.2));
+  float L=lum(lin),Lp=lum(paperLin);
+  lin=mix(lin,paperLin,clamp((uFloor-L)/max(Lp-L,.0001),0.,1.));
+  col=pow(lin,vec3(1./2.2));
   // the intro "bloom": the page opens white and the colour flows in
   col=mix(vec3(1.,.992,.965),col,uBloom);
   gl_FragColor=vec4(col,1.);
@@ -168,7 +171,8 @@ export function initGradient() {
     gl.uniform1f(uni.uDeep, clamp(base.deep * state.m, 0, 0.4));
     gl.uniform1f(uni.uZoom, state.z);
     gl.uniform1f(uni.uBloom, state.bloom);
-    gl.uniform1f(uni.uFloor, 0.6);
+    // 0.8 keeps the weakest pair, deep gold text (#8A5A00), above 4.5:1. Paper itself is about 0.98.
+    gl.uniform1f(uni.uFloor, 0.8);
     gl.uniform2f(uni.uCam, state.x, state.y);
     gl.uniform3fv(uni.uPaper, base.paper);
     gl.uniform3fv(uni.uGoldC, base.gold);

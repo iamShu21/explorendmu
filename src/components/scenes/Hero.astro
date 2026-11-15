@@ -12,8 +12,8 @@ const me = scenes.find((s) => s.id === 'top')!;
   <div class="hero__art" data-hero-art>
     <!-- A still of the same 3D scene: shown first, kept on weak phones, with reduced motion and without WebGL. -->
     <picture>
-      <source type="image/avif" srcset="img/hero-island-720.avif 720w, img/hero-island-1440.avif 1440w" sizes="(min-width: 60rem) 66vw, 100vw" />
-      <img class="hero__poster" src="img/hero-island-720.webp" srcset="img/hero-island-720.webp 720w, img/hero-island-1440.webp 1440w" sizes="(min-width: 60rem) 66vw, 100vw" width="1440" height="990" alt="A small clay model of the NDMU campus: cream walkways between green-roofed buildings and trees, with one route marked in gold" fetchpriority="high" decoding="async" />
+      <source type="image/avif" srcset="img/hero-island-720.avif 720w, img/hero-island-960.avif 960w, img/hero-island-1440.avif 1440w" sizes="(min-width: 60rem) 60vw, (min-width: 40rem) 44rem, 80vw" />
+      <img class="hero__poster" src="img/hero-island-720.webp" srcset="img/hero-island-720.webp 720w, img/hero-island-960.webp 960w, img/hero-island-1440.webp 1440w" sizes="(min-width: 60rem) 60vw, (min-width: 40rem) 44rem, 80vw" width="1440" height="990" alt="A small clay model of the NDMU campus: cream walkways between green-roofed buildings and trees, with one route marked in gold" fetchpriority="high" decoding="sync" />
     </picture>
     <canvas class="hero__canvas" data-hero-canvas aria-hidden="true"></canvas>
   </div>

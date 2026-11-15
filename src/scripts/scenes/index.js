@@ -1,20 +1,9 @@
-// Sets up every scene below the hero, in page order (ScrollTriggers must be created top to bottom).
+// Every scene below the hero, in page order (ScrollTriggers must be created top to bottom).
+// main.js runs these one per task, so no single step holds up the page.
 import { initFollow, initWalk, initHear, initArrive } from './story.js';
 import { initProblem } from './problem.js';
 import { initFind } from './find.js';
 import { initStatues } from './statues.js';
 import { initPlaces, initWalks, initFilm, initArrival } from './more.js';
 
-export function initScenes(ctx) {
-  initProblem(ctx);
-  initFollow(ctx);
-  initWalk(ctx);
-  initHear(ctx);
-  initArrive(ctx);
-  initFind(ctx);
-  initStatues(ctx);
-  initPlaces(ctx);
-  initWalks(ctx);
-  initFilm(ctx);
-  initArrival(ctx);
-}
+export const sceneSteps = [initProblem, initFollow, initWalk, initHear, initArrive, initFind, initStatues, initPlaces, initWalks, initFilm, initArrival];

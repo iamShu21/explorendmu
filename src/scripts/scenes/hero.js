@@ -40,7 +40,14 @@ export function initHero() {
   // Wait until the page is idle so the first paint is never blocked.
   const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 600));
   const arm = () => idle(() => boot(), { timeout: 2500 });
-  if (document.readyState === 'complete') arm(); else addEventListener('load', arm, { once: true });
+  const whenLoaded = (fn) => (document.readyState === 'complete' ? fn() : addEventListener('load', fn, { once: true }));
+  if (env.touch) {
+    // Phones show the still of the same scene until the visitor first touches or scrolls the page:
+    // building a 3D scene is the heaviest thing this page does, and a phone should not pay for it before it is wanted.
+    const wake = () => { removeEventListener('touchstart', wake); removeEventListener('scroll', wake); whenLoaded(arm); };
+    addEventListener('touchstart', wake, { passive: true, once: true });
+    addEventListener('scroll', wake, { passive: true, once: true });
+  } else whenLoaded(arm);
 
   onVisible(art, () => { visible = true; start(); }, () => { visible = false; stop(); });
   on('visibility', (v) => (v ? start() : stop()));

@@ -55,7 +55,10 @@ const base404 = page === '404' && import.meta.env.PROD ? new URL(site).pathname 
         // The intro plays once per visit, never with reduced motion, and not when a tour is asked for in the address.
         var seen = false;
         try { seen = sessionStorage.getItem('ndmu-intro') === '1'; } catch (e) {}
-        if (!seen && !reduced && !q.has('tour') && !q.has('nointro') && d.dataset.page !== 'other') d.classList.add('intro-on');
+        if (!seen && !reduced && !q.has('tour') && !q.has('nointro')) {
+          d.classList.add('intro-on');
+          try { sessionStorage.setItem('ndmu-intro', '1'); } catch (e) {}
+        }
       })();
     </script>
     <script type="application/ld+json" set:html={JSON.stringify({

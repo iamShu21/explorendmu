@@ -151,6 +151,7 @@ export function initTour() {
     if (i === active) return;
     active = i;
     if (count) count.textContent = `${String(i + 1).padStart(2, '0')} / ${String(sceneEls.length).padStart(2, '0')}`;
+    listBtn?.setAttribute('aria-label', `${count?.textContent ?? ''}, choose a scene`);
     dotBtns.forEach((b, k) => { b.classList.toggle('is-past', k < i); k === i ? b.setAttribute('aria-current', 'true') : b.removeAttribute('aria-current'); });
     listBtns.forEach((b, k) => (k === i ? b.setAttribute('aria-current', 'true') : b.removeAttribute('aria-current')));
     emit('scene', sceneEls[i].id);

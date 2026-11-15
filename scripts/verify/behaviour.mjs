@@ -136,9 +136,9 @@ const state = (page) => page.evaluate(() => ({ ...window.__site.tour.state, tota
   }));
   check('reduced motion: no smooth scroll, no pinned scenes, no Start button', r.cls && !r.lenis && r.pinned !== 'sticky' && r.startHidden, JSON.stringify(r));
   check('reduced motion: nothing hidden, no video autoplays', r.hidden === 0 && r.autoplay === 0);
-  const before = await page.evaluate(() => window.__site.gradient?.state.t ?? null); await page.waitForTimeout(1200);
-  const after = await page.evaluate(() => window.__site.gradient?.state.t ?? null);
-  check('reduced motion: the gradient is still', before === after);
+  const before = await page.evaluate(() => window.__site.gradient.state.t); await page.waitForTimeout(1200);
+  const after = await page.evaluate(() => ({ t: window.__site.gradient.state.t, live: window.__site.gradient.live }));
+  check('reduced motion: the gradient is still', before === after.t && !after.live);
   check('reduced motion: no console errors', errors.length === 0, errors[0]?.slice(0, 120));
   await ctx.close();
 }
@@ -168,8 +168,8 @@ const state = (page) => page.evaluate(() => ({ ...window.__site.tour.state, tota
   for (const hour of [7, 13, 16.5, 20, 2]) {
     const { ctx, page } = await open(`&hour=${hour}`, { viewport: { width: 900, height: 700 } });
     // sample the whole canvas across every scene look and several moments of the drift
-    const range = await page.evaluate(() => {
-      const g = window.__site.gradient; if (!g) return null;
+    const range = await page.evaluate(async () => {
+      const g = window.__site.gradient; if (!g || !(await g.boot())) return null;
       const gl = g.gl, w = g.canvas.width, h = g.canvas.height, px = new Uint8Array(w * h * 4);
       let lo = [255, 255, 255], hi = [0, 0, 0], loL = 999, hiL = -1;
       const L = (r, gg, b) => 0.2126 * r + 0.7152 * gg + 0.0722 * b;

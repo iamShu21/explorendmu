@@ -114,6 +114,7 @@ const SCENE = {
   download: { g: 1.3, m: 0.7, x: 0, y: 4.9, z: 0.9 },
 };
 
+
 export function initGradient() {
   const canvas = $('[data-gradient]');
   const now = manila();
@@ -126,93 +127,109 @@ export function initGradient() {
   };
   setLabel();
   setInterval(setLabel, 30000);
+  if (!canvas) return null;
 
-  // Weak devices and browsers without WebGL get the still image (set in CSS on the canvas).
-  if (!canvas || !env.webgl || env.weak) { canvas?.classList.add('is-still'); return null; }
-
-  const gl = canvas.getContext('webgl', { antialias: false, alpha: false, depth: false, stencil: false, powerPreference: 'low-power', preserveDrawingBuffer: false });
-  if (!gl) { canvas.classList.add('is-still'); return null; }
-
-  let program, uni = {};
-  const build = () => {
-    const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; };
-    program = gl.createProgram();
-    gl.attachShader(program, sh(gl.VERTEX_SHADER, VERT));
-    gl.attachShader(program, sh(gl.FRAGMENT_SHADER, FRAG));
-    gl.linkProgram(program);
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(program));
-    gl.useProgram(program);
-    const buf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-    const loc = gl.getAttribLocation(program, 'p');
-    gl.enableVertexAttribArray(loc);
-    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-    ['uRes', 'uTime', 'uGold', 'uGreen', 'uDeep', 'uZoom', 'uBloom', 'uFloor', 'uCam', 'uPaper', 'uGoldC', 'uMintC', 'uForestC'].forEach((n) => (uni[n] = gl.getUniformLocation(program, n)));
-  };
-  try { build(); } catch (e) { canvas.classList.add('is-still'); return null; }
-
-  // The gradient is soft, so a small buffer is enough: a third of the CSS size on phones, half on desktop.
-  let scale = env.phone ? 0.34 : 0.5;
-  const resize = () => {
-    const w = Math.max(2, Math.round(innerWidth * scale)), h = Math.max(2, Math.round(innerHeight * scale));
-    if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; gl.viewport(0, 0, w, h); }
-  };
-  resize();
-  addEventListener('resize', resize, { passive: true });
-
+  // Everyone starts on the still image of the gradient (set in CSS on the canvas). It costs nothing.
+  canvas.classList.add('is-still');
   const base = lookAt(now.hours);
   const state = { g: 1, m: 1, x: 0, y: 0, z: 1, bloom: document.documentElement.classList.contains('intro-on') ? 0 : 1, t: Math.random() * 40 };
-  const draw = () => {
-    gl.uniform2f(uni.uRes, canvas.width, canvas.height);
-    gl.uniform1f(uni.uTime, state.t);
-    gl.uniform1f(uni.uGold, clamp(base.gold_ * state.g, 0, 0.95));
-    gl.uniform1f(uni.uGreen, clamp(base.green * state.m, 0, 0.7));
-    gl.uniform1f(uni.uDeep, clamp(base.deep * state.m, 0, 0.4));
-    gl.uniform1f(uni.uZoom, state.z);
-    gl.uniform1f(uni.uBloom, state.bloom);
-    // 0.8 keeps the weakest pair, deep gold text (#8A5A00), above 4.5:1. Paper itself is about 0.98.
-    gl.uniform1f(uni.uFloor, 0.8);
-    gl.uniform2f(uni.uCam, state.x, state.y);
-    gl.uniform3fv(uni.uPaper, base.paper);
-    gl.uniform3fv(uni.uGoldC, base.gold);
-    gl.uniform3fv(uni.uMintC, hex(MINT));
-    gl.uniform3fv(uni.uForestC, hex(FOREST));
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
-  };
-
-  // 30 fps is plenty for a slow drift. Stops while the tab is hidden; a still frame with reduced motion.
-  let running = false, lost = false, last = 0, acc = 0;
-  const frame = (time, dt) => {
-    if (lost) return;
-    acc += dt;
-    if (acc < 33) return;
-    state.t += (acc / 1000) * 0.11;
-    acc = 0;
-    draw();
-  };
-  const start = () => { if (!running && !env.reduced && !lost) { running = true; gsap.ticker.add(frame); } };
-  const stop = () => { if (running) { running = false; gsap.ticker.remove(frame); } };
-  draw();
-  canvas.classList.add('is-live');
-  start();
-  on('visibility', (v) => (v ? start() : stop()));
-  on('slow', () => { scale *= 0.6; resize(); draw(); });
-  canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); lost = true; stop(); canvas.classList.remove('is-live'); canvas.classList.add('is-still'); });
-  canvas.addEventListener('webglcontextrestored', () => { try { build(); lost = false; canvas.classList.remove('is-still'); canvas.classList.add('is-live'); resize(); draw(); start(); } catch {} });
-
+  const api = { canvas, gl: null, state, draw: () => {}, live: false };
+  api.bloom = (duration = 0.9) => (env.reduced || !duration ? ((state.bloom = 1), api.draw()) : gsap.to(state, { bloom: 1, duration, ease: 'power2.out' }));
   // Each scene nudges the palette and the camera.
-  const go = (id) => {
+  on('scene', (id) => {
     const s = SCENE[id];
     if (!s) return;
-    if (env.reduced) { Object.assign(state, s); draw(); return; }
+    if (env.reduced || !api.live) { Object.assign(state, s); api.draw(); return; }
     gsap.to(state, { ...s, duration: 2.2, ease: EASE.soft, overwrite: 'auto' });
-  };
-  on('scene', go);
+  });
 
-  return {
-    gl, canvas,
-    bloom: (duration = 0.9) => (env.reduced ? ((state.bloom = 1), draw()) : gsap.to(state, { bloom: 1, duration, ease: 'power2.out' })),
-    state, draw,
-  };
+  // The live shader replaces the still later. Creating a WebGL context and compiling a shader can hold the main
+  // thread for a moment, so it never happens during the first paint: desktops wait until the page is idle, phones
+  // until the visitor first touches the page. Weak devices, reduced motion and browsers without WebGL keep the still.
+  let booted = null;
+  api.boot = () => (booted ||= new Promise((resolve) => {
+    const fail = () => { env.webgl = false; document.documentElement.classList.add('no-webgl'); resolve(false); };
+    if (!env.webgl) return resolve(false);
+    const gl = canvas.getContext('webgl', { antialias: false, alpha: false, depth: false, stencil: false, powerPreference: 'low-power', preserveDrawingBuffer: false, failIfMajorPerformanceCaveat: true });
+    if (!gl) return fail();
+    let uni = {};
+    const build = () => {
+      const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; };
+      const program = gl.createProgram();
+      gl.attachShader(program, sh(gl.VERTEX_SHADER, VERT));
+      gl.attachShader(program, sh(gl.FRAGMENT_SHADER, FRAG));
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(program));
+      gl.useProgram(program);
+      gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+      const loc = gl.getAttribLocation(program, 'p');
+      gl.enableVertexAttribArray(loc);
+      gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+      ['uRes', 'uTime', 'uGold', 'uGreen', 'uDeep', 'uZoom', 'uBloom', 'uFloor', 'uCam', 'uPaper', 'uGoldC', 'uMintC', 'uForestC'].forEach((n) => (uni[n] = gl.getUniformLocation(program, n)));
+    };
+    try { build(); } catch { return fail(); }
+
+    // The gradient is soft, so a small buffer is enough: a third of the CSS size on phones, half on desktop.
+    let scale = env.phone ? 0.34 : 0.5;
+    const resize = () => {
+      const w = Math.max(2, Math.round(innerWidth * scale)), h = Math.max(2, Math.round(innerHeight * scale));
+      if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; gl.viewport(0, 0, w, h); }
+    };
+    resize();
+    addEventListener('resize', resize, { passive: true });
+
+    const draw = () => {
+      gl.uniform2f(uni.uRes, canvas.width, canvas.height);
+      gl.uniform1f(uni.uTime, state.t);
+      gl.uniform1f(uni.uGold, clamp(base.gold_ * state.g, 0, 0.95));
+      gl.uniform1f(uni.uGreen, clamp(base.green * state.m, 0, 0.7));
+      gl.uniform1f(uni.uDeep, clamp(base.deep * state.m, 0, 0.4));
+      gl.uniform1f(uni.uZoom, state.z);
+      gl.uniform1f(uni.uBloom, state.bloom);
+      // 0.8 keeps the weakest pair, deep gold text (#8A5A00), above 4.5:1. Paper itself is about 0.98.
+      gl.uniform1f(uni.uFloor, 0.8);
+      gl.uniform2f(uni.uCam, state.x, state.y);
+      gl.uniform3fv(uni.uPaper, base.paper);
+      gl.uniform3fv(uni.uGoldC, base.gold);
+      gl.uniform3fv(uni.uMintC, hex(MINT));
+      gl.uniform3fv(uni.uForestC, hex(FOREST));
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    };
+
+    // 30 fps is plenty for a slow drift. It stops while the tab is hidden.
+    let running = false, lost = false, acc = 0;
+    const frame = (time, dt) => {
+      if (lost) return;
+      acc += dt;
+      if (acc < 33) return;
+      state.t += (acc / 1000) * 0.11;
+      acc = 0;
+      draw();
+    };
+    const start = () => { if (!running && !env.reduced && !lost) { running = true; gsap.ticker.add(frame); } };
+    const stop = () => { if (running) { running = false; gsap.ticker.remove(frame); } };
+    Object.assign(api, { gl, draw, live: true });
+    draw();
+    canvas.classList.add('is-live');
+    start();
+    // after the intro the colour flows in from white
+    if (state.bloom < 1) api.bloom(1.1);
+    on('visibility', (v) => (v ? start() : stop()));
+    on('slow', () => { scale *= 0.6; resize(); draw(); });
+    canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); lost = true; api.live = false; stop(); canvas.classList.remove('is-live'); });
+    canvas.addEventListener('webglcontextrestored', () => { try { build(); lost = false; api.live = true; canvas.classList.add('is-live'); resize(); draw(); start(); } catch {} });
+    resolve(true);
+  }));
+
+  if (env.webgl && !env.weak && !env.reduced) {
+    const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 400));
+    const whenLoaded = (fn) => (document.readyState === 'complete' ? fn() : addEventListener('load', fn, { once: true }));
+    const arm = () => whenLoaded(() => idle(() => api.boot(), { timeout: 3000 }));
+    if (env.touch) {
+      const wake = () => { ['touchstart', 'scroll', 'keydown'].forEach((t) => removeEventListener(t, wake)); arm(); };
+      ['touchstart', 'scroll', 'keydown'].forEach((t) => addEventListener(t, wake, { passive: true }));
+    } else arm();
+  }
+  return api;
 }

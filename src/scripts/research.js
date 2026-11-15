@@ -1,12 +1,8 @@
 // Entry for the research page and the 404 page: the same gradient, header and quiet reveals, without the tour.
-import { ScrollTrigger, $, $$, initReveals, initPointer, initHeader } from './core.js';
+import { ScrollTrigger, $, $$, boot, initReveals, initPointer, initHeader } from './core.js';
 import { initGradient } from './gradient.js';
 
-const gradient = initGradient();
-gradient?.bloom(0);
 initHeader();
-initReveals();
-initPointer();
 
 // figures open in a dialog
 const dialog = $('[data-lightbox-dialog]'), big = $('[data-lightbox-img]');
@@ -25,4 +21,11 @@ copy?.addEventListener('click', async () => {
   setTimeout(() => (label.textContent = 'Copy citation'), 2200);
 });
 
-document.fonts?.ready.then(() => ScrollTrigger.refresh());
+// The animation engine and the gradient start after the first paint, as on the main page.
+requestAnimationFrame(() => setTimeout(() => {
+  boot();
+  initGradient()?.bloom(0);
+  initReveals();
+  initPointer();
+  document.fonts?.ready.then(() => ScrollTrigger.refresh());
+}, 0));

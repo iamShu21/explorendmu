@@ -192,6 +192,12 @@ html.defense, html.defense * { cursor: none !important; }
   }
 }
 
+/* ---------- first paint ---------- */
+/* Until the app has started, the browser may skip rendering the scenes below the first screen. They are still in
+   the page, are rendered as soon as they come near the screen, and the app renders them all straight after the
+   first paint (src/scripts/main.js). Without JavaScript this simply stays on, which is harmless. */
+html:not(.rendered) #main > .scene ~ .scene, html:not(.rendered) .site-footer { content-visibility: auto; contain-intrinsic-size: auto 62rem; }
+
 /* ---------- the route spine and its chevron (built in src/scripts/spine.js) ---------- */
 #main { position: relative; }
 .spine { position: absolute; left: 0; top: 0; z-index: -1; pointer-events: none; overflow: visible; }
@@ -210,6 +216,9 @@ html.no-js .chev, html.defense .chev { display: none; }
 
 /* Still gradient: weak devices, no WebGL */
 .gradient.is-still { opacity: 1; background: url("../img-static/gradient.avif") center / cover no-repeat; }
+
+/* On touch screens the grain is a plain overlay: blending a full-screen layer costs too much on a phone. */
+@media (pointer: coarse) { .grain::after { mix-blend-mode: normal; opacity: 0.035; } }
 
 /* Lazy videos show their poster until they start. */
 video[data-lazy] { background: #0b1410; }

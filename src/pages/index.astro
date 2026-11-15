@@ -21,7 +21,7 @@ import { FACTS } from '../config';
   title="ExploreNDMU: find your way around NDMU in Augmented Reality"
   description={`An Android app that guides you to ${FACTS.placesWithRoutes} places at Notre Dame of Marbel University with gold AR arrows on the real walkway, spoken turns and a place card on arrival. Works fully offline.`}
 >
-  <link slot="head" rel="preload" as="image" type="image/avif" imagesrcset="img/hero-island-720.avif 720w, img/hero-island-1440.avif 1440w" imagesizes="(min-width: 60rem) 66vw, 100vw" fetchpriority="high" />
+  <link slot="head" rel="preload" as="image" type="image/avif" imagesrcset="img/hero-island-720.avif 720w, img/hero-island-960.avif 960w, img/hero-island-1440.avif 1440w" imagesizes="(min-width: 60rem) 60vw, (min-width: 40rem) 44rem, 80vw" fetchpriority="high" />
   <Hero />
   <Problem />
   <Follow />
@@ -38,6 +38,7 @@ import { FACTS } from '../config';
   <Team />
   <Download />
   <script>
-    import '../scripts/main.js';
+    // The app starts right after the first paint, so nothing it does can hold that paint back.
+    requestAnimationFrame(() => setTimeout(() => import('../scripts/main.js'), 0));
   </script>
 </Base>

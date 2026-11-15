@@ -17,7 +17,7 @@ import { scenes, total } from '../data/scenes';
       <li><button type="button" data-tour-jump={s.id} aria-label={`Scene ${i + 1} of ${total}: ${s.title}`} title={s.title}><span></span></button></li>
     ))}
   </ol>
-  <button type="button" class="tourbar__count" data-tour-list-toggle aria-expanded="false" aria-controls="tour-list" aria-label="Choose a scene">
+  <button type="button" class="tourbar__count" data-tour-list-toggle aria-expanded="false" aria-controls="tour-list" aria-label={`01 / ${String(total).padStart(2, '0')}, choose a scene`}>
     <span class="t-num" data-tour-count>01 / {String(total).padStart(2, '0')}</span>
     <i class="fi-rr-list" aria-hidden="true"></i>
   </button>

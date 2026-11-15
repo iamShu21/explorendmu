@@ -12,7 +12,8 @@ const me = scenes.find((s) => s.id === 'film')!;
     <div class="wrap film__inner">
       <SceneHead id="film" title="Watch the film." lead="The whole story in three minutes and thirteen seconds: the problem, the app at work on campus, and how it was built." />
       <div class="film__box rv" data-film>
-        <video data-src="film/explorendmu-film-720p.mp4" poster="film/poster.jpg" preload="none" playsinline width="1280" height="720" aria-label="ExploreNDMU, the film">
+        <picture class="film__poster"><source type="image/avif" srcset="film/poster.avif" /><img src="film/poster.jpg" width="1280" height="720" alt="" loading="lazy" decoding="async" /></picture>
+        <video data-src="film/explorendmu-film-720p.mp4" preload="none" playsinline width="1280" height="720" aria-label="ExploreNDMU, the film">
           <track kind="captions" src="film/captions.vtt" srclang="en" label="English" />
         </video>
         <button type="button" class="film__play" data-film-play aria-label="Play the film, 3 minutes 13 seconds">
@@ -36,7 +37,8 @@ const me = scenes.find((s) => s.id === 'film')!;
   .film { padding-block: clamp(2rem, 6vh, 4rem); }
   .film__inner { padding-block: clamp(3.5rem, 9vh, 6.5rem); display: grid; gap: clamp(1.75rem, 4vh, 3rem); }
   .film__box { position: relative; width: min(100%, 64rem); aspect-ratio: 16 / 9; border-radius: 1.1rem; overflow: hidden; background: #000; box-shadow: 0 0 0 1px rgb(255 255 255 / 0.1), 0 3rem 5rem -3rem #000; }
-  .film__box video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .film__box video, .film__poster, .film__poster img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .film__box:not(.is-playing) video { visibility: hidden; }
   .film__play { position: absolute; inset: 0; display: flex; align-items: flex-end; gap: 0.9rem; padding: clamp(1rem, 3vw, 2rem); border: 0; background: linear-gradient(180deg, transparent 45%, rgb(4 23 15 / 0.82)); color: #fff; font-size: clamp(1.05rem, 2vw, 1.4rem); font-weight: 600; text-align: left; }
   .film__play > span:nth-child(2) { align-self: center; margin-top: auto; }
   .film__playicon { display: grid; place-items: center; width: clamp(3.25rem, 6vw, 4.5rem); height: clamp(3.25rem, 6vw, 4.5rem); border-radius: 50%; background: var(--color-gold); color: var(--color-ink); font-size: 1.2rem; transition: transform var(--dur-micro) var(--ease-out); }

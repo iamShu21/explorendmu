@@ -5,7 +5,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 import Lenis from 'lenis';
 
-gsap.registerPlugin(ScrollTrigger, SplitText);
 export { gsap, ScrollTrigger, SplitText };
 
 /* ---------- tokens (mirrored in global.css) ---------- */
@@ -19,13 +18,9 @@ export const lerp = (a, b, t) => a + (b - a) * t;
 
 /* ---------- environment ---------- */
 const params = new URLSearchParams(location.search);
-const hasWebGL = () => {
-  if (params.has('nowebgl')) return false; // lets us test the fallbacks
-  try {
-    const c = document.createElement('canvas');
-    return !!(c.getContext('webgl', { failIfMajorPerformanceCaveat: true }) || c.getContext('experimental-webgl', { failIfMajorPerformanceCaveat: true }));
-  } catch { return false; }
-};
+// Whether WebGL is worth trying. No test context is created here (that alone can stall the first paint);
+// the first real context, the gradient's, sets env.webgl to false if the browser refuses it.
+const hasWebGL = () => !params.has('nowebgl') && !!window.WebGLRenderingContext; // "?nowebgl" lets us test the fallbacks
 const cores = navigator.hardwareConcurrency || 4;
 const memory = navigator.deviceMemory || 4;
 const conn = navigator.connection || {};
@@ -33,7 +28,8 @@ export const env = {
   reduced: matchMedia('(prefers-reduced-motion: reduce)').matches,
   fine: matchMedia('(hover: hover) and (pointer: fine)').matches,
   touch: matchMedia('(pointer: coarse)').matches,
-  phone: Math.min(innerWidth, innerHeight) < 600,
+  // asked as a media query: reading innerWidth here would force a layout of the whole page before its first paint
+  phone: matchMedia('(max-width: 599px), (max-height: 599px)').matches,
   defense: params.get('defense') === '1',
   tourParam: params.get('tour') === '1',
   webgl: hasWebGL(),
@@ -53,13 +49,21 @@ export const emit = (name, data) => (listeners[name] || []).forEach((fn) => fn(d
 
 /* ---------- smooth scroll ---------- */
 export let lenis = null;
-ScrollTrigger.config({ ignoreMobileResize: true }); // the iOS address bar collapsing must not re-measure the page
-if (!env.reduced) {
-  lenis = new Lenis({ lerp: 0.11, wheelMultiplier: 1, smoothWheel: true, syncTouch: false });
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add((time) => lenis.raf(time * 1000));
-  gsap.ticker.lagSmoothing(0);
-}
+// Registering ScrollTrigger measures the page, which forces a layout. So the engine is switched on by the entry
+// script after the first paint, not while this module loads.
+let booted = false;
+export const boot = () => {
+  if (booted) return;
+  booted = true;
+  gsap.registerPlugin(ScrollTrigger, SplitText);
+  ScrollTrigger.config({ ignoreMobileResize: true }); // the iOS address bar collapsing must not re-measure the page
+  if (!env.reduced) {
+    lenis = new Lenis({ lerp: 0.11, wheelMultiplier: 1, smoothWheel: true, syncTouch: false });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+};
 export const scrollY = () => (lenis ? lenis.scroll : window.scrollY);
 export const maxScroll = () => Math.max(0, document.documentElement.scrollHeight - innerHeight);
 /** Scroll to a position or element. `immediate` jumps without easing (the tour drives the page this way). */
@@ -172,6 +176,8 @@ export const initVideos = () => {
   };
   vids.forEach((v) => {
     v.muted = true; v.playsInline = true;
+    // the poster comes first, well before the clip is on screen
+    onNear(v, () => { if (v.dataset.poster) v.poster = v.dataset.poster; }, '250% 0px');
     if (env.reduced) { v.controls = true; v.loop = false; onNear(v, load, '50% 0px'); return; }
     onNear(v, load, '120% 0px');
     onVisible(v, () => { v.dataset.inview = '1'; if (v.dataset.hold !== '1') v.play().catch(() => {}); }, () => { v.dataset.inview = ''; v.pause(); }, { threshold: 0.2 });

@@ -27,7 +27,7 @@ const png = (dataUrl) => Buffer.from(dataUrl.split(',')[1], 'base64');
     return document.querySelector('[data-hero-canvas]').toDataURL('image/png');
   });
   const img = sharp(png(data));
-  for (const w of [1440, 720]) {
+  for (const w of [1440, 960, 720]) {
     await img.clone().resize(w).avif({ quality: 58 }).toFile(join(root, `public/img/hero-island-${w}.avif`));
     await img.clone().resize(w).webp({ quality: 80 }).toFile(join(root, `public/img/hero-island-${w}.webp`));
   }
@@ -40,8 +40,9 @@ const png = (dataUrl) => Buffer.from(dataUrl.split(',')[1], 'base64');
   const page = await browser.newPage({ viewport: { width: 900, height: 1350 }, deviceScaleFactor: 1 });
   await page.goto(`${base}?nointro&hour=13`, { waitUntil: 'load' });
   await page.waitForFunction(() => window.__site?.gradient, null, { timeout: 30000 });
-  const data = await page.evaluate(() => {
+  const data = await page.evaluate(async () => {
     const g = window.__site.gradient;
+    await g.boot();
     g.canvas.width = 600; g.canvas.height = 900; g.gl.viewport(0, 0, 600, 900);
     Object.assign(g.state, { bloom: 1, g: 1, m: 1, x: 0, y: 0, z: 1, t: 12 });
     g.draw();

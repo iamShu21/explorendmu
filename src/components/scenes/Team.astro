@@ -1,12 +1,12 @@
 ---
-// Team and adviser: a portrait, initials, surname and role for each member.
+// Team and adviser: a portrait, full name (surname large, given names below) and role for each member.
 import SceneHead from '../SceneHead.astro';
 import { scenes } from '../../data/scenes';
 const me = scenes.find((s) => s.id === 'team')!;
 const team = [
-  { initials: 'SA', photo: 'sa', surname: 'Amoran', role: 'Full-stack developer', lead: true },
-  { initials: 'BR', photo: 'br', surname: 'Herradura', role: 'Research, field mapping and 3D modeling' },
-  { initials: 'EV', photo: 'ev', surname: 'Villanueva', role: 'Research and field mapping' },
+  { photo: 'sa', given: 'Shuhari Alaihim', surname: 'Amoran', role: 'Full-stack developer', lead: true },
+  { photo: 'br', given: 'Ben Raffy', surname: 'Herradura', role: 'Research, field mapping and 3D modeling' },
+  { photo: 'ev', given: 'Edward', surname: 'Villanueva', role: 'Research and field mapping' },
 ];
 ---
 <section class="scene scene-pad team" id="team" data-scene data-dwell={me.dwell}>
@@ -17,10 +17,10 @@ const team = [
         <li class:list={['team__card rv', m.lead && 'is-lead']}>
           <picture class="team__photo">
             <source type="image/avif" srcset={`img/team-${m.photo}-480.avif 480w, img/team-${m.photo}-960.avif 960w`} sizes="(min-width: 52rem) 30vw, 9rem" />
-            <img src={`img/team-${m.photo}-480.webp`} srcset={`img/team-${m.photo}-480.webp 480w, img/team-${m.photo}-960.webp 960w`} sizes="(min-width: 52rem) 30vw, 9rem" width="480" height="480" alt={`Portrait of ${m.surname}`} loading="lazy" decoding="async" />
+            <img src={`img/team-${m.photo}-480.webp`} srcset={`img/team-${m.photo}-480.webp 480w, img/team-${m.photo}-960.webp 960w`} sizes="(min-width: 52rem) 30vw, 9rem" width="480" height="480" alt={`Portrait of ${m.given} ${m.surname}`} loading="lazy" decoding="async" />
           </picture>
-          <p class="team__initials" aria-hidden="true">{m.initials}</p>
-          <h3><span class="sr-only-focus">{m.initials}, </span>{m.surname}</h3>
+          <!-- Read in name order (given names, then surname); shown with the surname on top. -->
+          <h3 class="team__name"><span class="team__given">{m.given}</span> <span class="team__surname">{m.surname}</span></h3>
           <p class="team__role">{m.role}</p>
         </li>
       ))}
@@ -39,12 +39,13 @@ const team = [
   @media (max-width: 51.99rem) {
     .team__card { grid-template-columns: clamp(6.5rem, 30vw, 9rem) 1fr; column-gap: 1.1rem; align-content: center; }
     .team__photo { grid-row: 1 / span 3; align-self: center; margin: 0; }
-    .team__card h3 { margin-top: 0.3rem; }
+    .team__card .team__surname { font-size: clamp(1.9rem, 8.6vw, 2.9rem); }
   }
   .team__photo img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 1rem; background: #fff; }
-  .team__initials { font-family: var(--font-display); font-size: clamp(3rem, 5vw, 4.25rem); line-height: 0.9; color: var(--color-forest); letter-spacing: -0.02em; }
-  .team__card.is-lead .team__initials { color: var(--color-gold-deep); }
-  .team__card h3 { margin-top: 0.6rem; font-family: var(--font-sans); font-size: 1.15rem; font-weight: 600; letter-spacing: 0; color: var(--color-ink); }
+  .team__name { display: flex; flex-direction: column-reverse; align-items: start; gap: 0.6rem; margin: 0; }
+  .team__surname { font-family: var(--font-display); font-size: clamp(3rem, 4.6vw, 4.25rem); font-weight: 400; line-height: 0.9; color: var(--color-forest); letter-spacing: -0.02em; overflow-wrap: anywhere; }
+  .team__card.is-lead .team__surname { color: var(--color-gold-deep); }
+  .team__given { font-family: var(--font-sans); font-size: 1.15rem; font-weight: 600; letter-spacing: 0; color: var(--color-ink); }
   .team__role { font-size: var(--fs-small); font-weight: 600; color: var(--color-gold-deep); }
   .team__adviser { display: flex; align-items: center; gap: 1rem; padding-top: 1.5rem; border-top: 1px solid var(--color-line); }
   .team__adviser i { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: 0.8rem; background: var(--color-forest); color: var(--color-gold); font-size: 1.1rem; }

@@ -4,7 +4,7 @@ import SceneHead from '../SceneHead.astro';
 import { scenes } from '../../data/scenes';
 const me = scenes.find((s) => s.id === 'team')!;
 const team = [
-  { photo: 'sa', given: 'Shuhari Alaihim', surname: 'Amoran', role: 'Full-stack developer', lead: true },
+  { photo: 'sa', given: 'Shuhari Alaihim', surname: 'Amoran', role: 'Full-stack developer' },
   { photo: 'br', given: 'Ben Raffy', surname: 'Herradura', role: 'Research, field mapping and 3D modeling' },
   { photo: 'ev', given: 'Edward', surname: 'Villanueva', role: 'Research and field mapping' },
 ];
@@ -14,7 +14,7 @@ const team = [
     <SceneHead id="team" title="Three students, one campus." lead="A capstone project of the BS Information Technology program at Notre Dame of Marbel University." />
     <ul class="team__row">
       {team.map((m) => (
-        <li class:list={['team__card rv', m.lead && 'is-lead']}>
+        <li class="team__card rv">
           <picture class="team__photo">
             <source type="image/avif" srcset={`img/team-${m.photo}-480.avif 480w, img/team-${m.photo}-960.avif 960w`} sizes="(min-width: 52rem) 30vw, 9rem" />
             <img src={`img/team-${m.photo}-480.webp`} srcset={`img/team-${m.photo}-480.webp 480w, img/team-${m.photo}-960.webp 960w`} sizes="(min-width: 52rem) 30vw, 9rem" width="480" height="480" alt={`Portrait of ${m.given} ${m.surname}`} loading="lazy" decoding="async" />
@@ -33,8 +33,7 @@ const team = [
   .team__grid { display: grid; gap: clamp(2rem, 5vh, 3.5rem); }
   .team__row { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25rem; }
   @media (min-width: 52rem) { .team__row { grid-template-columns: repeat(3, 1fr); gap: 1.75rem; } }
-  .team__card { display: grid; gap: 0.35rem; align-content: start; padding: clamp(1.25rem, 3vw, 2rem); border-radius: 1.5rem; background: rgb(255 253 246 / 0.86); box-shadow: 0 0 0 1px rgb(10 90 49 / 0.1); }
-  .team__card.is-lead { box-shadow: 0 0 0 2px var(--color-gold), 0 2rem 3rem -2.4rem rgb(138 90 0 / 0.6); }
+  .team__card { display: grid; gap: 0.35rem; align-content: start; padding: clamp(1.25rem, 3vw, 2rem); border-radius: 1.5rem; background: rgb(255 253 246 / 0.86); box-shadow: 0 0 0 2px var(--color-gold), 0 2rem 3rem -2.4rem rgb(138 90 0 / 0.6); }
   .team__photo { display: block; margin-bottom: 1.1rem; }
   @media (max-width: 51.99rem) {
     .team__card { grid-template-columns: clamp(6.5rem, 30vw, 9rem) 1fr; column-gap: 1.1rem; align-content: center; }
@@ -43,8 +42,7 @@ const team = [
   }
   .team__photo img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 1rem; background: #fff; }
   .team__name { display: flex; flex-direction: column-reverse; align-items: start; gap: 0.6rem; margin: 0; }
-  .team__surname { font-family: var(--font-display); font-size: clamp(3rem, 4.6vw, 4.25rem); font-weight: 400; line-height: 0.9; color: var(--color-forest); letter-spacing: -0.02em; overflow-wrap: anywhere; }
-  .team__card.is-lead .team__surname { color: var(--color-gold-deep); }
+  .team__surname { font-family: var(--font-display); font-size: clamp(3rem, 4.6vw, 4.25rem); font-weight: 400; line-height: 0.9; color: var(--color-gold-deep); letter-spacing: -0.02em; overflow-wrap: anywhere; }
   .team__given { font-family: var(--font-sans); font-size: 1.15rem; font-weight: 600; letter-spacing: 0; color: var(--color-ink); }
   .team__role { font-size: var(--fs-small); font-weight: 600; color: var(--color-gold-deep); }
   .team__adviser { display: flex; align-items: center; gap: 1rem; padding-top: 1.5rem; border-top: 1px solid var(--color-line); }

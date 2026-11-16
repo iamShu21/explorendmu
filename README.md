@@ -40,7 +40,7 @@ To turn on the download button, upload the APK to a GitHub Release and set `APK_
 ## Stats
 
 - **APK downloads:** the Download section shows the live total of every `ExploreNDMU.apk` across all GitHub Releases, read from GitHub's public API. It stays hidden if GitHub doesn't answer.
-- **Visits:** private, on GoatCounter (no cookies). Set `STATS_URL` in `src/config.ts` to the site's count address, e.g. `https://explorendmu.goatcounter.com/count`; the dashboard is at the same address without `/count`. Visits from localhost are not counted.
+- **Visits:** private, on GoatCounter (no cookies). Set `STATS_URL` in `src/config.ts` to the site's count address, currently `https://explorendmuu.goatcounter.com/count`; the dashboard is at the same address without `/count`. Visits from localhost are not counted.
 
 ## Data, and where every number comes from
 

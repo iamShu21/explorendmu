@@ -4,6 +4,6 @@ import { initFollow, initWalk, initHear, initArrive } from './story.js';
 import { initProblem } from './problem.js';
 import { initFind } from './find.js';
 import { initStatues } from './statues.js';
-import { initPlaces, initWalks, initFilm, initArrival } from './more.js';
+import { initPlaces, initWalks, initFilm, initArrival, initApkCount } from './more.js';
 
-export const sceneSteps = [initProblem, initFollow, initWalk, initHear, initArrive, initFind, initStatues, initPlaces, initWalks, initFilm, initArrival];
+export const sceneSteps = [initProblem, initFollow, initWalk, initHear, initArrive, initFind, initStatues, initPlaces, initWalks, initFilm, initArrival, initApkCount];

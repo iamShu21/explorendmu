@@ -3,7 +3,7 @@
 // "You have arrived: ExploreNDMU", with the download, the research link and a QR code to open the page on a phone.
 import QRCode from 'qrcode';
 import DownloadButton from '../DownloadButton.astro';
-import { LIVE_URL, APK_URL } from '../../config';
+import { LIVE_URL, APK_URL, REPO_API } from '../../config';
 import { scenes, total } from '../../data/scenes';
 const me = scenes.find((s) => s.id === 'download')!;
 // Made once, when the site is built. It points at the live address.
@@ -34,6 +34,7 @@ const qr = await QRCode.toString(LIVE_URL, { type: 'svg', margin: 1, errorCorrec
             <DownloadButton />
             <a class="btn btn-line arrival__ghost" href="research.html">Read the research</a>
           </div>
+          {APK_URL && <p class="arrival__note" data-apk-count={`${REPO_API}/releases`} aria-live="polite" hidden></p>}
           {!APK_URL && <p class="arrival__note">The Android release is being prepared. This button will turn on when it is ready.</p>}
         </div>
         <div class="arrival__qr" data-arrival-part>

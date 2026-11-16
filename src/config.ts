@@ -1,6 +1,10 @@
 // Public address of the site (used for the canonical link, the QR code and social cards).
 export const LIVE_URL = 'https://explorendmu.github.io/';
 export const REPO_URL = 'https://github.com/explorendmu/explorendmu.github.io';
+// GitHub's public API for the same repository (used for the live APK download count).
+export const REPO_API = REPO_URL.replace('https://github.com/', 'https://api.github.com/repos/');
+// Private visit stats (GoatCounter). Empty means no stats script on the page.
+export const STATS_URL = '';
 // Direct link to the APK on the latest release. A new release with a file named
 // ExploreNDMU.apk updates every download button without changing the site.
 // While this is empty, every download button stays disabled and says "APK release coming soon".

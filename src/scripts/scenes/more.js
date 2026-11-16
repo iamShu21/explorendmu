@@ -55,6 +55,28 @@ export function initFilm() {
   on('visibility', (v) => { if (!v && !video.paused) video.pause(); });
 }
 
+/* ---------------------------------------------------------------- 15 live APK download count */
+// The real total from GitHub Releases: every ExploreNDMU.apk across all releases.
+// Shown only when GitHub answers with a number above zero; otherwise the line stays hidden.
+export function initApkCount() {
+  const el = $('[data-apk-count]');
+  if (!el) return;
+  const KEY = 'ndmu-apk-count', TTL = 10 * 60 * 1000;
+  const render = (n) => { if (!(n > 0)) return; el.textContent = `Downloaded ${n.toLocaleString('en-US')} ${n === 1 ? 'time' : 'times'}`; el.hidden = false; };
+  const load = async () => {
+    try { const c = JSON.parse(localStorage.getItem(KEY) || 'null'); if (c && Date.now() - c.t < TTL) return render(c.n); } catch {}
+    try {
+      const res = await fetch(el.dataset.apkCount, { headers: { accept: 'application/vnd.github+json' } });
+      if (!res.ok) return;
+      const releases = await res.json();
+      const n = releases.flatMap((r) => r.assets || []).filter((a) => a.name === 'ExploreNDMU.apk').reduce((s, a) => s + (a.download_count || 0), 0);
+      try { localStorage.setItem(KEY, JSON.stringify({ n, t: Date.now() })); } catch {}
+      render(n);
+    } catch {}
+  };
+  onVisibleOnce(el.closest('[data-scene]') || el, load, '0px 0px 50% 0px');
+}
+
 /* ---------------------------------------------------------------- 15 you have arrived */
 export function initArrival() {
   const card = $('[data-arrival]');

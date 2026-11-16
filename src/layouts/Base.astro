@@ -9,7 +9,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Intro from '../components/Intro.astro';
 import TourBar from '../components/TourBar.astro';
-import { LIVE_URL } from '../config';
+import { LIVE_URL, STATS_URL } from '../config';
 
 interface Props { title: string; description: string; page?: 'home' | 'research' | '404'; }
 const { title, description, page = 'home' } = Astro.props;
@@ -71,6 +71,7 @@ const base404 = page === '404' && import.meta.env.PROD ? new URL(site).pathname 
       url: site,
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'PHP' },
     })} />
+    {STATS_URL && <script is:inline async data-goatcounter={STATS_URL} src="https://gc.zgo.at/count.js"></script>}
   </head>
   <body class="grain" data-page={page}>
     <a href="#main" class="sr-only-focus btn btn-gold" style="position:fixed;top:.75rem;left:.75rem;z-index:300">Skip to content</a>

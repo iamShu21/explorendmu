@@ -37,6 +37,11 @@ Large type, no cursor, and a QR code on the first screen. The first key press or
 Pushing to `main` builds and publishes to GitHub Pages through `.github/workflows/deploy.yml`.
 To turn on the download button, upload the APK to a GitHub Release and set `APK_URL` in `src/config.ts`.
 
+## Stats
+
+- **APK downloads:** the Download section shows the live total of every `ExploreNDMU.apk` across all GitHub Releases, read from GitHub's public API. It stays hidden if GitHub doesn't answer.
+- **Visits:** private, on GoatCounter (no cookies). Set `STATS_URL` in `src/config.ts` to the site's count address, e.g. `https://explorendmu.goatcounter.com/count`; the dashboard is at the same address without `/count`. Visits from localhost are not counted.
+
 ## Data, and where every number comes from
 
 - `src/data/campus-network.json`: the team's walked routes, projected to a flat plane.
